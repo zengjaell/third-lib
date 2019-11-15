@@ -1,5 +1,9 @@
 
 
 node_modules/
+.SpaceVim.d/
+project/install/
+project/*/build/
 
+project/zlib/zlib-1.2.11/
 
