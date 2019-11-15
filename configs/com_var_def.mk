@@ -37,6 +37,9 @@ USR_BIN			:= /usr/bin/
 USR_LIB 		:= /usr/lib/
 USR_SHR 		:= /usr/share/
 
+ROOT  			:= $(shell pwd)
+PREFIX_PATH 	:= $(ROOT)/../$(INSTALL_DIR)
+
 export TOP_DIR
 
 MKDIR 			:= mkdir -p
