@@ -31,7 +31,8 @@ ifdef project
 else
 	$(ECHO) "the instructions are as follows:"
 	$(ECHO) ''
-	$(ECHO) "\tmake list \t\t- show all projects that can be compiled."
+	$(ECHO) "\tmake list  \t\t- show all projects that can be compiled."
+	$(ECHO) "\tmake clean \t\t- clean all projects."
 	$(ECHO) ''
 endif
 
@@ -39,7 +40,12 @@ include configs/com_target_def.mk
 
 list:
 	$(ECHO) "support compiled projects"
-	$(call run_dir_makefile_make_list, $(makefile_list))
+	$(call run_dir_makefile_make_target, $(makefile_list), list)
+
+clean:
+	$(ECHO) "clean all projects"
+	$(RM) project/install
+	$(call run_dir_makefile_make_target, $(makefile_list), clean)
 
 .PHONY: all list
 

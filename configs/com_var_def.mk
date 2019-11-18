@@ -74,7 +74,7 @@ ifeq ($(TARGET_SYSTEM)-x, x1800-x)
 	GCC_TYPE 		:= $(GCC_PATH)/$(GCC_PRE)
 endif
 ifeq ($(TARGET_SYSTEM)-x, unisound-x)
-	GCC_PATH 	 	:= /home/uos/yzs/tool-chain/arm-linux-hf-4.9/unione/arm-linux-hf-4.9/bin
+	GCC_PATH 	 	:= /home/uos/data/yzs/toolchain/unione/arm-linux-hf-4.9/bin
 	GCC_PRE 	 	:= arm-linux-
 	HOST         	:= arm-linux
 	PROGRAM_PREFIX 	:= arm-linux-
@@ -82,11 +82,11 @@ ifeq ($(TARGET_SYSTEM)-x, unisound-x)
 endif
 endif
 
-AR 	   := $(GCC_TYPE)ar
-AS 	   := $(GCC_TYPE)as
-LD 	   := $(GCC_TYPE)ld
-NM 	   := $(GCC_TYPE)nm
-CC 	   := $(GCC_TYPE)gcc
+AR 	    := $(GCC_TYPE)ar
+AS 	    := $(GCC_TYPE)as
+LD 	    := $(GCC_TYPE)ld
+NM 	    := $(GCC_TYPE)nm
+CC 	    := $(GCC_TYPE)gcc
 GCC     := $(GCC_TYPE)gcc
 CPP     := $(GCC_TYPE)cpp
 CXX     := $(GCC_TYPE)g++

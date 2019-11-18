@@ -18,10 +18,10 @@
 #     last modified: 14/11 2019 20:27
 # ===============================================================
 		
-define run_dir_makefile_make_list
+define run_dir_makefile_make_target
 	for dir in $(1); 			   		    	\
 	do 									    	\
-		$(MAKE1) -C $${dir%/*} list || exit 1; 	\
+		$(MAKE1) -C $${dir%/*} $(2) || exit 1; 	\
 	done
 endef
 
