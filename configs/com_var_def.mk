@@ -62,6 +62,7 @@ TARGET_SYSTEM   := pc
 # TARGET_SYSTEM   := unisound
 # TARGET_SYSTEM   := x1800
 
+# build为编译的平台，host为运行的平台，target为调试的平台
 ifeq ($(TARGET_SYSTEM)-x, pc-x)
 	HOST 		:= $(BUILD)
 else

@@ -22,6 +22,7 @@ include configs/com_var_def.mk
 include configs/com_ruler_def.mk
 
 makefile_list := $(wildcard ./project/*/Makefile)
+makefile_list += $(wildcard ./project/gdb/*/Makefile)
 
 all: 
 ifdef project
