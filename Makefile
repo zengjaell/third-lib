@@ -23,6 +23,7 @@ include configs/com_ruler_def.mk
 
 makefile_list := $(wildcard ./project/*/Makefile)
 makefile_list += $(wildcard ./project/gdb/*/Makefile)
+makefile_list += $(wildcard ./project/lua/*/Makefile)
 
 all: 
 ifdef project
