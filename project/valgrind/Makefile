@@ -49,6 +49,13 @@ ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 		--host=armv7-linux \
 		CC=$(GCC) CXX=$(CXX)
 
+# 注意：只支持 armV7、armV8两种arm CPU架构。
+# 
+# 注意：特别注意安装目录，否则出现如下错误：
+# “valgrind: failed to start tool 'memcheck' for platform 'arm-linux': No such file or directory”
+# 增加目录路径：
+# 	export VALGRIND_LIB=/lib/valgrind
+
 	$(TOUCH) $(TARGET_CONFIG)
 endif
 

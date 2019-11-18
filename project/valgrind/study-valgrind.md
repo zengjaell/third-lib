@@ -87,42 +87,74 @@ valgrind包含的工具有:
 
 #### 常用选项，适用于所有valgrind工具
 
-* -tool=<name> 最常用的选项。运行 valgrind中名为toolname的工具。默认memcheck。
-* h –help 显示帮助信息。
-* -version 显示valgrind内核的版本，每个工具都有各自的版本。
-* q –quiet 安静地运行，只打印错误信息。
-* v –verbose 更详细的信息, 增加错误数统计。
-* -trace-children=no|yes 跟踪子线程? [no]
-* -track-fds=no|yes 跟踪打开的文件描述？[no]
-* -time-stamp=no|yes 增加时间戳到LOG信息? [no]
-* -log-fd=<number> 输出LOG到描述符文件 [2=stderr]
-* -log-file=<file> 将输出的信息写入到filename.PID的文件里，PID是运行程序的进行ID
-* -log-file-exactly=<file> 输出LOG信息到 file
-* -log-file-qualifier=<VAR> 取得环境变量的值来做为输出信息的文件名。 [none]
-* -log-socket=ipaddr:port 输出LOG到socket ，ipaddr:port
+* -tool=<name>                      最常用的选项。运行 valgrind中名为toolname的工具。默认memcheck。
+* h –help                           显示帮助信息。
+* -version                          显示valgrind内核的版本，每个工具都有各自的版本。
+* q –quiet                          安静地运行，只打印错误信息。
+* v –verbose                        更详细的信息, 增加错误数统计。
+* -trace-children=no|yes            跟踪子线程? [no]
+* -track-fds=no|yes                 跟踪打开的文件描述？[no]
+* -time-stamp=no|yes                增加时间戳到LOG信息? [no]
+* -log-fd=<number>                  输出LOG到描述符文件 [2=stderr]
+* -log-file=<file>                  将输出的信息写入到filename.PID的文件里，PID是运行程序的进行ID
+* -log-file-exactly=<file>          输出LOG信息到 file
+* -log-file-qualifier=<VAR>         取得环境变量的值来做为输出信息的文件名。 [none]
+* -log-socket=ipaddr:port           输出LOG到socket ，ipaddr:port
 
 #### log信息输出
 
-* -xml=yes 将信息以xml格式输出，只有memcheck可用
-* -num-callers=<number> show <number> callers in stack traces [12]
-* -error-limit=no|yes 如果太多错误，则停止显示新错误? [yes]
-* -error-exitcode=<number> 如果发现错误则返回错误代码 [0=disable]
-* -db-attach=no|yes 当出现错误，valgrind会自动启动调试器gdb。[no]
-* -db-command=<command> 启动调试器的命令行选项[gdb -nw %f %p]
+* -xml=yes                          将信息以xml格式输出，只有memcheck可用
+* -num-callers=<number>             show <number> callers in stack traces [12]
+* -error-limit=no|yes               如果太多错误，则停止显示新错误? [yes]
+* -error-exitcode=<number>          如果发现错误则返回错误代码 [0=disable]
+* -db-attach=no|yes                 当出现错误，valgrind会自动启动调试器gdb。[no]
+* -db-command=<command>             启动调试器的命令行选项[gdb -nw %f %p]
 
 #### Memcheck - 相关选项
 
-* -leak-check=no|summary|full 要求对leak给出详细信息? [summary]
-* -leak-resolution=low|med|high how much bt merging in leak check [low]
-* -show-reachable=no|yes show reachable blocks in leak check? [no]
+* -leak-check=no|summary|full       要求对leak给出详细信息? [summary]
+* -leak-resolution=low|med|high     how much bt merging in leak check [low]
+* -show-reachable=no|yes            show reachable blocks in leak check? [no]
 
 #### helgrind - 相关选项
 
 
 #### callgrind - 相关选项
 
-* -separate-threads=yes 调试线程性能，这样会为每个线程单独生成一个性能分析文件
+* -separate-threads=yes             调试线程性能，这样会为每个线程单独生成一个性能分析文件
 
+
+#### 见的内存问题
+
+* 使用未初始化的内存
+    局部变量和动态申请的变量，其初始值为随机值。
+    如果程序使用了随机值的变量，那么程序的行为变得不可预测。
+
+* 内存读写越界
+    访问了你不应该/没有权限访问的内存地址空间，
+    比如访问数组时越界；对动态内存访问时超出了申请的内存大小范围。
+
+* 内存覆盖
+    C 语言的强大和可怕之处在于其可以直接操作内存，
+    C 标准库中提供了大量这样的函数，比如 strcpy, strncpy, memcpy, strcat等。
+	  这些函数有一个共同的特点就是需要设置源地址 (src)，和目标地址(dst)，
+	  src 和 dst 指向的地址不能发生重叠，否则结果将不可预期。
+
+* 动态内存管理错误
+    动态分配函数包括：malloc, new等，动态释放函数包括free, delete。
+    成功申请了动态内存，就需要对其进行内存管理，而这又是最容易犯错误的。
+    常见的包括：
+        <申请和释放不一致> ：malloc/free，new/delete匹配调用，如调用一个释放两次
+	    <释放后仍然读写  > ：释放后再使用就会覆盖别的数据，最好设置为NULL
+
+* 内存泄露
+    内存泄露(Memory leak): 动态申请的内存在使用完后既没有释放，又无法被程序的其他部分访问。
+    内存泄露是在开发大型程序中最令人头疼的问题，
+    防止内存泄露要从良好的变成习惯做起，并加强单元测试，同时可以使用memcheck检测
+
+> 注意：
+>    Valgrind不能检测静态数组的边界(在栈上分配的空间)。
+>    Valgrind缺点是会消耗更多的内存(最大两倍于你源程序的内存)
 
 
 ## callgrind - 程序性能分析
