@@ -63,6 +63,10 @@ TARGET_SYSTEM   := pc
 # TARGET_SYSTEM   := x1800
 
 # build为编译的平台，host为运行的平台，target为调试的平台
+#
+# --host=i686-pc-linux-gnu  指定了生成<可执行文件>运行的平台和系统，运行于X86平台的linux系统
+# --host=arm-linux 			指定了生成<可执行文件>运行的平台和系统，运行于ARM平台的linux系统
+# --target=arm-linux 		目标平台是运行于ARM体系结构的linux内核
 ifeq ($(TARGET_SYSTEM)-x, pc-x)
 	HOST 		:= $(BUILD)
 else
