@@ -8,3 +8,8 @@ project/*/build/
 project/zlib/zlib-1.2.11/
 project/curl/curl-7.64.1/
 project/openssl/openssl-1.1.0g/
+project/htop/htop-2.2.0/
+project/libffi/libffi-3.2.1/
+project/ncurses/ncurses-6.1/
+project/valgrind/valgrind-3.14.0/
+
