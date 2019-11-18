@@ -46,8 +46,8 @@ ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 		$(ROOT)/$(@:-config=)/configure \
 		--prefix=$(PREFIX_PATH) \
 		--build=$(BUILD) \
-		--host=$(HOST)
-		CC=$(GCC) CXX=$(CXX) \
+		--host=armv7-linux \
+		CC=$(GCC) CXX=$(CXX)
 
 	$(TOUCH) $(TARGET_CONFIG)
 endif
