@@ -29,8 +29,17 @@ TARGET_CONFIG    		:= $(BUILD_DIR)/$(TARGET_DIR)-config-ok
 TARGET_DOWNLOAD_PATH 	:= http://hisham.hm/htop/releases/$(TARGET_VERSION)
 TAR_CMD 				:= tar -xzvf
 TAR_SUFFIX 				:= tar.gz
+NCURSES_DIR           	:= $(PREFIX_PATH)/include/ncurses
+libncurses6_so 			:= $(PREFIX_PATH)/lib/libncurses6.so
 
-all: $(TARGET_DIR)-make
+all: depend_lib $(TARGET_DIR)-make
+
+depend_lib:
+ifneq ($(NCURSES_DIR), $(wildcard $(NCURSES_DIR)))
+	$(ECHO) "\tuse \"make project=ncurses\" first to  compile ncurses."
+	$(ECHO) ''
+	exit 1
+endif
 
 include $(TO_TOP_DIR)/configs/com_target_def.mk
 
@@ -39,19 +48,23 @@ $(TARGET_DIR)-make: $(TARGET_DIR)-config
 	cd $(BUILD_DIR)/$(@:-make=) && $(MAKE) && make install
 
 $(TARGET_DIR)-config: $(TARGET_DIR)-src
+ifneq ($(libncurses6_so), $(wildcard $(libncurses6_so)))
+	$(LN) $(PREFIX_PATH)/lib/libncurses.so.6.1 $(libncurses6_so)
+endif
 ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
 	cd $(@:-config=) && ./autogen.sh
 	cd $(BUILD_DIR)/$(@:-config=) && \
 		$(RM) $(ROOT)/$(@:-config=)/config.h && \
 		$(ROOT)/$(@:-config=)/configure \
+		CC=$(GCC) CXX=$(CXX) \
+		LDFLAGS="-L$(PREFIX_PATH)/lib" \
+		CPPFLAGS="-I$(PREFIX_PATH)/include" \
+		--program-prefix=$(PROGRAM_PREFIX) \
 		--prefix=$(PREFIX_PATH) \
 		--build=$(BUILD) \
         --host=$(HOST) \
-        --disable-unicode \
-		CC=$(GCC) CXX=$(CXX) \
-        LDFLAGS=-L$(PREFIX_PATH)/lib \
-		CFLAGS=-I$(PREFIX_PATH)/include
+        --disable-unicode
 
 	$(TOUCH) $(TARGET_CONFIG)
 endif
@@ -67,8 +80,13 @@ list:
 
 .PHONY: all clean distclean list
 
-
-### 编译
+## 编译
+#configure: error: missing libraries:  libncurses
+#```
+#ln -s libncurses.so.6.0 libncurses6.so
+#```
+#
+### 运行
 #
 #### 缺少terminfo环境变量
 #
