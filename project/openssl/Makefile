@@ -53,7 +53,8 @@ $(TARGET_DIR)-config: $(TARGET_DIR)-src
 ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
 	cd $(BUILD_DIR)/$(@:-config=) && \
-		$(ROOT)/$(@:-config=)/Configure $(CONFIG_CONTENT) \
+		$(ROOT)/$(@:-config=)/Configure \
+		$(CONFIG_CONTENT) \
 		--prefix=$(PREFIX_PATH)
 
 	$(TOUCH) $(TARGET_CONFIG)

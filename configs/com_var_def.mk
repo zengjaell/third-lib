@@ -61,6 +61,7 @@ BUILD  			:= x86_64-linux-gnu
 TARGET_SYSTEM   := pc
 # TARGET_SYSTEM   := unisound
 # TARGET_SYSTEM   := x1800
+TARGET_SYSTEM   := rk3308
 
 # build为编译的平台，host为运行的平台，target为调试的平台
 #
@@ -74,14 +75,21 @@ ifeq ($(TARGET_SYSTEM)-x, x1800-x)
 	GCC_PATH 	 	:= /home/uos/test/ingenic/mips-gcc520-32bit/bin
 	GCC_PRE 	 	:= mips-linux-gnu-
 	HOST         	:= mips-linux-gnu
-	PROGRAM_PREFIX 	:= mipsel-linux-
+	PROGRAM_PREFIX 	:= arm-$(TARGET_SYSTEM)-
 	GCC_TYPE 		:= $(GCC_PATH)/$(GCC_PRE)
 endif
 ifeq ($(TARGET_SYSTEM)-x, unisound-x)
 	GCC_PATH 	 	:= /home/uos/data/yzs/toolchain/unione/arm-linux-hf-4.9/bin
 	GCC_PRE 	 	:= arm-linux-
 	HOST         	:= arm-linux
-	PROGRAM_PREFIX 	:= arm-linux-
+	PROGRAM_PREFIX 	:= arm-$(TARGET_SYSTEM)-
+	GCC_TYPE 		:= $(GCC_PATH)/$(GCC_PRE)
+endif
+ifeq ($(TARGET_SYSTEM)-x, rk3308-x)
+	GCC_PATH 	 	:= /home/uos/data/yzs/toolchain/rk3308/bin
+	GCC_PRE 	 	:= arm-linux-
+	HOST         	:= arm-linux
+	PROGRAM_PREFIX 	:= arm-$(TARGET_SYSTEM)-
 	GCC_TYPE 		:= $(GCC_PATH)/$(GCC_PRE)
 endif
 endif

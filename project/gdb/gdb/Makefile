@@ -39,16 +39,27 @@ $(TARGET_DIR)-make: $(TARGET_DIR)-config
 	$(call echo-make-msg, $(@:-make=))
 	cd $(BUILD_DIR)/$(@:-make=) && $(MAKE) && make install
 
+# --enable-shared    			动态编译
+# --without-x     				取消x windows 支持
+# --disable-gdbtk  				取消gdbtk,应该也是图形界面相关的
+# --disable-tui   				取消tui 界面
+# --without-included-regex 		关闭正则表达式库
+# --without-included-gettext  	去掉用于多语言处理的 gettext库
+# CPPFLAGS/LDFLAGS				确保能找到ARM版的ncurses库
+
 $(TARGET_DIR)-config: $(TARGET_DIR)-src
 ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
 	cd $(BUILD_DIR)/$(@:-config=) && \
 		$(ROOT)/$(@:-config=)/configure \
+		CC=$(GCC) CXX=$(CXX) AR=$(AR) LD=$(LD) \
+		LDFLAGS="-L$(PREFIX_PATH)/lib" \
+		CPPFLAGS="-I$(PREFIX_PATH)/include -pipe" \
+		--program-prefix=$(PROGRAM_PREFIX) \
 		--prefix=$(PREFIX_PATH) \
 		--build=$(BUILD) \
-		--host=$(BUILD) \
-		--target=arm-linux \
-		--program-prefix=$(PROGRAM_PREFIX)
+		--host=$(HOST) \
+		--target=$(HOST)
 
 	cp ./remote.c $(ROOT)/$(@:-config=)/gdb/remote.c
 

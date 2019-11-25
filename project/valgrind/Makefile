@@ -44,10 +44,11 @@ ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 	cd $(@:-config=) && ./autogen.sh
 	cd $(BUILD_DIR)/$(@:-config=) && \
 		$(ROOT)/$(@:-config=)/configure \
+		CC=$(GCC) CXX=$(CXX) \
+		--program-prefix=$(PROGRAM_PREFIX) \
 		--prefix=$(PREFIX_PATH) \
 		--build=$(BUILD) \
-		--host=armv7-linux \
-		CC=$(GCC) CXX=$(CXX)
+		--host=armv7-linux
 
 # 注意：只支持 armV7、armV8两种arm CPU架构。
 # 

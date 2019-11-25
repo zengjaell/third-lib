@@ -45,11 +45,11 @@ ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 	cd $(BUILD_DIR)/$(@:-config=) && \
 		$(ROOT)/$(@:-config=)/gdb/gdbserver/configure \
 		CC=$(GCC) CXX=$(CXX) AR=$(AR) LD=$(LD) \
+		--program-prefix=$(PROGRAM_PREFIX) \
+		--prefix=$(PREFIX_PATH) \
 		--build=$(BUILD) \
 		--host=$(HOST) \
-		--target=$(HOST) \
-		--prefix=$(PREFIX_PATH) \
-		--program-prefix=$(PROGRAM_PREFIX)
+		--target=$(HOST)
 
 	$(TOUCH) $(TARGET_CONFIG)
 endif

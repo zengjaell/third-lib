@@ -42,9 +42,13 @@ $(TARGET_DIR)-config: $(TARGET_DIR)-src
 ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
 	cd $(BUILD_DIR)/$(@:-config=) && \
-		$(ROOT)/$(@:-config=)/configure CC=$(GCC) CXX=$(CXX) \
+		$(ROOT)/$(@:-config=)/configure \
+		CC=$(GCC) CXX=$(CXX) \
+		CPPFLAGS="-pipe" \
+		--prefix=$(PREFIX_PATH) \
+		--build=$(BUILD) \
 		--host=$(HOST) \
-		--prefix=$(PREFIX_PATH)
+		--target=$(HOST)
 
 	$(TOUCH) $(TARGET_CONFIG)
 endif

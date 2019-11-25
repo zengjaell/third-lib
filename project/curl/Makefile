@@ -29,8 +29,8 @@ TARGET_CONFIG    		:= $(BUILD_DIR)/$(TARGET_DIR)-config-ok
 TARGET_DOWNLOAD_PATH 	:= https://curl.haxx.se/download
 TAR_CMD    	       		:= tar -xzvf
 TAR_SUFFIX 	       		:= tar.gz
-ZLIB_DIR           		:= ../install/include/zlib.h
-OPENSSL_DIR        		:= ../install/include/openssl
+ZLIB_DIR           		:= $(PREFIX_PATH)/include/zlib.h
+OPENSSL_DIR        		:= $(PREFIX_PATH)/include/openssl
 
 all: depend_lib $(TARGET_DIR)-make
 
@@ -56,9 +56,15 @@ $(TARGET_DIR)-config: $(TARGET_DIR)-src
 ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
 	cd $(BUILD_DIR)/$(@:-config=) && \
-		$(ROOT)/$(@:-config=)/configure CC=$(GCC) CXX=$(CXX) \
-		--host=$(HOST) --with-zlib=$(PREFIX_PATH) --with-ssl=$(PREFIX_PATH) \
-		--prefix=$(PREFIX_PATH)
+		$(ROOT)/$(@:-config=)/configure \
+		CC=$(GCC) CXX=$(CXX) \
+		CPPFLAGS="-pipe" \
+		--program-prefix=$(PROGRAM_PREFIX) \
+		--prefix=$(PREFIX_PATH) \
+		--host=$(HOST) \
+		--build=$(BUILD) \
+		--with-zlib=$(PREFIX_PATH) \
+		--with-ssl=$(PREFIX_PATH)
 
 	$(TOUCH) $(TARGET_CONFIG)
 endif
