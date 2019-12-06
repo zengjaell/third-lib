@@ -18,12 +18,19 @@
 #     last modified: 14/11 2019 20:18
 # ===============================================================
 
-include configs/com_var_def.mk
-include configs/com_ruler_def.mk
+TOP_DIR := $(shell pwd)
+export TOP_DIR
 
-makefile_list := $(wildcard ./project/*/Makefile)
-makefile_list += $(wildcard ./project/gdb/*/Makefile)
-makefile_list += $(wildcard ./project/lua/*/Makefile)
+CONFIGS_DIR := $(TOP_DIR)/configs
+
+include $(CONFIGS_DIR)/common_var.mk
+
+# makefile_list := $(wildcard ./project/*/Makefile)
+# makefile_list += $(wildcard ./project/gdb/*/Makefile)
+# makefile_list += $(wildcard ./project/lua/*/Makefile)
+
+makefile_list := $(wildcard $(PROJECT_DIR)/zlib/Makefile)
+export makefile_list
 
 all: 
 ifdef project
@@ -36,7 +43,7 @@ else
 	$(ECHO) ''
 endif
 
-include configs/com_target_def.mk
+include $(CONFIGS_DIR)/common_target.mk
 
 list:
 	$(ECHO) "support compiled projects"
@@ -44,8 +51,11 @@ list:
 
 clean:
 	$(ECHO) "clean all projects"
-	$(RM) project/install
+	$(RM) $(PREFIX_PATH)
 	$(call run_dir_makefile_make_target, $(makefile_list), clean)
+
+debug:
+	echo $(makefile_list)
 
 .PHONY: all list
 

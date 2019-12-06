@@ -18,15 +18,6 @@
 #     last modified: 15/11 2019 13:47
 # ===============================================================
 
-$(TARGET_DIR)-src:
-ifneq ($(TARGET_DIR), $(wildcard $(TARGET_DIR)))
-	$(call echo-download-msg, $(@:-src=))
-	$(WGET) $(TARGET_DOWNLOAD_PATH)/$(@:-src=).$(TAR_SUFFIX)
-	$(TAR_CMD) $(@:-src=).$(TAR_SUFFIX)
-	$(RM) $(@:-src=).$(TAR_SUFFIX)
-endif
-
-#########################################################
 err_no_targets:
 	@echo "error: use \"targets = your_target\" to specify your target to make!"
 	exit 1

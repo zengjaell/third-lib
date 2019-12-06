@@ -18,39 +18,37 @@
 #     last modified: 14/11 2019 20:33
 # ===============================================================
 
-TO_TOP_DIR := ../..
+ifndef TOP_DIR
+TOP_DIR 	:= $(shell pwd)/../..
+endif
 
-include $(TO_TOP_DIR)/configs/com_var_def.mk
+CONFIGS_DIR := $(TOP_DIR)/configs
+
+include $(CONFIGS_DIR)/common_var.mk
 
 TARGET           		:= zlib
+TARGET_PATH 			:= $(PROJECT_DIR)/$(TARGET)
 TARGET_VERSION 			:= 1.2.11
 TARGET_DIR 				:= $(TARGET)-$(TARGET_VERSION)
-TARGET_CONFIG    		:= $(BUILD_DIR)/$(TARGET_DIR)-config-ok
+TARGET_CONFIG    		:= $(TARGET_PATH)/$(BUILD_DIR)/$(TARGET_DIR)-config-ok
 TARGET_DOWNLOAD_PATH 	:= https://nchc.dl.sourceforge.net/project/libpng/zlib/$(TARGET_VERSION)
 TAR_CMD 				:= tar -xzvf
 TAR_SUFFIX 				:= tar.gz
 
 all: $(TARGET_DIR)-make
 
-include $(TO_TOP_DIR)/configs/com_target_def.mk
-
-$(TARGET_DIR)-make: $(TARGET_DIR)-config
-	$(call echo-make-msg, $(@:-make=))
-	cd $(BUILD_DIR)/$(@:-make=) && $(MAKE) && make install
+include $(CONFIGS_DIR)/common_sub_target.mk
 
 $(TARGET_DIR)-config: $(TARGET_DIR)-src
 ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
 	cd $(BUILD_DIR)/$(@:-config=) && \
 		export CC=$(CC) export CXX=$(CXX) && \
-		$(ROOT)/$(@:-config=)/configure \
+		$(TARGET_PATH)/$(@:-config=)/configure \
 		--prefix=$(PREFIX_PATH)
 
 	$(TOUCH) $(TARGET_CONFIG)
 endif
-
-list:
-	$(ECHO) "\tmake project=zlib \t\t- compile zlib."
 
 .PHONY: all clean distclean list
 
