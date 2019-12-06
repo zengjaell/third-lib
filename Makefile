@@ -25,11 +25,10 @@ CONFIGS_DIR := $(TOP_DIR)/configs
 
 include $(CONFIGS_DIR)/common_var.mk
 
-# makefile_list := $(wildcard ./project/*/Makefile)
-# makefile_list += $(wildcard ./project/gdb/*/Makefile)
+makefile_list := $(wildcard ./project/*/Makefile)
+makefile_list += $(wildcard ./project/gdb/*/Makefile)
 # makefile_list += $(wildcard ./project/lua/*/Makefile)
 
-makefile_list := $(wildcard $(PROJECT_DIR)/zlib/Makefile)
 export makefile_list
 
 all: 

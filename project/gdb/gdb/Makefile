@@ -18,26 +18,26 @@
 #     last modified: 18/11 2019 14:07
 # ===============================================================
 
-TO_TOP_DIR := ../../..
+ifndef TOP_DIR
+TOP_DIR 	:= $(shell pwd)/../../..
+endif
 
-include $(TO_TOP_DIR)/configs/com_var_def.mk
-
-TARGET           		:= gdb
+PROJECT_TARGET  		:= gdb
 TARGET_VERSION 			:= 8.2.1
-TARGET_DIR 				:= $(TARGET)-$(TARGET_VERSION)
-TARGET_CONFIG    		:= $(BUILD_DIR)/$(TARGET_DIR)-config-ok
 TARGET_DOWNLOAD_PATH 	:= http://ftp.gnu.org/gnu/gdb
-TAR_CMD 				:= tar -xzvf
-TAR_SUFFIX 				:= tar.gz
-PREFIX_PATH 			:= $(ROOT)/../../$(INSTALL_DIR)
+
+PREFIX_PATH 			:= $(TARGET_PATH)/../../$(INSTALL_DIR)
+
+CONFIGS_DIR := $(TOP_DIR)/configs
+
+include $(CONFIGS_DIR)/common_var.mk
+include $(UTILS_DIR)/sub_dir.mk
+
+TARGET_PATH 			:= $(PROJECT_DIR)/$(PROJECT_TARGET)/$(PROJECT_TARGET)
 
 all: $(TARGET_DIR)-make
 
-include $(TO_TOP_DIR)/configs/com_target_def.mk
-
-$(TARGET_DIR)-make: $(TARGET_DIR)-config
-	$(call echo-make-msg, $(@:-make=))
-	cd $(BUILD_DIR)/$(@:-make=) && $(MAKE) && make install
+include $(CONFIGS_DIR)/common_sub_target.mk
 
 # --enable-shared    			动态编译
 # --without-x     				取消x windows 支持
@@ -51,7 +51,7 @@ $(TARGET_DIR)-config: $(TARGET_DIR)-src
 ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
 	cd $(BUILD_DIR)/$(@:-config=) && \
-		$(ROOT)/$(@:-config=)/configure \
+		$(TARGET_PATH)/$(@:-config=)/configure \
 		CC=$(GCC) CXX=$(CXX) AR=$(AR) LD=$(LD) \
 		LDFLAGS="-L$(PREFIX_PATH)/lib" \
 		CPPFLAGS="-I$(PREFIX_PATH)/include -pipe" \
@@ -61,19 +61,10 @@ ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 		--host=$(HOST) \
 		--target=$(HOST)
 
-	cp ./remote.c $(ROOT)/$(@:-config=)/gdb/remote.c
+	cp ./remote.c $(TARGET_PATH)/$(@:-config=)/gdb/remote.c
 
 	$(TOUCH) $(TARGET_CONFIG)
 endif
-
-clean:
-	$(RM) $(BUILD_DIR)
-
-distclean: clean
-	$(RM) $(TARGET_DIR)
-
-list:
-	$(ECHO) "\tmake project=gdb \t\t- compile gdb."
 
 .PHONY: all clean distclean list
 

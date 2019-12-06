@@ -18,10 +18,6 @@
 #     last modified: 15/11 2019 11:21
 # ===============================================================
 
-# 配置需要编译的平台，如果没有指定，默认为x86_64
-# 可选的平台有: x86_64, r328, rk3308, unione, x1830
-PLATFORM := r328
-
 ifndef $(UTILS_DIR)
 UTILS_DIR := $(TOP_DIR)/configs/utils
 endif

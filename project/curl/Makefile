@@ -18,17 +18,19 @@
 #     last modified: 18/11 2019 14:19
 # ===============================================================
 
-TO_TOP_DIR := ../..
+ifndef TOP_DIR
+TOP_DIR 	:= $(shell pwd)/../..
+endif
 
-include $(TO_TOP_DIR)/configs/com_var_def.mk
-
-TARGET           		:= curl
+PROJECT_TARGET          := curl
 TARGET_VERSION 			:= 7.64.1
-TARGET_DIR 				:= $(TARGET)-$(TARGET_VERSION)
-TARGET_CONFIG    		:= $(BUILD_DIR)/$(TARGET_DIR)-config-ok
 TARGET_DOWNLOAD_PATH 	:= https://curl.haxx.se/download
-TAR_CMD    	       		:= tar -xzvf
-TAR_SUFFIX 	       		:= tar.gz
+
+CONFIGS_DIR := $(TOP_DIR)/configs
+
+include $(CONFIGS_DIR)/common_var.mk
+include $(UTILS_DIR)/sub_dir.mk
+
 ZLIB_DIR           		:= $(PREFIX_PATH)/include/zlib.h
 OPENSSL_DIR        		:= $(PREFIX_PATH)/include/openssl
 
@@ -46,17 +48,13 @@ ifneq ($(OPENSSL_DIR), $(wildcard $(OPENSSL_DIR)))
 	exit 1
 endif
 
-include $(TO_TOP_DIR)/configs/com_target_def.mk
-
-$(TARGET_DIR)-make: $(TARGET_DIR)-config
-	$(call echo-make-msg, $(@:-make=))
-	cd $(BUILD_DIR)/$(@:-make=) && $(MAKE) && make install
+include $(CONFIGS_DIR)/common_sub_target.mk
 
 $(TARGET_DIR)-config: $(TARGET_DIR)-src
 ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
 	cd $(BUILD_DIR)/$(@:-config=) && \
-		$(ROOT)/$(@:-config=)/configure \
+		$(TARGET_PATH)/$(@:-config=)/configure \
 		CC=$(GCC) CXX=$(CXX) \
 		CPPFLAGS="-pipe" \
 		--program-prefix=$(PROGRAM_PREFIX) \
@@ -68,15 +66,6 @@ ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 
 	$(TOUCH) $(TARGET_CONFIG)
 endif
-
-clean:
-	$(RM) $(BUILD_DIR)
-
-distclean: clean
-	$(RM) $(TARGET_DIR)
-
-list:
-	$(ECHO) "\tmake project=curl \t\t- compile zlib."
 
 .PHONY: all clean distclean list
 

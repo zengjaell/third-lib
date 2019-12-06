@@ -18,32 +18,32 @@
 #     last modified: 18/11 2019 11:40
 # ===============================================================
 
-TO_TOP_DIR := ../..
+ifndef TOP_DIR
+TOP_DIR 	:= $(shell pwd)/../..
+endif
 
-include $(TO_TOP_DIR)/configs/com_var_def.mk
-
-TARGET           		:= valgrind
+PROJECT_TARGET         	:= valgrind
 TARGET_VERSION 			:= 3.14.0
-TARGET_DIR 				:= $(TARGET)-$(TARGET_VERSION)
-TARGET_CONFIG    		:= $(BUILD_DIR)/$(TARGET_DIR)-config-ok
 TARGET_DOWNLOAD_PATH 	:= http://www.valgrind.org/downloads
 TAR_CMD 				:= tar -xjvf
 TAR_SUFFIX 				:= tar.bz2
 
+CONFIGS_DIR := $(TOP_DIR)/configs
+
+include $(CONFIGS_DIR)/common_var.mk
+include $(UTILS_DIR)/sub_dir.mk
+
+
 all: $(TARGET_DIR)-make
 
-include $(TO_TOP_DIR)/configs/com_target_def.mk
-
-$(TARGET_DIR)-make: $(TARGET_DIR)-config
-	$(call echo-make-msg, $(@:-make=))
-	cd $(BUILD_DIR)/$(@:-make=) && $(MAKE) && make install
+include $(CONFIGS_DIR)/common_sub_target.mk
 
 $(TARGET_DIR)-config: $(TARGET_DIR)-src
 ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
 	cd $(@:-config=) && ./autogen.sh
 	cd $(BUILD_DIR)/$(@:-config=) && \
-		$(ROOT)/$(@:-config=)/configure \
+		$(TARGET_PATH)/$(@:-config=)/configure \
 		CC=$(GCC) CXX=$(CXX) \
 		--program-prefix=$(PROGRAM_PREFIX) \
 		--prefix=$(PREFIX_PATH) \
@@ -59,15 +59,6 @@ ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 
 	$(TOUCH) $(TARGET_CONFIG)
 endif
-
-clean:
-	$(RM) $(BUILD_DIR)
-
-distclean: clean
-	$(RM) $(TARGET_DIR)
-
-list:
-	$(ECHO) "\tmake project=valgrind \t\t- compile valgrind."
 
 .PHONY: all clean distclean debug
 

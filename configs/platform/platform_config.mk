@@ -18,7 +18,9 @@
 #     last modified: 05/12 2019 16:40
 # ===============================================================
 
-PLATFORM ?= x86_64
+# 配置需要编译的平台
+# 可选的平台有: x86_64, r328, rk3308, unione, x1830
+PLATFORM := r328
 
 # build为编译的平台，host为运行的平台，target为调试的平台
 #
@@ -40,7 +42,7 @@ else ifeq ($(PLATFORM), r328)
 endif
 
 TARGET 			:= $(HOST)
-PROGRAM_PREFIX 	:= $(PLATFORM)
+PROGRAM_PREFIX 	:= $(PLATFORM)-
 
 ifneq ($(PLATFORM), x86_64)
 CROSS_GCC 		:= $(TOOLCHAINS_BIN_DIR)/$(GCC_PREFIX)

@@ -31,17 +31,21 @@ ifneq ($(TARGET_DIR), $(wildcard $(TARGET_DIR)))
 endif
 
 clean:
-	$(ECHO) "    rm $(TARGET)/$(BUILD_DIR)"
+	$(ECHO) "    rm $(PROJECT_TARGET)/$(BUILD_DIR)"
 	$(RM) $(BUILD_DIR)
 
 distclean: clean
 	$(RM) $(TARGET_DIR)
 
 list:
+ifeq ($(PROJECT_TARGET_SERVER), )
 ifneq ($(makefile_list), )
-	$(ECHO) "\tmake project=$(TARGET) \t\t- compile $(TARGET)."
+	$(ECHO) "\tmake project=$(PROJECT_TARGET) \t\t- compile $(PROJECT_TARGET)."
 else
-	$(ECHO) "\tmake \t\t- compile $(TARGET)."
+	$(ECHO) "\tmake \t\t- compile $(PROJECT_TARGET)."
+endif
+else
+	$(ECHO) "\tmake project=$(PROJECT_TARGET_SERVER) \t\t- compile $(PROJECT_TARGET_SERVER)."
 endif
 
 include $(CONFIGS_DIR)/common_target.mk

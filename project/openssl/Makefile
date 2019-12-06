@@ -18,56 +18,52 @@
 #     last modified: 18/11 2019 10:15
 # ===============================================================
 
-TO_TOP_DIR := ../..
+ifndef TOP_DIR
+TOP_DIR 	:= $(shell pwd)/../..
+endif
 
-include $(TO_TOP_DIR)/configs/com_var_def.mk
-
-TARGET           		:= openssl
+PROJECT_TARGET          := openssl
 TARGET_VERSION 			:= 1.1.0g
-TARGET_DIR 				:= $(TARGET)-$(TARGET_VERSION)
-TARGET_CONFIG    		:= $(BUILD_DIR)/$(TARGET_DIR)-config-ok
 TARGET_DOWNLOAD_PATH 	:= https://www.openssl.org/source
-TAR_CMD 				:= tar -xzvf
-TAR_SUFFIX 				:= tar.gz
 
-all: $(TARGET_DIR)-make
+CONFIGS_DIR := $(TOP_DIR)/configs
 
-include $(TO_TOP_DIR)/configs/com_target_def.mk
+include $(CONFIGS_DIR)/common_var.mk
+include $(UTILS_DIR)/sub_dir.mk
 
+all: $(TARGET_DIR)-make_inside
+
+include $(CONFIGS_DIR)/common_sub_target.mk
+
+$(TARGET_DIR)-make_inside: $(TARGET_DIR)-config
+	$(call echo-make-msg, $(@:-make_inside=))
+	cd $(BUILD_DIR)/$(@:-make_inside=) && \
+		$(MAKE) && make install_sw && make install_man_docs
+
+# 编译平台: 
+#     linux-x86_64, linux-armv4
+# no-async					作用是不使用GNU的ucontext库
+# no-asm					在交叉编译过程中不使用汇编代码代码加速编译过程
+# shared 					生成动态连接库
+# –-cross-compile-prefix= 	交叉编译工具
 ifeq ($(HOST)-x, $(BUILD)-x)
-	CONFIG_CONTENT := linux-x86_64
-else
-ifeq ($(HOST)-x, arm-linux-x)
-	CONFIG_CONTENT := linux-armv4 no-asm \
-		--cross-compile-prefix=$(GCC_TYPE)
+CONFIG_CONTENT := linux-x86_64
+else ifeq ($(HOST)-x, arm-linux-x)
+CONFIG_CONTENT := linux-armv4 shared no-asm no-async
+else ifeq ($(HOST)-x, mips-linux-gnu-x)
 endif
-ifeq ($(HOST)-x, mips-linux-gnu-x)
-endif
-endif
-
-$(TARGET_DIR)-make: $(TARGET_DIR)-config
-	$(call echo-make-msg, $(@:-make=))
-	cd $(BUILD_DIR)/$(@:-make=) && $(MAKE) && make install
 
 $(TARGET_DIR)-config: $(TARGET_DIR)-src
 ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
 	cd $(BUILD_DIR)/$(@:-config=) && \
-		$(ROOT)/$(@:-config=)/Configure \
+		$(TARGET_PATH)/$(@:-config=)/Configure \
 		$(CONFIG_CONTENT) \
-		--prefix=$(PREFIX_PATH)
+		--cross-compile-prefix=$(CROSS_GCC) \
+		--prefix=$(PREFIX_PATH) 
 
 	$(TOUCH) $(TARGET_CONFIG)
 endif
-
-clean:
-	$(RM) $(BUILD_DIR)
-
-distclean: clean
-	$(RM) $(TARGET_DIR)
-
-list:
-	$(ECHO) "\tmake project=openssl \t\t- compile openssl."
 
 .PHONY: all clean distclean list
 

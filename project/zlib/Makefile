@@ -22,18 +22,14 @@ ifndef TOP_DIR
 TOP_DIR 	:= $(shell pwd)/../..
 endif
 
+PROJECT_TARGET          := zlib
+TARGET_VERSION 			:= 1.2.11
+TARGET_DOWNLOAD_PATH 	:= https://nchc.dl.sourceforge.net/project/libpng/zlib/$(TARGET_VERSION)
+
 CONFIGS_DIR := $(TOP_DIR)/configs
 
 include $(CONFIGS_DIR)/common_var.mk
-
-TARGET           		:= zlib
-TARGET_PATH 			:= $(PROJECT_DIR)/$(TARGET)
-TARGET_VERSION 			:= 1.2.11
-TARGET_DIR 				:= $(TARGET)-$(TARGET_VERSION)
-TARGET_CONFIG    		:= $(TARGET_PATH)/$(BUILD_DIR)/$(TARGET_DIR)-config-ok
-TARGET_DOWNLOAD_PATH 	:= https://nchc.dl.sourceforge.net/project/libpng/zlib/$(TARGET_VERSION)
-TAR_CMD 				:= tar -xzvf
-TAR_SUFFIX 				:= tar.gz
+include $(UTILS_DIR)/sub_dir.mk
 
 all: $(TARGET_DIR)-make
 
