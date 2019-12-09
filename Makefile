@@ -29,6 +29,7 @@ makefile_list := $(wildcard ./project/*/Makefile)
 makefile_list += $(wildcard ./project/gdb/*/Makefile)
 # makefile_list += $(wildcard ./project/lua/*/Makefile)
 makefile_list += $(wildcard ./project/tcpdump/*/Makefile)
+makefile_list += $(wildcard ./project/ffmpeg/*/Makefile)
 
 export makefile_list
 
