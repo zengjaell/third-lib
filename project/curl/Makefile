@@ -31,17 +31,11 @@ CONFIGS_DIR := $(TOP_DIR)/configs
 include $(CONFIGS_DIR)/common_var.mk
 include $(UTILS_DIR)/sub_dir.mk
 
-ZLIB_DIR           		:= $(PREFIX_PATH)/include/zlib.h
 OPENSSL_DIR        		:= $(PREFIX_PATH)/include/openssl
 
 all: depend_lib $(TARGET_DIR)-make
 
 depend_lib:
-ifneq ($(ZLIB_DIR), $(wildcard $(ZLIB_DIR)))
-	$(ECHO) "\tuse \"make project=zlib\" first to  compile zlib."
-	$(ECHO) ''
-	exit 1
-endif
 ifneq ($(OPENSSL_DIR), $(wildcard $(OPENSSL_DIR)))
 	$(ECHO) "\tuse \"make project=openssl\" first to compile openssl."
 	$(ECHO) ''
@@ -56,12 +50,12 @@ ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 	cd $(BUILD_DIR)/$(@:-config=) && \
 		$(TARGET_PATH)/$(@:-config=)/configure \
 		CC=$(GCC) CXX=$(CXX) \
-		CPPFLAGS="-pipe" \
+		CFLAGS="-pipe" \
 		--program-prefix=$(PROGRAM_PREFIX) \
 		--prefix=$(PREFIX_PATH) \
 		--host=$(HOST) \
 		--build=$(BUILD) \
-		--with-zlib=$(PREFIX_PATH) \
+		--without-zlib \
 		--with-ssl=$(PREFIX_PATH)
 
 	$(TOUCH) $(TARGET_CONFIG)

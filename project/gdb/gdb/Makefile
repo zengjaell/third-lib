@@ -54,7 +54,7 @@ ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 		$(TARGET_PATH)/$(@:-config=)/configure \
 		CC=$(GCC) CXX=$(CXX) AR=$(AR) LD=$(LD) \
 		LDFLAGS="-L$(PREFIX_PATH)/lib" \
-		CPPFLAGS="-I$(PREFIX_PATH)/include -pipe" \
+		CFLAGS="-I$(PREFIX_PATH)/include -pipe" \
 		--program-prefix=$(PROGRAM_PREFIX) \
 		--prefix=$(PREFIX_PATH) \
 		--build=$(BUILD) \

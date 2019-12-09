@@ -41,7 +41,7 @@ ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 	cd $(BUILD_DIR)/$(@:-config=) && \
 		$(TARGET_PATH)/$(@:-config=)/configure \
 		CC=$(GCC) CXX=$(CXX) \
-		CPPFLAGS="-pipe" \
+		CFLAGS="-pipe" \
 		--prefix=$(PREFIX_PATH) \
 		--build=$(BUILD) \
 		--host=$(HOST) \
