@@ -20,6 +20,7 @@
 
 TOOLCHAINS_DIR 		:= /home/uos/data/yzs/ivm/toolchains/arm_328tina
 TOOLCHAINS_BIN_DIR 	:= $(TOOLCHAINS_DIR)/bin
+TOOLCHAINS_INC_DIR 	:= $(TOOLCHAINS_DIR)/include
 GCC_PREFIX 			:= arm-openwrt-linux-
 HOST         		:= arm-linux
 

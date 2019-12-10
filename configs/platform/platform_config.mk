@@ -45,22 +45,22 @@ TARGET 			:= $(HOST)
 PROGRAM_PREFIX 	:= $(PLATFORM)-
 
 ifneq ($(PLATFORM), x86_64)
-CROSS_GCC 		:= $(TOOLCHAINS_BIN_DIR)/$(GCC_PREFIX)
+CROSS_PREFIX 	:= $(TOOLCHAINS_BIN_DIR)/$(GCC_PREFIX)
 endif
 
-AR 	    		:= $(CROSS_GCC)ar
-AS 	    		:= $(CROSS_GCC)as
-LD 	    		:= $(CROSS_GCC)ld
-NM 	    		:= $(CROSS_GCC)nm
-CC 	    		:= $(CROSS_GCC)gcc
-GCC     		:= $(CROSS_GCC)gcc
-CPP     		:= $(CROSS_GCC)cpp
-CXX     		:= $(CROSS_GCC)g++
-FC      		:= $(CROSS_GCC)gfortran
-F77     		:= $(CROSS_GCC)gfortran
-RANLIB  		:= $(CROSS_GCC)ranlib
-READELF 		:= $(CROSS_GCC)readelf
-STRIP   		:= $(CROSS_GCC)strip
-OBJCOPY 		:= $(CROSS_GCC)objcopy
-OBJDUMP 		:= $(CROSS_GCC)objdump
+AR 	    		:= $(CROSS_PREFIX)ar
+AS 	    		:= $(CROSS_PREFIX)as
+LD 	    		:= $(CROSS_PREFIX)ld
+NM 	    		:= $(CROSS_PREFIX)nm
+CC 	    		:= $(CROSS_PREFIX)gcc
+GCC     		:= $(CROSS_PREFIX)gcc
+CPP     		:= $(CROSS_PREFIX)cpp
+CXX     		:= $(CROSS_PREFIX)g++
+FC      		:= $(CROSS_PREFIX)gfortran
+F77     		:= $(CROSS_PREFIX)gfortran
+RANLIB  		:= $(CROSS_PREFIX)ranlib
+READELF 		:= $(CROSS_PREFIX)readelf
+STRIP   		:= $(CROSS_PREFIX)strip
+OBJCOPY 		:= $(CROSS_PREFIX)objcopy
+OBJDUMP 		:= $(CROSS_PREFIX)objdump
 
