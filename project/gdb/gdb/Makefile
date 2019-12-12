@@ -39,6 +39,11 @@ all: $(TARGET_DIR)-make
 
 include $(CONFIGS_DIR)/common_sub_target.mk
 
+ifeq ($(PLATFORM), x86_64)
+else ifeq ($(PLATFORM), r328)
+ADDITIONAL_LDFLAGS=-lc -lgcc_s
+endif
+
 # --enable-shared    			动态编译
 # --without-x     				取消x windows 支持
 # --disable-gdbtk  				取消gdbtk,应该也是图形界面相关的
@@ -53,8 +58,8 @@ ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 	cd $(BUILD_DIR)/$(@:-config=) && \
 		$(TARGET_PATH)/$(@:-config=)/configure \
 		CC=$(GCC) CXX=$(CXX) AR=$(AR) LD=$(LD) \
-		LDFLAGS="-L$(PREFIX_PATH)/lib" \
-		CFLAGS="-I$(PREFIX_PATH)/include -pipe" \
+		LDFLAGS="$(ADDITIONAL_LDFLAGS)" \
+		CFLAGS="-pipe" \
 		--program-prefix=$(PROGRAM_PREFIX) \
 		--prefix=$(PREFIX_PATH) \
 		--build=$(BUILD) \
