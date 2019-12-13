@@ -18,7 +18,7 @@
 #     last modified: 05/12 2019 17:33
 # ===============================================================
 
-TOOLCHAINS_DIR 		:= /home/uos/data/yzs/ivm/toolchains/unione/arm-linux-hf-4.9
+TOOLCHAINS_DIR 		:= /opt/toolchains/unione/arm-linux-hf-4.9
 TOOLCHAINS_BIN_DIR 	:= $(TOOLCHAINS_DIR)/bin
 GCC_PREFIX 			:= arm-linux-
 HOST         		:= arm-linux

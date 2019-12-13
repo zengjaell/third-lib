@@ -18,7 +18,7 @@
 #     last modified: 05/12 2019 17:42
 # ===============================================================
 
-TOOLCHAINS_DIR 		:= /home/uos/data/yzs/ivm/toolchains/rk3308/host
+TOOLCHAINS_DIR 		:= /opt/toolchains/rk3308/host
 TOOLCHAINS_BIN_DIR 	:= $(TOOLCHAINS_DIR)/bin
 GCC_PREFIX 			:= arm-linux-
 HOST         		:= arm-linux
