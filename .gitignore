@@ -21,5 +21,6 @@ project/lua/lua/lua-5.1.5/
 project/tcpdump/libpcap/libpcap-1.9.1/
 project/ffmpeg/fdk-aac/fdk-aac-2.0.1/
 project/ffmpeg/ffmpeg/ffmpeg-4.2.1/
+project/paho.mqtt.embedded-c/paho.mqtt.embedded-c-1.1.0/
 
 

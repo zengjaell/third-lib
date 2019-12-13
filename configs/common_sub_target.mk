@@ -24,10 +24,17 @@ $(TARGET_DIR)-make: $(TARGET_DIR)-config
 
 $(TARGET_DIR)-src:
 ifneq ($(TARGET_DIR), $(wildcard $(TARGET_DIR)))
+ifeq ($(PROJECT_TARGET), paho.mqtt.embedded-c)
+	$(call echo-download-msg, $(@:-src=))
+	$(WGET) $(TARGET_DOWNLOAD_PATH) -O $(PROJECT_TARGET)-$(TARGET_VERSION).$(TAR_SUFFIX)
+	$(TAR_CMD) $(@:-src=).$(TAR_SUFFIX)
+	$(RM) $(@:-src=).$(TAR_SUFFIX)
+else
 	$(call echo-download-msg, $(@:-src=))
 	$(WGET) $(TARGET_DOWNLOAD_PATH)/$(@:-src=).$(TAR_SUFFIX)
 	$(TAR_CMD) $(@:-src=).$(TAR_SUFFIX)
 	$(RM) $(@:-src=).$(TAR_SUFFIX)
+endif
 endif
 
 clean:
@@ -39,13 +46,13 @@ distclean: clean
 
 list:
 ifeq ($(PROJECT_TARGET_SERVER), )
-ifneq ($(makefile_list), )
-	$(ECHO) "\tmake project=$(PROJECT_TARGET) \t\t- compile $(PROJECT_TARGET)."
-else
-	$(ECHO) "\tmake \t\t- compile $(PROJECT_TARGET)."
+ifneq ($(makefile_list), ) # 在顶层显示
+	$(ECHO) "\tmake project=$(PROJECT_TARGET) \t\t\t- compile $(PROJECT_TARGET)."
+else # 在项目层显示
+	$(ECHO) "\tmake \t\t\t- compile $(PROJECT_TARGET)."
 endif
-else
-	$(ECHO) "\tmake project=$(PROJECT_TARGET_SERVER) \t\t- compile $(PROJECT_TARGET_SERVER)."
+else#两级目录显示
+	$(ECHO) "\tmake project=$(PROJECT_TARGET_SERVER) \t\t\t- compile $(PROJECT_TARGET_SERVER)."
 endif
 
 include $(CONFIGS_DIR)/common_target.mk
