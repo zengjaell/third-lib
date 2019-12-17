@@ -59,7 +59,7 @@ ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 	cd $(BUILD_DIR)/$(@:-config=) && \
 		$(TARGET_PATH)/$(@:-config=)/Configure \
 		$(CONFIG_CONTENT) \
-		--cross-compile-prefix=$(CROSS_GCC) \
+		--cross-compile-prefix=$(CROSS_PREFIX) \
 		--prefix=$(PREFIX_PATH) 
 
 	$(TOUCH) $(TARGET_CONFIG)
