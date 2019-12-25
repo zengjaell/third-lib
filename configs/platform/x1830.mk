@@ -23,3 +23,5 @@ TOOLCHAINS_BIN_DIR 	:= $(TOOLCHAINS_DIR)/bin
 GCC_PREFIX 			:= mips-linux-gnu-
 HOST         		:= mips-linux
 
+CFLAGS 				:=
+LDFLAGS 			:=

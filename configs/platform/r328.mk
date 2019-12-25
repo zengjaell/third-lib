@@ -24,5 +24,9 @@ TOOLCHAINS_INC_DIR 	:= $(TOOLCHAINS_DIR)/include
 GCC_PREFIX 			:= arm-openwrt-linux-
 HOST         		:= arm-linux
 
-STAGING_DIR 	:= $(TOOLCHAINS_BIN_DIR)
+CFLAGS 				:=
+LDFLAGS 			:=
+
+STAGING_DIR 		:= $(TOOLCHAINS_BIN_DIR)
 export STAGING_DIR
+
