@@ -6,6 +6,7 @@ project/install/
 project/*/build/
 project/*/*/build/
 
+main
 project/zlib/zlib-1.2.11/
 project/curl/curl-7.64.1/
 project/openssl/openssl-1.1.0g/
