@@ -42,6 +42,7 @@ clean:
 	$(RM) $(BUILD_DIR)
 
 distclean: clean
+	$(ECHO) "    rm $(TARGET_DIR)"
 	$(RM) $(TARGET_DIR)
 
 list:

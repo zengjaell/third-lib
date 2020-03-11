@@ -40,7 +40,8 @@ else
 	$(ECHO) "the instructions are as follows:"
 	$(ECHO) ''
 	$(ECHO) "\tmake list  \t\t- show all projects that can be compiled."
-	$(ECHO) "\tmake clean \t\t- clean all projects."
+	$(ECHO) "\tmake clean \t\t- clean all build projects."
+	$(ECHO) "\tmake distclean\t\t- clean all projects."
 	$(ECHO) ''
 endif
 
@@ -51,9 +52,14 @@ list:
 	$(call run_dir_makefile_make_target, $(makefile_list), list)
 
 clean:
-	$(ECHO) "clean all projects"
+	$(ECHO) "clean all build projects"
 	$(RM) $(PREFIX_PATH)
 	$(call run_dir_makefile_make_target, $(makefile_list), clean)
+
+distclean:
+	$(ECHO) "clean all projects"
+	$(RM) $(PREFIX_PATH)
+	$(call run_dir_makefile_make_target, $(makefile_list), distclean)
 
 debug:
 	echo $(makefile_list)
