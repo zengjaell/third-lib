@@ -24,7 +24,7 @@ $(TARGET_DIR)-make: $(TARGET_DIR)-config
 
 $(TARGET_DIR)-src:
 ifneq ($(TARGET_DIR), $(wildcard $(TARGET_DIR)))
-ifeq ($(PROJECT_TARGET), paho.mqtt.embedded-c)
+ifeq ($(GITHUB_FLAG), yes)
 	$(call echo-download-msg, $(@:-src=))
 	$(WGET) $(TARGET_DOWNLOAD_PATH) -O $(PROJECT_TARGET)-$(TARGET_VERSION).$(TAR_SUFFIX)
 	$(TAR_CMD) $(@:-src=).$(TAR_SUFFIX)

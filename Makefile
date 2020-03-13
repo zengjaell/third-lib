@@ -30,6 +30,7 @@ makefile_list += $(wildcard ./project/gdb/*/Makefile)
 # makefile_list += $(wildcard ./project/lua/*/Makefile)
 makefile_list += $(wildcard ./project/tcpdump/*/Makefile)
 makefile_list += $(wildcard ./project/ffmpeg/*/Makefile)
+makefile_list += $(wildcard ./project/audio/*/Makefile)
 
 export makefile_list
 
