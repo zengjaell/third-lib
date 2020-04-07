@@ -1,7 +1,7 @@
 {
   "name": "3rd-lib",
   "version": "1.0.0",
-  "description": "Cross-compiling third-party libraries ",
+  "description": "Cross-compiling third-party libraries",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/gnsyxiang/3rd-lib#readme",
   "devDependencies": {
-    "cz-conventional-changelog": "^2.1.0"
+    "cz-conventional-changelog": "^3.1.0"
   },
   "config": {
     "commitizen": {
