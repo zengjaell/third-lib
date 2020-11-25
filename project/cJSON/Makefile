@@ -23,7 +23,7 @@ TOP_DIR 	:= $(shell pwd)/../..
 endif
 
 PROJECT_TARGET          := cJSON
-TARGET_VERSION 			:= 1.7.13
+TARGET_VERSION 			:= 1.7.14
 TARGET_DOWNLOAD_PATH 	:= https://codeload.github.com/DaveGamble/$(PROJECT_TARGET)/tar.gz/v$(TARGET_VERSION)
 GITHUB_FLAG 			:= yes
 
