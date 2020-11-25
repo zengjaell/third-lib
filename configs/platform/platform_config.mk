@@ -19,7 +19,7 @@
 # ===============================================================
 
 # 配置需要编译的平台
-# 可选的平台有: x86_64, r328, rk3308, unione, x1830
+# 可选的平台有: x86_64, r328, rk3308, unione, x1830, ats3607d
 PLATFORM := x86_64
 
 # build为编译的平台，host为运行的平台，target为调试的平台
@@ -39,6 +39,8 @@ else ifeq ($(PLATFORM), rk3308)
   include $(PLATFROM_DIR)/rk3308.mk
 else ifeq ($(PLATFORM), r328)
   include $(PLATFROM_DIR)/r328.mk
+else ifeq ($(PLATFORM), ats3607d)
+  include $(PLATFROM_DIR)/ats3607d.mk
 endif
 
 TARGET 			:= $(HOST)

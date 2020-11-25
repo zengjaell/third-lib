@@ -1,11 +1,11 @@
 # ===============================================================
 # 
-# Release under GPLv-3.0.
+# Release under GPL-3.0.
 # 
-# @file    unione.mk
+# @file    ats3607d.mk
 # @brief   
 # @author  gnsyxiang <gnsyxiang@163.com>
-# @date    05/12 2019 17:33
+# @date    25/11 2020 16:32
 # @version v0.0.1
 # 
 # @since    note
@@ -13,14 +13,14 @@
 # 
 #     change log:
 #     NO.     Author              Date            Modified
-#     00      zhenquan.qiu        05/12 2019      create the file
+#     00      zhenquan.qiu        25/11 2020      create the file
 # 
-#     last modified: 05/12 2019 17:33
+#     last modified: 25/11 2020 16:32
 # ===============================================================
 
-TOOLCHAINS_DIR 		:= ~/data/opt/toolchains/unione/arm-linux-hf-4.9
+TOOLCHAINS_DIR 		:= ~/data/opt/gcc-arm-none-eabi-5_4-2016q3
 TOOLCHAINS_BIN_DIR 	:= $(TOOLCHAINS_DIR)/bin
-GCC_PREFIX 			:= arm-linux-
+GCC_PREFIX 			:= arm-none-eabi-
 HOST         		:= arm-linux
 
 CFLAGS 				:=
