@@ -27,12 +27,8 @@ project/tcpdump/tcpdump/tcpdump-4.9.3/
 project/audio/tinyalsa/tinyalsa-1.1.1/
 
 
-project/openssl
-project/cJSON
+project/openssl/
+project/cJSON/
 project/mosquitto/
-
-
-
-
-
-
+project/c-ares-cares/
+project/libwebsockets/
