@@ -38,7 +38,7 @@ include $(CONFIGS_DIR)/common_sub_target.mk
 $(TARGET_DIR)-make_inside: $(TARGET_DIR)-config
 	$(call echo-make-msg, $(@:-make_inside=))
 	cd $(BUILD_DIR)/$(@:-make_inside=) && \
-		$(MAKE) && make install_sw && make install_man_docs
+		$(MAKE) && make install
 
 # 编译平台: 
 #     linux-x86_64, linux-generic32, linux-armv4

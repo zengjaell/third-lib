@@ -32,7 +32,28 @@ CONFIGS_DIR := $(TOP_DIR)/configs
 include $(CONFIGS_DIR)/common_var.mk
 include $(UTILS_DIR)/sub_dir.mk
 
-all: install_depend $(TARGET_DIR)-make_inside
+CARES_FILE           	:= $(PREFIX_PATH)/include/ares.h
+NCURSES_DIR           	:= $(PREFIX_PATH)/include/openssl
+LIBWEBSOCKETS_DIR       := $(PREFIX_PATH)/include/libwebsockets
+
+all: depend_lib install_depend $(TARGET_DIR)-make_inside
+
+depend_lib:
+ifneq ($(NCURSES_DIR), $(wildcard $(NCURSES_DIR)))
+	$(ECHO) "\tuse \"make project=openssl \" first to compile openssl."
+	$(ECHO) ''
+	exit 1
+endif
+ifneq ($(LIBWEBSOCKETS_DIR), $(wildcard $(LIBWEBSOCKETS_DIR)))
+	$(ECHO) "\tuse \"make project=libwebsockets \" first to compile libwebsockets."
+	$(ECHO) ''
+	exit 1
+endif
+ifneq ($(CARES_FILE), $(wildcard $(CARES_FILE)))
+	$(ECHO) "\tuse \"make project=c-ares-cares \" first to compile c-ares-cares."
+	$(ECHO) ''
+	exit 1
+endif
 
 include $(CONFIGS_DIR)/common_sub_target.mk
 
@@ -47,8 +68,7 @@ $(TARGET_DIR)-make_inside: $(TARGET_DIR)-config
 		export CROSS_COMPILE=$(CROSS_PREFIX) \
 		export CPPFLAGS=-I$(PREFIX_PATH)/include \
 		export LDFLAGS="-L$(PREFIX_PATH)/lib -lssl -lcrypto -lcares" \
-		export prefix=$(PREFIX_PATH) \
-		export DESTDIR=$(PREFIX_PATH) && \
+		export prefix=$(PREFIX_PATH) && \
 		$(MAKE) && make uninstall && make install
 
 $(TARGET_DIR)-config: $(TARGET_DIR)-src
@@ -59,6 +79,10 @@ ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 
 	sed -i 's/WITH_SRV:=no/WITH_SRV:=yes/' $(BUILD_DIR)/$(@:-config=)/config.mk
 	sed -i 's/WITH_WEBSOCKETS:=no/WITH_WEBSOCKETS:=yes/' $(BUILD_DIR)/$(@:-config=)/config.mk
+
+	sed -i 's/{DESTDIR}\/etc\/mosquitto/{prefix}\/etc\/mosquitto/g' $(BUILD_DIR)/$(@:-config=)/Makefile
+
+	exit
 	
 	$(TOUCH) $(TARGET_CONFIG)
 endif

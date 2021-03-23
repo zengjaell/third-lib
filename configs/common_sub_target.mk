@@ -22,6 +22,8 @@ $(TARGET_DIR)-make: $(TARGET_DIR)-config
 	$(call echo-make-msg, $(@:-make=))
 	cd $(BUILD_DIR)/$(@:-make=) && $(MAKE) && make install
 
+# cd $(BUILD_DIR)/$(@:-make=) && $(MAKE) VERBOSE=1 && make install
+
 $(TARGET_DIR)-src:
 ifneq ($(TARGET_DIR), $(wildcard $(TARGET_DIR)))
 ifeq ($(GITHUB_FLAG), yes)

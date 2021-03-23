@@ -32,7 +32,16 @@ CONFIGS_DIR := $(TOP_DIR)/configs
 include $(CONFIGS_DIR)/common_var.mk
 include $(UTILS_DIR)/sub_dir.mk
 
-all: install_depend $(TARGET_DIR)-make
+NCURSES_DIR           	:= $(PREFIX_PATH)/include/openssl
+
+all: depend_lib install_depend $(TARGET_DIR)-make
+
+depend_lib:
+ifneq ($(NCURSES_DIR), $(wildcard $(NCURSES_DIR)))
+	$(ECHO) "\tuse \"make project=openssl \" first to  compile openssl."
+	$(ECHO) ''
+	exit 1
+endif
 
 include $(CONFIGS_DIR)/common_sub_target.mk
 
@@ -50,8 +59,8 @@ ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 		-DCMAKE_C_COMPILER=$(CC) \
 		-DCMAKE_CXX_COMPILER=$(CXX) \
 		-DLWS_OPENSSL_INCLUDE_DIRS=$(PREFIX_PATH)/include \
-		-DLWS_OPENSSL_LIBRARIES="$(PREFIX_PATH)/lib/libssl.a;$(PREFIX_PATH)/lib/libcrypto.a"
-	
+		-DLWS_OPENSSL_LIBRARIES="$(PREFIX_PATH)/lib/libssl.so;$(PREFIX_PATH)/lib/libcrypto.so"
+
 	$(TOUCH) $(TARGET_CONFIG)
 endif
 
