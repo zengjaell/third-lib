@@ -31,5 +31,5 @@ USR_BIN			:= /usr/bin/
 USR_LIB 		:= /usr/lib/
 USR_SHR 		:= /usr/share/
 
-PREFIX_PATH 	:= $(PROJECT_DIR)/$(INSTALL_DIR)
+PREFIX_PATH 	:= $(HOME)/data/usr/local
 

@@ -23,7 +23,7 @@ TOP_DIR 	:= $(shell pwd)/../..
 endif
 
 PROJECT_TARGET          := openssl
-TARGET_VERSION 			:= 1.1.0g
+TARGET_VERSION 			:= 1.1.1i
 TARGET_DOWNLOAD_PATH 	:= https://www.openssl.org/source
 
 CONFIGS_DIR := $(TOP_DIR)/configs
@@ -41,7 +41,7 @@ $(TARGET_DIR)-make_inside: $(TARGET_DIR)-config
 		$(MAKE) && make install_sw && make install_man_docs
 
 # 编译平台: 
-#     linux-x86_64, linux-armv4
+#     linux-x86_64, linux-generic32, linux-armv4
 # no-async					作用是不使用GNU的ucontext库
 # no-asm					在交叉编译过程中不使用汇编代码代码加速编译过程
 # shared 					生成动态连接库
@@ -49,7 +49,7 @@ $(TARGET_DIR)-make_inside: $(TARGET_DIR)-config
 ifeq ($(HOST)-x, $(BUILD)-x)
 CONFIG_CONTENT := linux-x86_64
 else ifeq ($(HOST)-x, arm-linux-x)
-CONFIG_CONTENT := linux-armv4 shared no-asm no-async
+CONFIG_CONTENT := linux-generic32 shared no-asm no-async
 else ifeq ($(HOST)-x, mips-linux-gnu-x)
 endif
 
