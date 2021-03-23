@@ -20,7 +20,7 @@
 
 # 配置需要编译的平台
 # 可选的平台有: x86_64, r328, rk3308, unione, x1830, ats3607d hi35xx
-PLATFORM := hi35xx
+PLATFORM := r328
 
 # build为编译的平台，host为运行的平台，target为调试的平台
 #

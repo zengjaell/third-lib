@@ -29,6 +29,7 @@ project/audio/tinyalsa/tinyalsa-1.1.1/
 
 project/openssl
 project/cJSON
+project/mosquitto/
 
 
 
