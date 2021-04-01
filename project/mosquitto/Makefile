@@ -34,6 +34,7 @@ include $(UTILS_DIR)/sub_dir.mk
 
 CARES_FILE           	:= $(PREFIX_PATH)/include/ares.h
 NCURSES_DIR           	:= $(PREFIX_PATH)/include/openssl
+CJSON_DIR           	:= $(PREFIX_PATH)/include/cjson
 LIBWEBSOCKETS_DIR       := $(PREFIX_PATH)/include/libwebsockets
 
 all: depend_lib install_depend $(TARGET_DIR)-make_inside
@@ -51,6 +52,11 @@ ifneq ($(LIBWEBSOCKETS_DIR), $(wildcard $(LIBWEBSOCKETS_DIR)))
 endif
 ifneq ($(CARES_FILE), $(wildcard $(CARES_FILE)))
 	$(ECHO) "\tuse \"make project=c-ares-cares \" first to compile c-ares-cares."
+	$(ECHO) ''
+	exit 1
+endif
+ifneq ($(CJSON_DIR), $(wildcard $(CJSON_DIR)))
+	$(ECHO) "\tuse \"make project=cJSON \" first to compile cJSON."
 	$(ECHO) ''
 	exit 1
 endif
