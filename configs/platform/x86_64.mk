@@ -25,3 +25,5 @@ HOST         		:= $(BUILD)
 
 CFLAGS 				:=
 LDFLAGS 			:=
+
+PREFIX_PATH 		:= $(HOME)/data/usr/local

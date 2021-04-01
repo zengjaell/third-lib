@@ -25,3 +25,5 @@ HOST         		:= mips-linux
 
 CFLAGS 				:=
 LDFLAGS 			:=
+
+PREFIX_PATH 		:= $(HOME)/data/install/x1830

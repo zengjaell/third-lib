@@ -25,3 +25,5 @@ HOST         		:= arm-linux
 
 CFLAGS 				:=
 LDFLAGS 			:=
+
+PREFIX_PATH 		:= $(HOME)/data/install/rk3308

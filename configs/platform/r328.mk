@@ -30,3 +30,4 @@ LDFLAGS 			:=
 STAGING_DIR 		:= $(TOOLCHAINS_BIN_DIR)
 export STAGING_DIR
 
+PREFIX_PATH 		:= $(HOME)/data/install/r328
