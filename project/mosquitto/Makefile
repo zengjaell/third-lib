@@ -73,7 +73,7 @@ $(TARGET_DIR)-make_inside: $(TARGET_DIR)-config
 		export CC=gcc \
 		export CROSS_COMPILE=$(CROSS_PREFIX) \
 		export CPPFLAGS=-I$(PREFIX_PATH)/include \
-		export LDFLAGS="-L$(PREFIX_PATH)/lib -lssl -lcrypto -lcares" \
+		export LDFLAGS="-L$(PREFIX_PATH)/lib -lssl -lcrypto -lcares -lz" \
 		export prefix=$(PREFIX_PATH) && \
 		$(MAKE) && make uninstall && make install
 
@@ -84,6 +84,7 @@ ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 		$(CP) ../../$(@:-config=)/* ./
 
 	sed -i 's/WITH_SRV:=no/WITH_SRV:=yes/' $(BUILD_DIR)/$(@:-config=)/config.mk
+	sed -i 's/WITH_DOCS:=yes/WITH_SRV:=no/' $(BUILD_DIR)/$(@:-config=)/config.mk
 	sed -i 's/WITH_WEBSOCKETS:=no/WITH_WEBSOCKETS:=yes/' $(BUILD_DIR)/$(@:-config=)/config.mk
 
 	sed -i 's/{DESTDIR}\/etc\/mosquitto/{prefix}\/etc\/mosquitto/g' $(BUILD_DIR)/$(@:-config=)/Makefile
