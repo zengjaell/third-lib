@@ -31,7 +31,15 @@ CONFIGS_DIR := $(TOP_DIR)/configs
 include $(CONFIGS_DIR)/common_var.mk
 include $(UTILS_DIR)/sub_dir.mk
 
-all: $(TARGET_DIR)-make_inside
+all: depend_lib $(TARGET_DIR)-make_inside
+
+ZLIB_FILE := $(PREFIX_PATH)/include/zlib.h
+depend_lib:
+ifneq ($(ZLIB_FILE), $(wildcard $(ZLIB_FILE)))
+	$(ECHO) "\tuse \"make project=zlib \" first to compile zlib."
+	$(ECHO) ''
+	exit 1
+endif
 
 include $(CONFIGS_DIR)/common_sub_target.mk
 
@@ -40,16 +48,15 @@ $(TARGET_DIR)-make_inside: $(TARGET_DIR)-config
 	cd $(BUILD_DIR)/$(@:-make_inside=) && \
 		$(MAKE) && make install
 
-# 编译平台: 
-#     linux-x86_64, linux-generic32, linux-armv4
-# no-async					作用是不使用GNU的ucontext库
-# no-asm					在交叉编译过程中不使用汇编代码代码加速编译过程
-# shared 					生成动态连接库
-# –-cross-compile-prefix= 	交叉编译工具
+CONFIG_COM := no-tests \
+	zlib \
+	--with-zlib-include=$(PREFIX_PATH)/include \
+	--with-zlib-lib=$(PREFIX_PATH)/lib
+
 ifeq ($(HOST)-x, $(BUILD)-x)
 CONFIG_CONTENT := linux-x86_64
 else ifeq ($(HOST)-x, arm-linux-x)
-CONFIG_CONTENT := linux-generic32 shared no-asm no-async
+CONFIG_CONTENT := linux-generic32 shared no-async $(CONFIG_COM)
 else ifeq ($(HOST)-x, mips-linux-gnu-x)
 endif
 
@@ -61,6 +68,8 @@ ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 		$(CONFIG_CONTENT) \
 		--cross-compile-prefix=$(CROSS_PREFIX) \
 		--prefix=$(PREFIX_PATH) 
+
+	sed -i 's/^install: install_sw install_ssldirs install_docs/install: install_sw install_ssldirs/' $(BUILD_DIR)/$(@:-config=)/Makefile
 
 	$(TOUCH) $(TARGET_CONFIG)
 endif
