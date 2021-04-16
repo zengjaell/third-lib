@@ -19,8 +19,8 @@
 # ===============================================================
 
 # 配置需要编译的平台
-# 可选的平台有: x86_64, r328, rk3308, unione, x1830, ats3607d hisiv510
-PLATFORM := hisiv510
+# 可选的平台有: x86_64, r328, rk3308, unione, x1830, ats3607d hisiv510 himix200
+PLATFORM := himix200
 
 # build为编译的平台，host为运行的平台，target为调试的平台
 #
@@ -43,6 +43,8 @@ else ifeq ($(PLATFORM), ats3607d)
   include $(PLATFROM_DIR)/ats3607d.mk
 else ifeq ($(PLATFORM), hisiv510)
   include $(PLATFROM_DIR)/hisiv510.mk
+else ifeq ($(PLATFORM), himix200)
+  include $(PLATFROM_DIR)/himix200.mk
 endif
 
 TARGET 			:= $(HOST)
