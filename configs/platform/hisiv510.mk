@@ -2,7 +2,7 @@
 # 
 # Release under GPL-3.0.
 # 
-# @file    hi35xx.mk
+# @file    hisiv510.mk
 # @brief   
 # @author  gnsyxiang <gnsyxiang@163.com>
 # @date    23/03 2021 11:04
@@ -26,4 +26,4 @@ HOST         		:= arm-linux
 CFLAGS 				:=
 LDFLAGS 			:=
 
-PREFIX_PATH 		:= $(HOME)/data/install/hisi
+PREFIX_PATH 		:= $(HOME)/data/install/hisi/hisiv510
