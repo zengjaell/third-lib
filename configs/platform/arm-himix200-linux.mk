@@ -21,7 +21,8 @@
 TOOLCHAINS_DIR 		:= /opt/toolchains/hisi-linux/$(PLATFORM)
 TOOLCHAINS_BIN_DIR 	:= $(TOOLCHAINS_DIR)/bin
 GCC_PREFIX 			:= $(PLATFORM)-
-HOST         		:= arm-linux
+program_prefix 		:= $(PLATFORM)-
+HOST         		:= $(PLATFORM)-gnu
 
 CFLAGS 				:=
 LDFLAGS 			:=
