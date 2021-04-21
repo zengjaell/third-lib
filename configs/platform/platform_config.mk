@@ -19,8 +19,8 @@
 # ===============================================================
 
 # 配置需要编译的平台
-# 可选的平台有: x86_64, r328, rk3308, unione, x1830, ats3607d hisiv510 himix200
-PLATFORM := himix200
+# 可选的平台有: x86_64, r328, rk3308, unione, x1830, ats3607d arm-hisiv510-linux arm-himix200-linux
+PLATFORM := arm-himix200-linux
 
 # build为编译的平台，host为运行的平台，target为调试的平台
 #
@@ -28,6 +28,9 @@ PLATFORM := himix200
 # --host=arm-linux 			指定了生成<可执行文件>运行的平台和系统，运行于ARM平台的linux系统
 # --target=arm-linux 		目标平台是运行于ARM体系结构的linux内核
 BUILD := x86_64-linux-gnu
+
+base_toolchains_path := /opt/toolchains
+base_prefix_path := $(HOME)/data/install
 
 ifeq ($(PLATFORM), x86_64)
   include $(PLATFROM_DIR)/x86_64.mk
@@ -41,10 +44,10 @@ else ifeq ($(PLATFORM), r328)
   include $(PLATFROM_DIR)/r328.mk
 else ifeq ($(PLATFORM), ats3607d)
   include $(PLATFROM_DIR)/ats3607d.mk
-else ifeq ($(PLATFORM), hisiv510)
-  include $(PLATFROM_DIR)/hisiv510.mk
-else ifeq ($(PLATFORM), himix200)
-  include $(PLATFROM_DIR)/himix200.mk
+else ifeq ($(PLATFORM), arm-hisiv510-linux)
+  include $(PLATFROM_DIR)/$(PLATFORM).mk
+else ifeq ($(PLATFORM), arm-himix200-linux)
+  include $(PLATFROM_DIR)/$(PLATFORM).mk
 endif
 
 TARGET 			:= $(HOST)

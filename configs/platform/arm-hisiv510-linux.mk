@@ -1,11 +1,11 @@
 # ===============================================================
 # 
-# Release under GPLv-3.0.
+# Release under GPL-3.0.
 # 
-# @file    himix200.mk
+# @file    hisiv510.mk
 # @brief   
 # @author  gnsyxiang <gnsyxiang@163.com>
-# @date    16/04 2021 15:17
+# @date    23/03 2021 11:04
 # @version v0.0.1
 # 
 # @since    note
@@ -13,9 +13,9 @@
 # 
 #     change log:
 #     NO.     Author              Date            Modified
-#     00      zhenquan.qiu        16/04 2021      create the file
+#     00      zhenquan.qiu        23/03 2021      create the file
 # 
-#     last modified: 16/04 2021 15:17
+#     last modified: 23/03 2021 11:04
 # ===============================================================
 
 TOOLCHAINS_DIR 		:= $(base_toolchains_path)/hisi-linux/$(PLATFORM)
