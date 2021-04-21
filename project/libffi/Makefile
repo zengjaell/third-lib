@@ -23,7 +23,7 @@ TOP_DIR 	:= $(shell pwd)/../..
 endif
 
 PROJECT_TARGET 			:= libffi
-TARGET_VERSION 			:= 3.2.1
+TARGET_VERSION 			:= 3.3
 TARGET_DOWNLOAD_PATH 	:= ftp://sourceware.org/pub/libffi
 
 CONFIGS_DIR := $(TOP_DIR)/configs
@@ -41,7 +41,6 @@ ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 	cd $(BUILD_DIR)/$(@:-config=) && \
 		$(TARGET_PATH)/$(@:-config=)/configure \
 		CC=$(GCC) CXX=$(CXX) \
-		CFLAGS="-pipe" \
 		--prefix=$(PREFIX_PATH) \
 		--build=$(BUILD) \
 		--host=$(HOST) \
