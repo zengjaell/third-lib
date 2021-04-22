@@ -20,7 +20,7 @@
 
 $(TARGET_DIR)-make: $(TARGET_DIR)-config
 	$(call echo-make-msg, $(@:-make=))
-	cd $(BUILD_DIR)/$(@:-make=) && $(MAKE) && make install
+	cd $(BUILD_DIR)/$(@:-make=) && $(MAKE) && make install-strip
 
 # cd $(BUILD_DIR)/$(@:-make=) && $(MAKE) VERBOSE=1 && make install
 
