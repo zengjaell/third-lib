@@ -31,3 +31,4 @@ USR_BIN			:= /usr/bin/
 USR_LIB 		:= /usr/lib/
 USR_SHR 		:= /usr/share/
 
+build_dir_path 	:= $(TOP_DIR)/project/$(PROJECT_TARGET)/build

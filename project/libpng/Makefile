@@ -50,7 +50,7 @@ ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 
 	cd $(BUILD_DIR)/$(@:-config=) && \
 		$(TARGET_PATH)/$(@:-config=)/configure \
-			CC=$(GCC) \
+			CC=$(GCC) CXX=$(CXX) \
 			--prefix=$(PREFIX_PATH) \
 			CPPFLAGS="-I$(PREFIX_PATH)/include" \
 			LDFLAGS="-L$(PREFIX_PATH)/lib" \
