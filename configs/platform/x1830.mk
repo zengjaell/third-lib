@@ -18,12 +18,12 @@
 #     last modified: 05/12 2019 17:40
 # ===============================================================
 
-TOOLCHAINS_DIR 		:= 
-TOOLCHAINS_BIN_DIR 	:= $(TOOLCHAINS_DIR)/bin
-GCC_PREFIX 			:= mips-linux-gnu-
-HOST         		:= mips-linux
+toolchains_path 	:= 
+toolchains_bin_path := $(toolchains_path)/bin
+gcc_prefix 			:= mips-linux-gnu-
+host         		:= mips-linux
 
 CFLAGS 				:=
 LDFLAGS 			:=
 
-PREFIX_PATH 		:= $(HOME)/data/install/x1830
+prefix_path 		:= $(HOME)/data/install/x1830

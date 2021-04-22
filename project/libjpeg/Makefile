@@ -18,45 +18,41 @@
 #     last modified: 20/04 2021 16:23
 # ===============================================================
 
-ifndef TOP_DIR
-TOP_DIR 	:= $(shell pwd)/../..
+ifndef top_dir
+top_dir 	:= $(shell pwd)/../..
 endif
 
-PROJECT_TARGET          := libjpeg
-TARGET_VERSION 			:= 9d
-TARGET_DOWNLOAD_PATH 	:= http://www.ijg.org/files/jpegsrc.v$(TARGET_VERSION).tar.gz
+project_target          := libjpeg
+target_version 			:= 9d
+target_download_path 	:= http://www.ijg.org/files/jpegsrc.v$(target_version).tar.gz
 
-CONFIGS_DIR := $(TOP_DIR)/configs
+include $(top_dir)/configs/common_var.mk
 
-include $(CONFIGS_DIR)/common_var.mk
-include $(UTILS_DIR)/sub_dir.mk
+all: $(target_dir)-strip-make
 
-all: $(TARGET_DIR)-make
+include $(sub_target_path)/common_sub_target.mk
 
-include $(CONFIGS_DIR)/common_sub_target.mk
+$(target_dir)-config: $(target_dir)-jpeg-src
+ifneq ($(target_config), $(wildcard $(target_config)))
+	$(MKDIR) build/$(@:-config=)
 
-$(TARGET_DIR)-config: $(TARGET_DIR)-inside-src
-ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
-	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
-
-	cd $(BUILD_DIR)/$(@:-config=) && \
-		$(TARGET_PATH)/$(@:-config=)/configure \
+	cd build/$(@:-config=) && \
+		$(project_path)/$(@:-config=)/configure \
 			CC=$(GCC) CXX=$(CXX) \
-			--prefix=$(PREFIX_PATH) \
-			--build=$(BUILD) \
-			--host=$(HOST) \
-			--target=$(HOST)
+			--prefix=$(prefix_path) \
+			--build=$(build) \
+			--host=$(host) \
+			--target=$(host)
 
-	$(TOUCH) $(TARGET_CONFIG)
+	$(TOUCH) $(target_config)
 endif
 
-$(TARGET_DIR)-inside-src:
-ifneq ($(TARGET_DIR), $(wildcard $(TARGET_DIR)))
-	$(WGET) $(TARGET_DOWNLOAD_PATH) -O $(PROJECT_TARGET)-$(TARGET_VERSION).$(TAR_SUFFIX)
-	$(MKDIR) $(PROJECT_TARGET)-$(TARGET_VERSION)
-	$(TAR_CMD) $(@:-inside-src=).$(TAR_SUFFIX) -C $(PROJECT_TARGET)-$(TARGET_VERSION) --strip-components 1
-	$(RM) $(@:-inside-src=).$(TAR_SUFFIX)
+$(target_dir)-jpeg-src:
+ifneq ($(target_dir), $(wildcard $(target_dir)))
+	$(WGET) $(target_download_path) -O $(project_target)-$(target_version).tar.gz
+	$(MKDIR) $(project_target)-$(target_version)
+	$(TAR_GZ) $(@:-jpeg-src=).tar.gz -C $(project_target)-$(target_version) --strip-components 1
+	$(RM) $(@:-jpeg-src=).tar.gz
 endif
 
 .PHONY: all clean distclean list
-

@@ -18,20 +18,13 @@
 #     last modified: 14/11 2019 20:18
 # ===============================================================
 
-TOP_DIR := $(shell pwd)
-export TOP_DIR
+top_dir := $(shell pwd)
+export top_dir
 
-CONFIGS_DIR := $(TOP_DIR)/configs
+include $(top_dir)/configs/common_var.mk
 
-include $(CONFIGS_DIR)/common_var.mk
-
+# makefile_list := $(wildcard ./project/zlib/Makefile)
 makefile_list := $(wildcard ./project/*/Makefile)
-makefile_list += $(wildcard ./project/gdb/*/Makefile)
-# makefile_list += $(wildcard ./project/lua/*/Makefile)
-makefile_list += $(wildcard ./project/tcpdump/*/Makefile)
-makefile_list += $(wildcard ./project/ffmpeg/*/Makefile)
-makefile_list += $(wildcard ./project/audio/*/Makefile)
-
 export makefile_list
 
 all: 
@@ -46,7 +39,8 @@ else
 	$(ECHO) ''
 endif
 
-include $(CONFIGS_DIR)/common_target.mk
+include $(sub_target_path)/define_func.mk
+include $(sub_target_path)/common_target.mk
 
 list:
 	$(ECHO) "support compiled projects"
@@ -54,12 +48,12 @@ list:
 
 clean:
 	$(ECHO) "clean all build projects"
-	$(RM) $(PREFIX_PATH)
+	$(RM) $(prefix_path)
 	$(call run_dir_makefile_make_target, $(makefile_list), clean)
 
 distclean:
 	$(ECHO) "clean all projects"
-	$(RM) $(PREFIX_PATH)
+	$(RM) $(prefix_path)
 	$(call run_dir_makefile_make_target, $(makefile_list), distclean)
 
 debug:

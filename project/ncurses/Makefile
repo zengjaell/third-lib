@@ -18,44 +18,46 @@
 #     last modified: 18/11 2019 14:23
 # ===============================================================
 
-ifndef TOP_DIR
-TOP_DIR 	:= $(shell pwd)/../..
+ifndef top_dir
+top_dir 	:= $(shell pwd)/../..
 endif
 
-PROJECT_TARGET         	:= ncurses
-TARGET_VERSION 			:= 6.1
-TARGET_DOWNLOAD_PATH 	:= http://ftp.gnu.org/gnu/ncurses
+project_target         	:= ncurses
+target_version 			:= 6.2
+target_download_path 	:= http://ftp.gnu.org/gnu/ncurses
 
-CONFIGS_DIR := $(TOP_DIR)/configs
+include $(top_dir)/configs/common_var.mk
 
-include $(CONFIGS_DIR)/common_var.mk
-include $(UTILS_DIR)/sub_dir.mk
+all: $(target_dir)-make
 
-all: $(TARGET_DIR)-make
+include $(sub_target_path)/common_sub_target.mk
 
-include $(CONFIGS_DIR)/common_sub_target.mk
+$(target_dir)-config: $(target_dir)-gz-src
+ifneq ($(target_config), $(wildcard $(target_config)))
+	$(MKDIR) build/$(@:-config=)
 
-$(TARGET_DIR)-config: $(TARGET_DIR)-src
-ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
-	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
-	cd $(BUILD_DIR)/$(@:-config=) && \
-		$(TARGET_PATH)/$(@:-config=)/configure \
+	cd build/$(@:-config=) && \
+		$(project_path)/$(@:-config=)/configure \
 		CC=$(GCC) CXX=$(CXX) \
 		CFLAGS="-pipe" \
-		--prefix=$(PREFIX_PATH) \
-		--program-prefix=$(PROGRAM_PREFIX) \
-		--build=$(BUILD) \
-		--host=$(HOST) \
+		--prefix=$(prefix_path) \
+		--program-prefix=$(program_prefix) \
+		--build=$(build) \
+		--host=$(host) \
+		\
+		--enable-pc-files \
+		--with-pkg-config=$(prefix_path)/lib/pkgconfig \
+		--with-shared \
+		\
 		--without-cxx \
 		--without-cxx-binding \
 		--without-ada \
 		--without-manpages \
-		--without-progs \
 		--without-tests \
-		--with-shared
+		--without-progs \
+		--without-debug
 
-	$(TOUCH) $(TARGET_CONFIG)
+	$(TOUCH) $(target_config)
 endif
 
 .PHONY: all clean distclean list
-

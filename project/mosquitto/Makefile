@@ -18,81 +18,48 @@
 #     last modified: 23/03 2021 11:29
 # ===============================================================
 
-ifndef TOP_DIR
-TOP_DIR 	:= $(shell pwd)/../..
+ifndef top_dir
+top_dir 	:= $(shell pwd)/../..
 endif
 
-PROJECT_TARGET 			:= mosquitto
-TARGET_VERSION 			:= 2.0.9
-TARGET_DOWNLOAD_PATH 	:= https://github.com/eclipse/mosquitto/archive/refs/tags/v$(TARGET_VERSION).tar.gz
-GITHUB_FLAG 			:= yes
+project_target 			:= mosquitto
+target_version 			:= 2.0.10
+target_download_path 	:= https://mosquitto.org/files/source
 
-CONFIGS_DIR := $(TOP_DIR)/configs
+include $(top_dir)/configs/common_var.mk
 
-include $(CONFIGS_DIR)/common_var.mk
-include $(UTILS_DIR)/sub_dir.mk
+all: depend_lib $(target_dir)-make_inside
 
-CARES_FILE           	:= $(PREFIX_PATH)/include/ares.h
-NCURSES_DIR           	:= $(PREFIX_PATH)/include/openssl
-CJSON_DIR           	:= $(PREFIX_PATH)/include/cjson
-LIBWEBSOCKETS_DIR       := $(PREFIX_PATH)/include/libwebsockets
+include $(sub_target_path)/common_sub_target.mk
 
-all: depend_lib install_depend $(TARGET_DIR)-make_inside
+depend_lib: check_cjson check_openssl check_cares check_libwebsockets
 
-depend_lib:
-ifneq ($(NCURSES_DIR), $(wildcard $(NCURSES_DIR)))
-	$(ECHO) "\tuse \"make project=openssl \" first to compile openssl."
-	$(ECHO) ''
-	exit 1
-endif
-ifneq ($(LIBWEBSOCKETS_DIR), $(wildcard $(LIBWEBSOCKETS_DIR)))
-	$(ECHO) "\tuse \"make project=libwebsockets \" first to compile libwebsockets."
-	$(ECHO) ''
-	exit 1
-endif
-ifneq ($(CARES_FILE), $(wildcard $(CARES_FILE)))
-	$(ECHO) "\tuse \"make project=c-ares-cares \" first to compile c-ares-cares."
-	$(ECHO) ''
-	exit 1
-endif
-ifneq ($(CJSON_DIR), $(wildcard $(CJSON_DIR)))
-	$(ECHO) "\tuse \"make project=cJSON \" first to compile cJSON."
-	$(ECHO) ''
-	exit 1
-endif
-
-include $(CONFIGS_DIR)/common_sub_target.mk
-
-install_depend:
-	$(ECHO) "$(PREFIX_PATH)/lib"
-	$(MKDIR) "$(PREFIX_PATH)/lib"
-
-$(TARGET_DIR)-make_inside: $(TARGET_DIR)-config
+$(target_dir)-make_inside: $(target_dir)-config
 	$(call echo-make-msg, $(@:-make_inside=))
-	cd $(BUILD_DIR)/$(@:-make_inside=) && \
+	cd build/$(@:-make_inside=) && \
 		export CC=gcc \
-		export CROSS_COMPILE=$(CROSS_PREFIX) \
-		export CPPFLAGS=-I$(PREFIX_PATH)/include \
-		export LDFLAGS="-L$(PREFIX_PATH)/lib -lssl -lcrypto -lcares -lz" \
-		export prefix=$(PREFIX_PATH) && \
-		$(MAKE) && make uninstall && make install
+		export CROSS_COMPILE=$(cross_prefix) \
+		export CPPFLAGS=-I$(prefix_path)/include \
+		export LDFLAGS="-L$(prefix_path)/lib -lssl -lcrypto -lcares -lz" \
+		export prefix=$(prefix_path) && \
+		$(make) && make uninstall && make install
 
-$(TARGET_DIR)-config: $(TARGET_DIR)-src
-ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
-	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
-	cd $(BUILD_DIR)/$(@:-config=) && \
+$(target_dir)-config: $(target_dir)-gz-src
+ifneq ($(target_config), $(wildcard $(target_config)))
+	$(MKDIR) build/$(@:-config=)
+
+	cd build/$(@:-config=) && \
 		$(CP) ../../$(@:-config=)/* ./
 
-	sed -i 's/WITH_SRV:=no/WITH_SRV:=yes/' $(BUILD_DIR)/$(@:-config=)/config.mk
-	sed -i 's/WITH_DOCS:=yes/WITH_SRV:=no/' $(BUILD_DIR)/$(@:-config=)/config.mk
-	sed -i 's/WITH_WEBSOCKETS:=no/WITH_WEBSOCKETS:=yes/' $(BUILD_DIR)/$(@:-config=)/config.mk
+	sed -i 's/WITH_SRV:=no/WITH_SRV:=yes/' build/$(@:-config=)/config.mk
+	sed -i 's/WITH_DOCS:=yes/WITH_SRV:=no/' build/$(@:-config=)/config.mk
+	sed -i 's/WITH_WEBSOCKETS:=no/WITH_WEBSOCKETS:=yes/' build/$(@:-config=)/config.mk
 
-	sed -i 's/{DESTDIR}\/etc\/mosquitto/{prefix}\/etc\/mosquitto/g' $(BUILD_DIR)/$(@:-config=)/Makefile
+	sed -i 's/{DESTDIR}\/etc\/mosquitto/{prefix}\/etc\/mosquitto/g' build/$(@:-config=)/Makefile
 
 	exit
 	
-	$(TOUCH) $(TARGET_CONFIG)
+	$(TOUCH) $(target_config)
 endif
 
-.PHONY: all clean distclean list install_depend
-
+.PHONY: all clean distclean list

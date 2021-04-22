@@ -18,13 +18,13 @@
 #     last modified: 16/04 2021 15:17
 # ===============================================================
 
-TOOLCHAINS_DIR 		:= /opt/toolchains/hisi-linux/$(PLATFORM)
-TOOLCHAINS_BIN_DIR 	:= $(TOOLCHAINS_DIR)/bin
-GCC_PREFIX 			:= $(PLATFORM)-
-program_prefix 		:= $(PLATFORM)-
-HOST         		:= $(PLATFORM)
+toolchains_path 	:= /opt/toolchains/hisi-linux/$(platform)
+toolchains_bin_path := $(toolchains_path)/bin
+gcc_prefix 			:= $(platform)-
+program_prefix 		:= $(platform)-
+host         		:= $(platform)
 
 CFLAGS 				:=
 LDFLAGS 			:=
 
-PREFIX_PATH 		:= $(HOME)/data/install/hisi-linux/$(PLATFORM)
+prefix_path 		:= $(HOME)/data/install/hisi-linux/$(platform)

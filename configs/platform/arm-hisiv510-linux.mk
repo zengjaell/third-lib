@@ -18,12 +18,13 @@
 #     last modified: 23/03 2021 11:04
 # ===============================================================
 
-TOOLCHAINS_DIR 		:= $(base_toolchains_path)/hisi-linux/$(PLATFORM)
-TOOLCHAINS_BIN_DIR 	:= $(TOOLCHAINS_DIR)/bin
-GCC_PREFIX 			:= $(PLATFORM)-
-HOST         		:= arm-linux
+toolchains_path 	:= $(base_toolchains_path)/hisi-linux/$(platform)
+toolchains_bin_path := $(toolchains_path)/bin
+gcc_prefix 			:= $(platform)-
+program_prefix 		:= $(platform)-
+host         		:= $(platform)
 
 CFLAGS 				:=
 LDFLAGS 			:=
 
-PREFIX_PATH 		:= $(base_prefix_path)/hisi-linux/$(PLATFORM)
+prefix_path 		:= $(base_prefix_path)/hisi-linux/$(platform)

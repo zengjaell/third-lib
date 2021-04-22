@@ -18,42 +18,41 @@
 #     last modified: 10/12 2019 14:40
 # ===============================================================
 
-ifndef TOP_DIR
-TOP_DIR 	:= $(shell pwd)/../../..
+ifndef top_dir
+top_dir 	:= $(shell pwd)/../../..
 endif
 
-PROJECT_TARGET_TOP 		:= ffmpeg
-PROJECT_TARGET  		:= ffmpeg
-TARGET_VERSION 			:= 4.2.1
-TARGET_DOWNLOAD_PATH 	:= https://ffmpeg.org/releases
+project_target_TOP 		:= ffmpeg
+project_target  		:= ffmpeg
+target_version 			:= 4.2.1
+target_download_path 	:= https://ffmpeg.org/releases
 
-CONFIGS_DIR := $(TOP_DIR)/configs
+CONFIGS_DIR := $(top_dir)/configs
 
 include $(CONFIGS_DIR)/common_var.mk
-include $(UTILS_DIR)/sub_dir.mk
 
-TARGET_PATH 			:= $(PROJECT_DIR)/$(PROJECT_TARGET_TOP)/$(PROJECT_TARGET)
-PREFIX_PATH 			:= $(TARGET_PATH)/../../$(INSTALL_DIR)
+target_PATH 			:= $(PROJECT_DIR)/$(project_target_TOP)/$(project_target)
+prefix_path 			:= $(target_PATH)/../../$(INSTALL_DIR)
 
-all: $(TARGET_DIR)-make
+all: $(target_dir)-make
 
 include $(CONFIGS_DIR)/common_sub_target.mk
 
 ifeq ($(PLATFORM), x86_64)
 else ifeq ($(PLATFORM), r328)
 CONFIG_LINE := --enable-cross-compile \
-        	   --cross-prefix=$(CROSS_PREFIX) \
+        	   --cross-prefix=$(cross_prefix) \
 			   --target-os=linux \
 			   --arch=arm \
 			   --sysinclude=$(TOOLCHAINS_INC_DIR)
 endif
 
-$(TARGET_DIR)-config: $(TARGET_DIR)-src
-ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
-	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
-	cd $(BUILD_DIR)/$(@:-config=) && \
-		$(TARGET_PATH)/$(@:-config=)/configure \
-		--prefix=$(PREFIX_PATH) \
+$(target_dir)-config: $(target_dir)-gz-src
+ifneq ($(target_config), $(wildcard $(target_config)))
+	$(MKDIR) $(build_DIR)/$(@:-config=)
+	cd $(build_DIR)/$(@:-config=) && \
+		$(target_PATH)/$(@:-config=)/configure \
+		--prefix=$(prefix_path) \
         --enable-shared \
         --disable-static \
 		$(CONFIG_LINE) \
@@ -78,10 +77,10 @@ ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
         --disable-decoder=aac_fixed \
         --enable-decoder=libfdk_aac \
         --enable-libfdk-aac \
-        --extra-cflags="-Os -I$(PREFIX_PATH)/include" \
-        --extra-ldflags="-L$(PREFIX_PATH)/lib"
+        --extra-cflags="-Os -I$(prefix_path)/include" \
+        --extra-ldflags="-L$(prefix_path)/lib"
 
-	$(TOUCH) $(TARGET_CONFIG)
+	$(TOUCH) $(target_config)
 endif
 
 .PHONY: all clean distclean list
@@ -382,10 +381,10 @@ endif
 #  --pkg-config-flags=FLAGS pass additional flags to pkgconf []
 #  --ranlib=RANLIB          use ranlib RANLIB [ranlib]
 #  --doxygen=DOXYGEN        use DOXYGEN to generate API doc [doxygen]
-#  --host-cc=HOSTCC         use host C compiler HOSTCC
+#  --host-cc=hostCC         use host C compiler hostCC
 #  --host-cflags=HCFLAGS    use HCFLAGS when compiling for host
 #  --host-cppflags=HCPPFLAGS use HCPPFLAGS when compiling for host
-#  --host-ld=HOSTLD         use host linker HOSTLD
+#  --host-ld=hostLD         use host linker hostLD
 #  --host-ldflags=HLDFLAGS  use HLDFLAGS when linking for host
 #  --host-extralibs=HLIBS   use libs HLIBS when linking for host
 #  --host-os=OS             compiler host OS []

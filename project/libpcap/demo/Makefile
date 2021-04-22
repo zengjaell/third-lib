@@ -17,18 +17,17 @@
 # 
 #     last modified: 25/12 2019 13:49
 # ===============================================================
-ifndef TOP_DIR
-TOP_DIR 	:= $(shell pwd)/../../..
+ifndef top_dir
+top_dir 	:= $(shell pwd)/../../..
 endif
 
-CONFIGS_DIR := $(TOP_DIR)/configs
+CONFIGS_DIR := $(top_dir)/configs
 
 include $(CONFIGS_DIR)/common_var.mk
-include $(UTILS_DIR)/sub_dir.mk
 
-CFLAGS 	+= -I$(PREFIX_PATH)/include \
+CFLAGS 	+= -I$(prefix_path)/include \
 		   -I.  -std=gnu99
-LDFLAGS += -L$(PREFIX_PATH)/lib -lpcap \
+LDFLAGS += -L$(prefix_path)/lib -lpcap \
 		   -L.
 
 all:

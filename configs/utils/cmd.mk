@@ -26,9 +26,5 @@ ECHO 			:= echo
 WGET   			:= wget
 LN 				:= ln -sf
 
-GIT_CLONE  		:= git clone
-GIT_CO 	   		:= git checkout -b
-
-ADB_PUSH   		:= adb push
-ADB_SHELL  		:= adb shell
-
+TAR_BZ2 		?= tar -xjvf
+TAR_GZ 			?= tar -xzvf

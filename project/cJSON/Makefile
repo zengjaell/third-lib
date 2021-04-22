@@ -18,39 +18,35 @@
 #     last modified: 07/04 2020 09:49
 # ===============================================================
 
-ifndef TOP_DIR
-TOP_DIR 	:= $(shell pwd)/../..
+ifndef top_dir
+top_dir 	:= $(shell pwd)/../..
 endif
 
-PROJECT_TARGET          := cJSON
-TARGET_VERSION 			:= 1.7.14
-TARGET_DOWNLOAD_PATH 	:= https://codeload.github.com/DaveGamble/$(PROJECT_TARGET)/tar.gz/v$(TARGET_VERSION)
-GITHUB_FLAG 			:= yes
+project_target          := cJSON
+target_version 			:= 1.7.14
+target_download_path 	:= https://archive.fastgit.org/DaveGamble/cJSON/archive/refs/tags/v$(target_version).tar.gz
 
-CONFIGS_DIR := $(TOP_DIR)/configs
+include $(top_dir)/configs/common_var.mk
 
-include $(CONFIGS_DIR)/common_var.mk
-include $(UTILS_DIR)/sub_dir.mk
+all: $(target_dir)-make_inside
 
-all: $(TARGET_DIR)-make_inside
+include $(sub_target_path)/common_sub_target.mk
 
-include $(CONFIGS_DIR)/common_sub_target.mk
-
-$(TARGET_DIR)-make_inside: $(TARGET_DIR)-config
+$(target_dir)-make_inside: $(target_dir)-config
 	$(call echo-make-msg, $(@:-make_inside=))
-	cd $(BUILD_DIR)/$(@:-make_inside=) && \
-		export CC="$(GCC) -std=c89" export PREFIX=$(PREFIX_PATH) && \
-		$(MAKE1) && make install
+	cd build/$(@:-make_inside=) && \
+		export CC="$(GCC) -std=c89" export PREFIX=$(prefix_path) && \
+		$(make) && make install
 
-$(TARGET_DIR)-config: $(TARGET_DIR)-src
-ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
-	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
-	cd $(BUILD_DIR)/$(@:-config=) && \
+$(target_dir)-config: $(target_dir)-rename-gz-src
+ifneq ($(target_config), $(wildcard $(target_config)))
+	$(MKDIR) build/$(@:-config=)
+
+	cd build/$(@:-config=) && \
 		$(CP) ../../$(@:-config=)/* ./
-	cd $(BUILD_DIR)/$(@:-config=) && sed -i 's/CC = gcc -std=c89/CC ?= gcc -std=c89/g' Makefile
+	cd build/$(@:-config=) && sed -i 's/CC = gcc -std=c89/CC ?= gcc -std=c89/g' Makefile
 
-	$(TOUCH) $(TARGET_CONFIG)
+	$(TOUCH) $(target_config)
 endif
 
 .PHONY: all clean distclean list
-

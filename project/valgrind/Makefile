@@ -18,37 +18,37 @@
 #     last modified: 18/11 2019 11:40
 # ===============================================================
 
-ifndef TOP_DIR
-TOP_DIR 	:= $(shell pwd)/../..
+ifndef top_dir
+top_dir 	:= $(shell pwd)/../..
 endif
 
-PROJECT_TARGET         	:= valgrind
-TARGET_VERSION 			:= 3.14.0
-TARGET_DOWNLOAD_PATH 	:= http://www.valgrind.org/downloads
-TAR_CMD 				:= tar -xjvf
-TAR_SUFFIX 				:= tar.bz2
+project_target         	:= valgrind
+target_version 			:= 3.17.0
+target_download_path 	:= https://sourceware.org/pub/valgrind
 
-CONFIGS_DIR := $(TOP_DIR)/configs
+include $(top_dir)/configs/common_var.mk
 
-include $(CONFIGS_DIR)/common_var.mk
-include $(UTILS_DIR)/sub_dir.mk
+all: $(target_dir)-make
 
+include $(sub_target_path)/common_sub_target.mk
 
-all: $(TARGET_DIR)-make
+$(target_dir)-config: $(target_dir)-bz2-src
+ifneq ($(target_config), $(wildcard $(target_config)))
+	$(MKDIR) build/$(@:-config=)
 
-include $(CONFIGS_DIR)/common_sub_target.mk
-
-$(TARGET_DIR)-config: $(TARGET_DIR)-src
-ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
-	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
 	cd $(@:-config=) && ./autogen.sh
-	cd $(BUILD_DIR)/$(@:-config=) && \
-		$(TARGET_PATH)/$(@:-config=)/configure \
+	cd $(@:-config=) && \
+		sed 's/armv7\*)/armv7\*|arm\*)/g' ./configure > ./configure-bak && \
+		chmod +x ./configure-bak
+
+	cd build/$(@:-config=) && \
+		$(project_path)/$(@:-config=)/configure-bak \
 		CC=$(GCC) CXX=$(CXX) \
-		--program-prefix=$(PROGRAM_PREFIX) \
-		--prefix=$(PREFIX_PATH) \
-		--build=$(BUILD) \
-		--host=armv7-linux
+		--program-prefix=$(program_prefix) \
+		--prefix=$(prefix_path) \
+		--build=$(build) \
+		--host=$(host) \
+		--target=$(host)
 
 # 注意：只支持 armV7、armV8两种arm CPU架构。
 # 
@@ -57,8 +57,7 @@ ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
 # 增加目录路径：
 # 	export VALGRIND_LIB=/lib/valgrind
 
-	$(TOUCH) $(TARGET_CONFIG)
+	$(TOUCH) $(target_config)
 endif
 
 .PHONY: all clean distclean debug
-

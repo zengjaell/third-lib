@@ -51,6 +51,6 @@ zlib --with-zlib-include=dir --with-zlib-lib=dir
 * 去掉docs文档安装
 
 ```txt
-sed -i 's/^install: install_sw install_ssldirs install_docs/install: install_sw install_ssldirs/' $(BUILD_DIR)/$(@:-config=)/Makefile
+sed -i 's/^install: install_sw install_ssldirs install_docs/install: install_sw install_ssldirs/' build/$(@:-config=)/Makefile
 ```
 

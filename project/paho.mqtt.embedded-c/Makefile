@@ -18,44 +18,41 @@
 #     last modified: 13/12 2019 15:54
 # ===============================================================
 
-ifndef TOP_DIR
-TOP_DIR 	:= $(shell pwd)/../..
+ifndef top_dir
+top_dir 	:= $(shell pwd)/../..
 endif
 
-PROJECT_TARGET 			:= paho.mqtt.embedded-c
-TARGET_VERSION 			:= 1.1.0
-TARGET_DOWNLOAD_PATH 	:= https://codeload.github.com/eclipse/paho.mqtt.embedded-c/tar.gz/v$(TARGET_VERSION)
+project_target 			:= paho.mqtt.embedded-c
+target_version 			:= 1.1.0
+target_download_path 	:= https://codeload.github.com/eclipse/paho.mqtt.embedded-c/tar.gz/v$(target_version)
 GITHUB_FLAG 			:= yes
 
-CONFIGS_DIR := $(TOP_DIR)/configs
+include $(top_dir)/configs/common_var.mk
 
-include $(CONFIGS_DIR)/common_var.mk
-include $(UTILS_DIR)/sub_dir.mk
+all: install_depend $(target_dir)-make_inside
 
-all: install_depend $(TARGET_DIR)-make_inside
-
-include $(CONFIGS_DIR)/common_sub_target.mk
+include $(sub_target_path)/common_sub_target.mk
 
 install_depend:
-	$(ECHO) "$(PREFIX_PATH)/lib"
-	$(MKDIR) "$(PREFIX_PATH)/lib"
+	$(ECHO) "$(prefix_path)/lib"
+	$(MKDIR) "$(prefix_path)/lib"
 
-$(TARGET_DIR)-make_inside: $(TARGET_DIR)-config
+$(target_dir)-make_inside: $(target_dir)-config
 	$(call echo-make-msg, $(@:-make_inside=))
-	cd $(BUILD_DIR)/$(@:-make_inside=) && \
-		export CC=$(CC) export exec_prefix=$(PREFIX_PATH) && \
-		$(MAKE1) && make uninstall && make install
+	cd build/$(@:-make_inside=) && \
+		export CC=$(CC) export exec_prefix=$(prefix_path) && \
+		$(make) && make uninstall && make install
 
-$(TARGET_DIR)-config: $(TARGET_DIR)-src
-ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
-	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
-	cd $(BUILD_DIR)/$(@:-config=) && \
+$(target_dir)-config: $(target_dir)-gz-src
+ifneq ($(target_config), $(wildcard $(target_config)))
+	$(MKDIR) build/$(@:-config=)
+
+	cd build/$(@:-config=) && \
 		$(CP) ../../$(@:-config=)/* ./
 	
-	sed -i '/\/sbin\/ldconfig $(DESTDIR)${libdir}/d' $(BUILD_DIR)/$(@:-config=)/Makefile
+	sed -i '/\/sbin\/ldconfig $(DESTDIR)${libdir}/d' build/$(@:-config=)/Makefile
 
-	$(TOUCH) $(TARGET_CONFIG)
+	$(TOUCH) $(target_config)
 endif
 
 .PHONY: all clean distclean list install_depend
-

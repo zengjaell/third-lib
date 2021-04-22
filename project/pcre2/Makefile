@@ -18,37 +18,33 @@
 #     last modified: 22/04 2021 13:39
 # ===============================================================
 
-ifndef TOP_DIR
-TOP_DIR 	:= $(shell pwd)/../..
+ifndef top_dir
+top_dir 	:= $(shell pwd)/../..
 endif
 
-PROJECT_TARGET          := pcre2
-TARGET_VERSION 			:= 10.36
-TARGET_DOWNLOAD_PATH 	:= https://udomain.dl.sourceforge.net/project/pcre/$(PROJECT_TARGET)/$(TARGET_VERSION)
+project_target          := pcre2
+target_version 			:= 10.36
+target_download_path 	:= https://udomain.dl.sourceforge.net/project/pcre/$(project_target)/$(target_version)
 
-CONFIGS_DIR := $(TOP_DIR)/configs
+include $(top_dir)/configs/common_var.mk
 
-include $(CONFIGS_DIR)/common_var.mk
-include $(UTILS_DIR)/sub_dir.mk
+all: $(target_dir)-strip-make
 
-all: $(TARGET_DIR)-make
+include $(sub_target_path)/common_sub_target.mk
 
-include $(CONFIGS_DIR)/common_sub_target.mk
+$(target_dir)-config: $(target_dir)-gz-src
+ifneq ($(target_config), $(wildcard $(target_config)))
+	$(MKDIR) build/$(@:-config=)
 
-$(TARGET_DIR)-config: $(TARGET_DIR)-src
-ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
-	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
-
-	cd $(BUILD_DIR)/$(@:-config=) && \
-		$(TARGET_PATH)/$(@:-config=)/configure \
+	cd build/$(@:-config=) && \
+		$(project_path)/$(@:-config=)/configure \
 			CC=$(GCC) CXX=$(CXX) \
-			--prefix=$(PREFIX_PATH) \
-			--build=$(BUILD) \
-			--host=$(HOST) \
-			--target=$(HOST)
+			--prefix=$(prefix_path) \
+			--build=$(build) \
+			--host=$(host) \
+			--target=$(host)
 
-	$(TOUCH) $(TARGET_CONFIG)
+	$(TOUCH) $(target_config)
 endif
 
 .PHONY: all clean distclean list
-

@@ -18,16 +18,16 @@
 #     last modified: 05/12 2019 16:27
 # ===============================================================
 
-TOOLCHAINS_DIR 		:= /opt/toolchains/allwinner/toolchain-sunxi-arm9-glibc/toolchain
-TOOLCHAINS_BIN_DIR 	:= $(TOOLCHAINS_DIR)/bin
-TOOLCHAINS_INC_DIR 	:= $(TOOLCHAINS_DIR)/include
-GCC_PREFIX 			:= arm-openwrt-linux-
-HOST         		:= arm-linux
+toolchains_path 	:= /opt/toolchains/allwinner/toolchain-sunxi-arm9-glibc/toolchain
+toolchains_bin_path := $(toolchains_path)/bin
+TOOLCHAINS_INC_DIR 	:= $(toolchains_path)/include
+gcc_prefix 			:= arm-openwrt-linux-
+host         		:= arm-linux
 
 CFLAGS 				:=
 LDFLAGS 			:=
 
-STAGING_DIR 		:= $(TOOLCHAINS_BIN_DIR)
+STAGING_DIR 		:= $(toolchains_bin_path)
 export STAGING_DIR
 
-PREFIX_PATH 		:= $(HOME)/data/install/r328
+prefix_path 		:= $(HOME)/data/install/r328

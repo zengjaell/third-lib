@@ -18,63 +18,45 @@
 #     last modified: 18/11 2019 11:28
 # ===============================================================
 
-ifndef TOP_DIR
-TOP_DIR 	:= $(shell pwd)/../..
+ifndef top_dir
+top_dir 	:= $(shell pwd)/../..
 endif
 
-PROJECT_TARGET     		:= htop
-TARGET_VERSION 			:= 2.2.0
-TARGET_DOWNLOAD_PATH 	:= http://hisham.hm/htop/releases/$(TARGET_VERSION)
+project_target     		:= htop
+target_version 			:= 2.2.0
+target_download_path 	:= http://hisham.hm/htop/releases/$(target_version)
 
-CONFIGS_DIR := $(TOP_DIR)/configs
+include $(top_dir)/configs/common_var.mk
 
-include $(CONFIGS_DIR)/common_var.mk
-include $(UTILS_DIR)/sub_dir.mk
+all: depend_lib $(target_dir)-make
 
-NCURSES_DIR           	:= $(PREFIX_PATH)/include/ncurses
-libncurses6_so 			:= $(PREFIX_PATH)/lib/libncurses6.so
+include $(sub_target_path)/common_sub_target.mk
 
-all: depend_lib $(TARGET_DIR)-make
+depend_lib: check_ncurses
 
-depend_lib:
-ifneq ($(NCURSES_DIR), $(wildcard $(NCURSES_DIR)))
-	$(ECHO) "\tuse \"make project=ncurses\" first to  compile ncurses."
-	$(ECHO) ''
-	exit 1
-endif
+$(target_dir)-config: $(target_dir)-gz-src
+ifneq ($(target_config), $(wildcard $(target_config)))
+	$(MKDIR) build/$(@:-config=)
 
-include $(CONFIGS_DIR)/common_sub_target.mk
-
-$(TARGET_DIR)-config: $(TARGET_DIR)-src
-ifneq ($(libncurses6_so), $(wildcard $(libncurses6_so)))
-	$(LN) $(PREFIX_PATH)/lib/libncurses.so.6.1 $(libncurses6_so)
-endif
-ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
-	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
 	cd $(@:-config=) && ./autogen.sh
-	cd $(BUILD_DIR)/$(@:-config=) && \
-		$(RM) $(TARGET_PATH)/$(@:-config=)/config.h && \
-		$(TARGET_PATH)/$(@:-config=)/configure \
+
+	cd build/$(@:-config=) && \
+		$(RM) $(project_path)/$(@:-config=)/config.h && \
+		$(project_path)/$(@:-config=)/configure \
+		HTOP_NCURSES_CONFIG_SCRIPT=$(prefix_path)/bin/ncurses6-config \
 		CC=$(GCC) CXX=$(CXX) \
-		LDFLAGS="-L$(PREFIX_PATH)/lib" \
-		CFLAGS="-I$(PREFIX_PATH)/include" \
-		--program-prefix=$(PROGRAM_PREFIX) \
-		--prefix=$(PREFIX_PATH) \
-		--build=$(BUILD) \
-        --host=$(HOST) \
+		PKG_CONFIG_PATH=$(prefix_path)/lib/pkgconfig \
+		--program-prefix=$(program_prefix) \
+		--prefix=$(prefix_path) \
+		--build=$(build) \
+        --host=$(host) \
         --disable-unicode
 
-	$(TOUCH) $(TARGET_CONFIG)
+	$(TOUCH) $(target_config)
 endif
 
 .PHONY: all clean distclean list
 
-## 编译
-#configure: error: missing libraries:  libncurses
-#```
-#ln -s libncurses.so.6.0 libncurses6.so
-#```
-#
 ### 运行
 #
 #### 缺少terminfo环境变量

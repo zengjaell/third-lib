@@ -18,21 +18,19 @@
 #     last modified: 18/11 2019 15:34
 # ===============================================================
 
-TO_TOP_DIR := ../../..
+TO_top_dir := ../../..
 
-include $(TO_TOP_DIR)/configs/com_var_def.mk
+include $(TO_top_dir)/configs/com_var_def.mk
 
-TARGET           		:= lua-cjson
-TARGET_VERSION 			:= 2.1.0
-TARGET_DIR 				:= $(TARGET)-$(TARGET_VERSION)
-TARGET_CONFIG    		:= $(BUILD_DIR)/$(TARGET_DIR)-config-ok
-TARGET_DOWNLOAD_PATH 	:= https://www.kyne.com.au/~mark/software/download
-TAR_CMD 				:= tar -xzvf
-TAR_SUFFIX 				:= tar.gz
-PREFIX_PATH 			:= $(ROOT)/../../$(INSTALL_DIR)
+target           		:= lua-cjson
+target_version 			:= 2.1.0
+target_dir 				:= $(target)-$(target_version)
+target_config    		:= $(build_DIR)/$(target_dir)-config-ok
+target_download_path 	:= https://www.kyne.com.au/~mark/software/download
+prefix_path 			:= $(ROOT)/../../$(INSTALL_DIR)
 LUA_DIR 	       		:= ../../install/include/lua.h
 
-all: depend_lib $(TARGET_DIR)-make
+all: depend_lib $(target_dir)-make
 
 depend_lib:
 ifneq ($(LUA_DIR), $(wildcard $(LUA_DIR)))
@@ -41,36 +39,36 @@ ifneq ($(LUA_DIR), $(wildcard $(LUA_DIR)))
 	exit 1
 endif
 
-include $(TO_TOP_DIR)/configs/com_target_def.mk
+include $(TO_top_dir)/configs/com_target_def.mk
 
-$(TARGET_DIR)-make: $(TARGET_DIR)-config
+$(target_dir)-make: $(target_dir)-config
 	$(call echo-make-msg, $(@:-make=))
-	cd $(@:-make=) && $(MAKE) && make install
+	cd $(@:-make=) && $(make) && make install
 
-$(TARGET_DIR)-config: $(TARGET_DIR)-src
-ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
-	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
-	awk '{sub(/\/usr\/local/, "$(PREFIX_PATH)"); \
+$(target_dir)-config: $(target_dir)-gz-src
+ifneq ($(target_config), $(wildcard $(target_config)))
+	$(MKDIR) $(build_DIR)/$(@:-config=)
+	awk '{sub(/\/usr\/local/, "$(prefix_path)"); \
 		print > "$(@:-config=)/Makefile"};' \
 		$(@:-config=)/Makefile
-ifeq ($(HOST)-x, $(BUILD)-x)
+ifeq ($(host)-x, $(build)-x)
 else
-ifeq ($(HOST)-x, arm-linux-x)
+ifeq ($(host)-x, arm-linux-x)
 	sed -i '/^## Linux/a CC= $$(GCC_PRE)gcc' $(@:-config=)/Makefile
 	sed -i '/^## Linux/a GCC_PRE := $(GCC_PATH)/$(GCC_PRE)' $(@:-config=)/Makefile
 endif
-ifeq ($(HOST)-x, mips-linux-gnu-x)
+ifeq ($(host)-x, mips-linux-gnu-x)
 endif
 endif
 
-	$(TOUCH) $(TARGET_CONFIG)
+	$(TOUCH) $(target_config)
 endif
 
 clean:
-	$(RM) $(BUILD_DIR)
+	$(RM) $(build_DIR)
 
 distclean: clean
-	$(RM) $(TARGET_DIR)
+	$(RM) $(target_dir)
 
 list:
 	$(ECHO) "\tmake project=lua-cjson \t\t- compile lua-cjson."

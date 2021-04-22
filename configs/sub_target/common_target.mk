@@ -27,4 +27,3 @@ slient_targets=err_no_targets
 endif
 
 .SILENT: $(slient_targets)
-

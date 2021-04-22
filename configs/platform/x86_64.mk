@@ -18,12 +18,12 @@
 #     last modified: 05/12 2019 17:31
 # ===============================================================
 
-TOOLCHAINS_DIR 		:=
-TOOLCHAINS_BIN_DIR 	:= $(TOOLCHAINS_DIR)/bin
-GCC_PREFIX 			:=
-HOST         		:= $(BUILD)
+toolchains_path 	:=
+toolchains_bin_path := $(toolchains_path)/bin
+gcc_prefix 			:=
+host         		:= $(build)
 
 CFLAGS 				:=
 LDFLAGS 			:=
 
-PREFIX_PATH 		:= $(HOME)/data/usr/local
+prefix_path 		:= $(HOME)/data/usr/local

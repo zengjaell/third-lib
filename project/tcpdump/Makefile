@@ -5,7 +5,7 @@
 # @file    Makefile
 # @brief   
 # @author  gnsyxiang <gnsyxiang@163.com>
-# @date    20/04 2021 16:23
+# @date    25/12 2019 09:42
 # @version v0.0.1
 # 
 # @since    note
@@ -13,27 +13,26 @@
 # 
 #     change log:
 #     NO.     Author              Date            Modified
-#     00      zhenquan.qiu        20/04 2021      create the file
+#     00      zhenquan.qiu        25/12 2019      create the file
 # 
-#     last modified: 20/04 2021 16:23
+#     last modified: 25/12 2019 09:42
 # ===============================================================
 
 ifndef top_dir
-top_dir 	:= $(shell pwd)/../..
+top_dir := $(shell pwd)/../..
 endif
 
-project_target          := libpng
-target_version 			:= 1.6.37
-target_version_2  		:= 16
-target_download_path 	:= https://nchc.dl.sourceforge.net/project/libpng/libpng$(target_version_2)/$(target_version)
+project_target  		:= tcpdump
+target_version 			:= 4.99.0
+target_download_path 	:= https://www.tcpdump.org/release
 
 include $(top_dir)/configs/common_var.mk
 
-all: depend_lib $(target_dir)-strip-make
+all: depend_lib $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
 
-depend_lib: check_zlib
+depend_lib: check_libpcap
 
 $(target_dir)-config: $(target_dir)-gz-src
 ifneq ($(target_config), $(wildcard $(target_config)))
@@ -41,13 +40,14 @@ ifneq ($(target_config), $(wildcard $(target_config)))
 
 	cd build/$(@:-config=) && \
 		$(project_path)/$(@:-config=)/configure \
-			CC=$(GCC) CXX=$(CXX) \
-			--prefix=$(prefix_path) \
-			CPPFLAGS="-I$(prefix_path)/include" \
-			LDFLAGS="-L$(prefix_path)/lib" \
-			--build=$(build) \
-			--host=$(host) \
-			--target=$(host)
+		CC=$(GCC) CXX=$(CXX) \
+		CFLAGS="-pipe -I$(prefix_path)/include" \
+		LDFLAGS="-L$(prefix_path)/lib" \
+		LIBS="-lpcap" \
+		--prefix=$(prefix_path) \
+		--build=$(build) \
+		--host=$(host) \
+		--target=$(host)
 
 	$(TOUCH) $(target_config)
 endif

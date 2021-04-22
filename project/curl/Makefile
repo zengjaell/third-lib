@@ -18,48 +18,38 @@
 #     last modified: 18/11 2019 14:19
 # ===============================================================
 
-ifndef TOP_DIR
-TOP_DIR 	:= $(shell pwd)/../..
+ifndef top_dir
+top_dir 	:= $(shell pwd)/../..
 endif
 
-PROJECT_TARGET          := curl
-TARGET_VERSION 			:= 7.64.1
-TARGET_DOWNLOAD_PATH 	:= https://curl.haxx.se/download
+project_target          := curl
+target_version 			:= 7.76.1
+target_download_path 	:= https://curl.se/download
 
-CONFIGS_DIR := $(TOP_DIR)/configs
+include $(top_dir)/configs/common_var.mk
 
-include $(CONFIGS_DIR)/common_var.mk
-include $(UTILS_DIR)/sub_dir.mk
+all: depend_lib $(target_dir)-make
 
-OPENSSL_DIR        		:= $(PREFIX_PATH)/include/openssl
+include $(sub_target_path)/common_sub_target.mk
 
-all: depend_lib $(TARGET_DIR)-make
+depend_lib: check_zlib check_openssl
 
-depend_lib:
-ifneq ($(OPENSSL_DIR), $(wildcard $(OPENSSL_DIR)))
-	$(ECHO) "\tuse \"make project=openssl\" first to compile openssl."
-	$(ECHO) ''
-	exit 1
-endif
+$(target_dir)-config: $(target_dir)-gz-src
+ifneq ($(target_config), $(wildcard $(target_config)))
+	$(MKDIR) build/$(@:-config=)
 
-include $(CONFIGS_DIR)/common_sub_target.mk
-
-$(TARGET_DIR)-config: $(TARGET_DIR)-src
-ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
-	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
-	cd $(BUILD_DIR)/$(@:-config=) && \
-		$(TARGET_PATH)/$(@:-config=)/configure \
+	cd build/$(@:-config=) && \
+		$(project_path)/$(@:-config=)/configure \
 		CC=$(GCC) CXX=$(CXX) \
-		CFLAGS="-pipe" \
-		--program-prefix=$(PROGRAM_PREFIX) \
-		--prefix=$(PREFIX_PATH) \
-		--host=$(HOST) \
-		--build=$(BUILD) \
-		--without-zlib \
-		--with-ssl=$(PREFIX_PATH)
+		--program-prefix=$(program_prefix) \
+		--prefix=$(prefix_path) \
+		--host=$(host) \
+		--build=$(build) \
+		\
+		--with-zlib=$(prefix_path) \
+		--with-ssl=$(prefix_path)
 
-	$(TOUCH) $(TARGET_CONFIG)
+	$(TOUCH) $(target_config)
 endif
 
 .PHONY: all clean distclean list
-

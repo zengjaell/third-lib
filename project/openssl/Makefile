@@ -18,61 +18,52 @@
 #     last modified: 18/11 2019 10:15
 # ===============================================================
 
-ifndef TOP_DIR
-TOP_DIR 	:= $(shell pwd)/../..
+ifndef top_dir
+top_dir 	:= $(shell pwd)/../..
 endif
 
-PROJECT_TARGET          := openssl
-TARGET_VERSION 			:= 1.1.1i
-TARGET_DOWNLOAD_PATH 	:= https://www.openssl.org/source
+project_target          := openssl
+target_version 			:= 1.1.1i
+target_download_path 	:= https://www.openssl.org/source
 
-CONFIGS_DIR := $(TOP_DIR)/configs
+include $(top_dir)/configs/common_var.mk
 
-include $(CONFIGS_DIR)/common_var.mk
-include $(UTILS_DIR)/sub_dir.mk
+all: depend_lib $(target_dir)-make
 
-all: depend_lib $(TARGET_DIR)-make_inside
+include $(sub_target_path)/common_sub_target.mk
 
-ZLIB_FILE := $(PREFIX_PATH)/include/zlib.h
-depend_lib:
-ifneq ($(ZLIB_FILE), $(wildcard $(ZLIB_FILE)))
-	$(ECHO) "\tuse \"make project=zlib \" first to compile zlib."
-	$(ECHO) ''
-	exit 1
-endif
-
-include $(CONFIGS_DIR)/common_sub_target.mk
-
-$(TARGET_DIR)-make_inside: $(TARGET_DIR)-config
-	$(call echo-make-msg, $(@:-make_inside=))
-	cd $(BUILD_DIR)/$(@:-make_inside=) && \
-		$(MAKE) && make install
+depend_lib: check_zlib
 
 CONFIG_COM := no-tests \
 	zlib \
-	--with-zlib-include=$(PREFIX_PATH)/include \
-	--with-zlib-lib=$(PREFIX_PATH)/lib
+	--with-zlib-include=$(prefix_path)/include \
+	--with-zlib-lib=$(prefix_path)/lib
 
-ifeq ($(HOST)-x, $(BUILD)-x)
-CONFIG_CONTENT := linux-x86_64
-else ifeq ($(HOST)-x, arm-linux-x)
-CONFIG_CONTENT := linux-generic32 shared no-async $(CONFIG_COM)
-else ifeq ($(HOST)-x, mips-linux-gnu-x)
-endif
+$(target_dir)-config: $(target_dir)-gz-src
+ifneq ($(target_config), $(wildcard $(target_config)))
+	$(MKDIR) build/$(@:-config=)
 
-$(TARGET_DIR)-config: $(TARGET_DIR)-src
-ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
-	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
-	cd $(BUILD_DIR)/$(@:-config=) && \
-		$(TARGET_PATH)/$(@:-config=)/Configure \
-		$(CONFIG_CONTENT) \
-		--cross-compile-prefix=$(CROSS_PREFIX) \
-		--prefix=$(PREFIX_PATH) 
+	case $(host) in 											\
+	    x86*) 													\
+			CONFIG_CONTENT= 									\
+			cd build/$(@:-config=) &&  					\
+				$(project_path)/$(@:-config=)/Configure 			\
+				linux-x86_64 $(CONFIG_COM) 						\
+				--cross-compile-prefix=$(cross_prefix) 			\
+				--prefix=$(prefix_path) 						\
+	        ;; 													\
+	    arm*) 													\
+			cd build/$(@:-config=) && 					\
+				$(project_path)/$(@:-config=)/Configure 			\
+				linux-generic32 shared no-async $(CONFIG_COM) 	\
+				--cross-compile-prefix=$(cross_prefix) 			\
+				--prefix=$(prefix_path) 						\
+	        ;; 													\
+	esac
 
-	sed -i 's/^install: install_sw install_ssldirs install_docs/install: install_sw install_ssldirs/' $(BUILD_DIR)/$(@:-config=)/Makefile
+	sed -i 's/^install: install_sw install_ssldirs install_docs/install: install_sw install_ssldirs/' build/$(@:-config=)/Makefile
 
-	$(TOUCH) $(TARGET_CONFIG)
+	$(TOUCH) $(target_config)
 endif
 
 .PHONY: all clean distclean list
-

@@ -18,44 +18,41 @@
 #     last modified: 21/04 2021 17:01
 # ===============================================================
 
-ifndef TOP_DIR
-TOP_DIR 	:= $(shell pwd)/../..
+ifndef top_dir
+top_dir 	:= $(shell pwd)/../..
 endif
 
-PROJECT_TARGET          := pkg-config
-TARGET_VERSION 			:= 0.29.2
-TARGET_DOWNLOAD_PATH 	:= https://pkgconfig.freedesktop.org/releases
+project_target          := pkg-config
+target_version 			:= 0.29.2
+target_download_path 	:= https://pkgconfig.freedesktop.org/releases
 
-CONFIGS_DIR := $(TOP_DIR)/configs
+include $(top_dir)/configs/common_var.mk
 
-include $(CONFIGS_DIR)/common_var.mk
-include $(UTILS_DIR)/sub_dir.mk
+all: $(target_dir)-strip-make
 
-all: $(TARGET_DIR)-make
+include $(sub_target_path)/common_sub_target.mk
 
-include $(CONFIGS_DIR)/common_sub_target.mk
-
-$(TARGET_DIR)-config: $(TARGET_DIR)-src
-ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
-	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
+$(target_dir)-config: $(target_dir)-gz-src
+ifneq ($(target_config), $(wildcard $(target_config)))
+	$(MKDIR) build/$(@:-config=)
 
 	# https://blog.csdn.net/hexf9632/article/details/102625696
 	# 编译glib出现的问题，加了下面的echo语句和-C选项
-	cd $(BUILD_DIR)/$(@:-config=) && \
+	cd build/$(@:-config=) && \
 		echo "glib_cv_stack_grows=yes" 			 > config.cache && \
 		echo "ac_cv_func_posix_getpwuid_r=yes" 	>> config.cache && \
 		echo "glib_cv_uscore=yes" 				>> config.cache && \
 		echo "ac_cv_func_posix_getgrgid_r=yes" 	>> config.cache && \
-		$(TARGET_PATH)/$(@:-config=)/configure \
+		$(project_path)/$(@:-config=)/configure \
 			CC=$(GCC) CXX=$(CXX) \
 			-C \
 			--with-internal-glib \
-			--prefix=$(PREFIX_PATH) \
-			--build=$(BUILD) \
-			--host=$(HOST) \
-			--target=$(HOST)
+			--prefix=$(prefix_path) \
+			--build=$(build) \
+			--host=$(host) \
+			--target=$(host)
 
-	$(TOUCH) $(TARGET_CONFIG)
+	$(TOUCH) $(target_config)
 endif
 
 .PHONY: all clean distclean list

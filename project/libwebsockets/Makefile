@@ -18,63 +18,43 @@
 #     last modified: 23/03 2021 11:29
 # ===============================================================
 
-ifndef TOP_DIR
-TOP_DIR 	:= $(shell pwd)/../..
+ifndef top_dir
+top_dir 	:= $(shell pwd)/../..
 endif
 
-PROJECT_TARGET 			:= libwebsockets
-TARGET_VERSION 			:= 4.1.6
-TARGET_DOWNLOAD_PATH 	:= https://codeload.github.com/warmcat/libwebsockets/tar.gz/refs/tags/v$(TARGET_VERSION)
-GITHUB_FLAG 			:= yes
+project_target 			:= libwebsockets
+target_version 			:= 4.2.0
+target_download_path 	:= https://archive.fastgit.org/warmcat/libwebsockets/archive/refs/tags/v$(target_version).tar.gz
 
-CONFIGS_DIR := $(TOP_DIR)/configs
+include $(top_dir)/configs/common_var.mk
 
-include $(CONFIGS_DIR)/common_var.mk
-include $(UTILS_DIR)/sub_dir.mk
+all: depend_lib $(target_dir)-make
 
-all: depend_lib install_depend $(TARGET_DIR)-make
+include $(sub_target_path)/common_sub_target.mk
 
-ZLIB_FILE 	:= $(PREFIX_PATH)/include/zlib.h
-NCURSES_DIR := $(PREFIX_PATH)/include/openssl
-depend_lib:
-ifneq ($(ZLIB_FILE), $(wildcard $(ZLIB_FILE)))
-	$(ECHO) "\tuse \"make project=zlib \" first to compile zlib."
-	$(ECHO) ''
-	exit 1
-endif
-ifneq ($(NCURSES_DIR), $(wildcard $(NCURSES_DIR)))
-	$(ECHO) "\tuse \"make project=openssl \" first to  compile openssl."
-	$(ECHO) ''
-	exit 1
-endif
+depend_lib: check_zlib check_openssl
 
-include $(CONFIGS_DIR)/common_sub_target.mk
+$(target_dir)-config: $(target_dir)-rename-gz-src
+ifneq ($(target_config), $(wildcard $(target_config)))
+	$(MKDIR) build/$(@:-config=)
 
-install_depend:
-	$(ECHO) "$(PREFIX_PATH)/lib"
-	$(MKDIR) "$(PREFIX_PATH)/lib"
-
-$(TARGET_DIR)-config: $(TARGET_DIR)-src
-ifneq ($(TARGET_CONFIG), $(wildcard $(TARGET_CONFIG)))
-	$(MKDIR) $(BUILD_DIR)/$(@:-config=)
-	cd $(BUILD_DIR)/$(@:-config=) && \
+	cd build/$(@:-config=) && \
 		cmake \
 		../../$(@:-config=) \
-		-DCMAKE_INSTALL_PREFIX=$(PREFIX_PATH) \
-		-DCMAKE_SYSTEM_NAME=Linux \
-		-DCMAKE_C_COMPILER=$(CC) \
-		-DCMAKE_CXX_COMPILER=$(CXX) \
+		-DCmake_INSTALL_PREFIX=$(prefix_path) \
+		-DCmake_SYSTEM_NAME=Linux \
+		-DCmake_C_COMPILER=$(CC) \
+		-DCmake_CXX_COMPILER=$(CXX) \
 		\
 		-DLWS_WITH_ZLIB=1 \
-		-DLWS_ZLIB_INCLUDE_DIRS=$(PREFIX_PATH)/include \
-		-DLWS_ZLIB_LIBRARIES="$(PREFIX_PATH)/lib/libz.so" \
+		-DLWS_ZLIB_INCLUDE_DIRS=$(prefix_path)/include \
+		-DLWS_ZLIB_LIBRARIES="$(prefix_path)/lib/libz.so" \
 		\
 		-DLWS_WITH_HTTP2=1 \
-		-DLWS_OPENSSL_INCLUDE_DIRS=$(PREFIX_PATH)/include \
-		-DLWS_OPENSSL_LIBRARIES="$(PREFIX_PATH)/lib/libssl.so;$(PREFIX_PATH)/lib/libcrypto.so;"
+		-DLWS_OPENSSL_INCLUDE_DIRS=$(prefix_path)/include \
+		-DLWS_OPENSSL_LIBRARIES="$(prefix_path)/lib/libssl.so;$(prefix_path)/lib/libcrypto.so;"
 
-	$(TOUCH) $(TARGET_CONFIG)
+	$(TOUCH) $(target_config)
 endif
 
-.PHONY: all clean distclean list install_depend
-
+.PHONY: all clean distclean list
