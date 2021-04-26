@@ -33,15 +33,15 @@ all: $(target_dir)-make
 include $(sub_target_path)/common_sub_target.mk
 
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(target_config), $(wildcard $(target_config)))
-	$(MKDIR) build/$(@:-config=)
+ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+	$(MKDIR) $(build_path)/$(@:-config=)
 
-	cd build/$(@:-config=) && \
+	cd $(build_path)/$(@:-config=) && \
 		export CC=$(CC) export CXX=$(CXX) && \
-		$(project_path)/$(@:-config=)/configure \
+		$(src_path)/$(@:-config=)/configure \
 		--prefix=$(prefix_path)
 
-	$(TOUCH) $(target_config)
+	$(TOUCH) $(config_ok_path)
 endif
 
 .PHONY: all clean distclean list

@@ -5,7 +5,7 @@
 # @file    Makefile
 # @brief   
 # @author  gnsyxiang <gnsyxiang@163.com>
-# @date    22/04 2021 13:39
+# @date    09/12 2019 10:45
 # @version v0.0.1
 # 
 # @since    note
@@ -13,22 +13,22 @@
 # 
 #     change log:
 #     NO.     Author              Date            Modified
-#     00      zhenquan.qiu        22/04 2021      create the file
+#     00      zhenquan.qiu        09/12 2019      create the file
 # 
-#     last modified: 22/04 2021 13:39
+#     last modified: 09/12 2019 10:45
 # ===============================================================
 
 ifndef top_dir
 top_dir 	:= $(shell pwd)/../..
 endif
 
-project_target          := pcre2
-target_version 			:= 10.36
-target_download_path 	:= https://udomain.dl.sourceforge.net/project/pcre/$(project_target)/$(target_version)
+project_target          := libpcap
+target_version 			:= 1.9.1
+target_download_path 	:= http://www.tcpdump.org/release
 
 include $(top_dir)/configs/common_var.mk
 
-all: $(target_dir)-strip-make
+all: $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
 
@@ -38,11 +38,13 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 
 	cd $(build_path)/$(@:-config=) && \
 		$(src_path)/$(@:-config=)/configure \
-			CC=$(GCC) CXX=$(CXX) \
-			--prefix=$(prefix_path) \
-			--build=$(build) \
-			--host=$(host) \
-			--target=$(host)
+		CC=$(GCC) CXX=$(CXX) \
+		--program-prefix=$(program_prefix) \
+		--prefix=$(prefix_path) \
+		--build=$(build) \
+		--host=$(host) \
+		--target=$(host) \
+		--with-pcap=linux
 
 	$(TOUCH) $(config_ok_path)
 endif

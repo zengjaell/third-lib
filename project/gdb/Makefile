@@ -5,7 +5,7 @@
 # @file    Makefile
 # @brief   
 # @author  gnsyxiang <gnsyxiang@163.com>
-# @date    22/04 2021 13:39
+# @date    18/11 2019 14:07
 # @version v0.0.1
 # 
 # @since    note
@@ -13,24 +13,31 @@
 # 
 #     change log:
 #     NO.     Author              Date            Modified
-#     00      zhenquan.qiu        22/04 2021      create the file
+#     00      zhenquan.qiu        18/11 2019      create the file
 # 
-#     last modified: 22/04 2021 13:39
+#     last modified: 18/11 2019 14:07
 # ===============================================================
 
 ifndef top_dir
 top_dir 	:= $(shell pwd)/../..
 endif
 
-project_target          := pcre2
-target_version 			:= 10.36
-target_download_path 	:= https://udomain.dl.sourceforge.net/project/pcre/$(project_target)/$(target_version)
+project_target  		:= gdb
+target_version 			:= 10.1
+target_download_path 	:= http://ftp.gnu.org/gnu/gdb
 
 include $(top_dir)/configs/common_var.mk
 
-all: $(target_dir)-strip-make
+all: $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
+
+# --without-x     				取消x windows 支持
+# --disable-gdbtk  				取消gdbtk,应该也是图形界面相关的
+# --disable-tui   				取消tui 界面
+#
+# --without-included-regex 		关闭正则表达式库
+# --without-included-gettext  	去掉用于多语言处理的 gettext库
 
 $(target_dir)-config: $(target_dir)-gz-src
 ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
@@ -38,11 +45,14 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 
 	cd $(build_path)/$(@:-config=) && \
 		$(src_path)/$(@:-config=)/configure \
-			CC=$(GCC) CXX=$(CXX) \
-			--prefix=$(prefix_path) \
-			--build=$(build) \
-			--host=$(host) \
-			--target=$(host)
+		CC=$(GCC) CXX=$(CXX) \
+		--program-prefix=$(program_prefix) \
+		--prefix=$(prefix_path) \
+		--build=$(build) \
+		--host=$(host) \
+		--target=$(host)
+
+	# cp ./remote.c $(src_path)/$(@:-config=)/gdb/remote.c
 
 	$(TOUCH) $(config_ok_path)
 endif

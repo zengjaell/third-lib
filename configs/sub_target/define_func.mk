@@ -19,17 +19,17 @@
 # ===============================================================
 
 define run_dir_makefile_make_target
-	for dir in $(1); do 			   		    \
-		$(make) -C $${dir%/*} $(2) || exit 1; 	\
+	for dir in $(1); do 			   		    	\
+		$(make_j1) -C $${dir%/*} $(2) || exit 1; 	\
 	done
 endef
 
 define run_dir_makefile_make_project
-	for dir in $(1); do 			   		    \
-		path=$${dir%/*};  						\
-		project=$${path##*/}; 					\
-		if [ "$${project}" = ${2} ]; then 		\
-			$(make) -C $${path} || exit 1; 	\
-		fi 										\
+	for dir in $(1); do 			   		    	\
+		path=$${dir%/*};  							\
+		project=$${path##*/}; 						\
+		if [ "$${project}" = ${2} ]; then 			\
+			$(make_j1) -C $${path} || exit 1; 		\
+		fi 											\
 	done
 endef

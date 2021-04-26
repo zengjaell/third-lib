@@ -32,29 +32,35 @@ all: depend_lib $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
 
-depend_lib: check_zlib check_openssl
+depend_lib: check_zlib check_libuv check_mbedtls
 
 $(target_dir)-config: $(target_dir)-rename-gz-src
-ifneq ($(target_config), $(wildcard $(target_config)))
-	$(MKDIR) build/$(@:-config=)
+ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+	$(MKDIR) $(build_path)/$(@:-config=)
 
-	cd build/$(@:-config=) && \
+	echo $(prefix_path)
+
+	cd $(build_path)/$(@:-config=) && \
 		cmake \
-		../../$(@:-config=) \
-		-DCmake_INSTALL_PREFIX=$(prefix_path) \
-		-DCmake_SYSTEM_NAME=Linux \
-		-DCmake_C_COMPILER=$(CC) \
-		-DCmake_CXX_COMPILER=$(CXX) \
+		$(src_path)/$(@:-config=) \
+		-DCMAKE_INSTALL_PREFIX=$(prefix_path) \
+		-DCMAKE_C_COMPILER=$(CC) \
+		-DCMAKE_CXX_COMPILER=$(CXX) \
 		\
-		-DLWS_WITH_ZLIB=1 \
-		-DLWS_ZLIB_INCLUDE_DIRS=$(prefix_path)/include \
+		-DLWS_WITH_LIBUV:BOOL=ON \
+		-DLWS_LIBUV_LIBRARIES="$(prefix_path)/lib/libuv.so" \
+		-DLWS_LIBUV_INCLUDE_DIRS="$(prefix_path)/include"\
+		\
+		-DLWS_WITH_ZLIB:BOOL=ON \
+		-DLWS_ZLIB_INCLUDE_DIRS="$(prefix_path)/include" \
 		-DLWS_ZLIB_LIBRARIES="$(prefix_path)/lib/libz.so" \
 		\
-		-DLWS_WITH_HTTP2=1 \
-		-DLWS_OPENSSL_INCLUDE_DIRS=$(prefix_path)/include \
-		-DLWS_OPENSSL_LIBRARIES="$(prefix_path)/lib/libssl.so;$(prefix_path)/lib/libcrypto.so;"
+		-DLWS_WITH_LWSWS:BOOL=ON \
+		-DLWS_WITH_MBEDTLS:BOOL=ON \
+		-DLWS_MBEDTLS_LIBRARIES="$(prefix_path)/lib/libmbedcrypto.so;$(prefix_path)/lib/libmbedtls.so;$(prefix_path)/lib/libmbedx509.so" \
+		-DLWS_MBEDTLS_INCLUDE_DIRS="$(prefix_path)/include"
 
-	$(TOUCH) $(target_config)
+	$(TOUCH) $(config_ok_path)
 endif
 
 .PHONY: all clean distclean list

@@ -33,26 +33,27 @@ all: $(target_dir)-strip-make
 include $(sub_target_path)/common_sub_target.mk
 
 $(target_dir)-config: $(target_dir)-jpeg-src
-ifneq ($(target_config), $(wildcard $(target_config)))
-	$(MKDIR) build/$(@:-config=)
+ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+	$(MKDIR) $(build_path)/$(@:-config=)
 
-	cd build/$(@:-config=) && \
-		$(project_path)/$(@:-config=)/configure \
+	cd $(build_path)/$(@:-config=) && \
+		$(src_path)/$(@:-config=)/configure \
 			CC=$(GCC) CXX=$(CXX) \
 			--prefix=$(prefix_path) \
 			--build=$(build) \
 			--host=$(host) \
 			--target=$(host)
 
-	$(TOUCH) $(target_config)
+	$(TOUCH) $(config_ok_path)
 endif
 
 $(target_dir)-jpeg-src:
 ifneq ($(target_dir), $(wildcard $(target_dir)))
-	$(WGET) $(target_download_path) -O $(project_target)-$(target_version).tar.gz
-	$(MKDIR) $(project_target)-$(target_version)
-	$(TAR_GZ) $(@:-jpeg-src=).tar.gz -C $(project_target)-$(target_version) --strip-components 1
-	$(RM) $(@:-jpeg-src=).tar.gz
+	cd $(src_path) && \
+		$(WGET) $(target_download_path) -O $(project_target)-$(target_version).tar.gz && \
+		$(MKDIR) $(project_target)-$(target_version) && \
+		$(TAR_GZ) $(@:-jpeg-src=).tar.gz -C $(project_target)-$(target_version) --strip-components 1 && \
+		$(RM) $(@:-jpeg-src=).tar.gz
 endif
 
 .PHONY: all clean distclean list

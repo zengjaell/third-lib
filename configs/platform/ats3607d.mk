@@ -18,7 +18,7 @@
 #     last modified: 25/11 2020 16:32
 # ===============================================================
 
-toolchains_path 	:= /opt/toolchains/gnu_arm_embedded/gcc-arm-none-eabi-10-2020-q4-major
+toolchains_path 	:= $(base_toolchains_path)/gnu_arm_embedded/gcc-arm-none-eabi-10-2020-q4-major
 toolchains_bin_path := $(toolchains_path)/bin
 gcc_prefix 			:= arm-none-eabi-
 host         		:= arm-linux
@@ -26,4 +26,4 @@ host         		:= arm-linux
 CFLAGS 				:=
 LDFLAGS 			:=
 
-prefix_path 		:= $(HOME)/data/install/ats3607d
+prefix_path 		:= $(base_prefix_path)/ats3607d

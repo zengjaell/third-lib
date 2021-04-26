@@ -26,4 +26,4 @@ host         		:= mips-linux
 CFLAGS 				:=
 LDFLAGS 			:=
 
-prefix_path 		:= $(HOME)/data/install/x1830
+prefix_path 		:= $(base_prefix_path)/x1830

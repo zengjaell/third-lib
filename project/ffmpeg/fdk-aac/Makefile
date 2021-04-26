@@ -39,7 +39,7 @@ all: $(target_dir)-make
 include $(CONFIGS_DIR)/common_sub_target.mk
 
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(target_config), $(wildcard $(target_config)))
+ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	$(MKDIR) $(build_DIR)/$(@:-config=)
 	cd $(build_DIR)/$(@:-config=) && \
 		$(target_PATH)/$(@:-config=)/configure \
@@ -52,7 +52,7 @@ ifneq ($(target_config), $(wildcard $(target_config)))
 		--target=$(host) \
 		--disable-static
 
-	$(TOUCH) $(target_config)
+	$(TOUCH) $(config_ok_path)
 endif
 
 .PHONY: all clean distclean list

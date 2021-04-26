@@ -34,19 +34,19 @@ include $(sub_target_path)/common_sub_target.mk
 
 $(target_dir)-make_inside: $(target_dir)-config
 	$(call echo-make-msg, $(@:-make_inside=))
-	cd build/$(@:-make_inside=) && \
+	cd $(build_path)/$(@:-make_inside=) && \
 		export CC="$(GCC) -std=c89" export PREFIX=$(prefix_path) && \
-		$(make) && make install
+		$(make_j1) && make install
 
 $(target_dir)-config: $(target_dir)-rename-gz-src
-ifneq ($(target_config), $(wildcard $(target_config)))
-	$(MKDIR) build/$(@:-config=)
+ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+	$(MKDIR) $(build_path)/$(@:-config=)
 
-	cd build/$(@:-config=) && \
-		$(CP) ../../$(@:-config=)/* ./
-	cd build/$(@:-config=) && sed -i 's/CC = gcc -std=c89/CC ?= gcc -std=c89/g' Makefile
+	cd $(build_path)/$(@:-config=) && \
+		$(CP) $(src_path)/$(@:-config=)/* ./ && \
+		sed -i 's/CC = gcc -std=c89/CC ?= gcc -std=c89/g' Makefile
 
-	$(TOUCH) $(target_config)
+	$(TOUCH) $(config_ok_path)
 endif
 
 .PHONY: all clean distclean list

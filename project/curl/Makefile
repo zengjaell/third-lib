@@ -35,11 +35,11 @@ include $(sub_target_path)/common_sub_target.mk
 depend_lib: check_zlib check_openssl
 
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(target_config), $(wildcard $(target_config)))
-	$(MKDIR) build/$(@:-config=)
+ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+	$(MKDIR) $(build_path)/$(@:-config=)
 
-	cd build/$(@:-config=) && \
-		$(project_path)/$(@:-config=)/configure \
+	cd $(build_path)/$(@:-config=) && \
+		$(src_path)/$(@:-config=)/configure \
 		CC=$(GCC) CXX=$(CXX) \
 		--program-prefix=$(program_prefix) \
 		--prefix=$(prefix_path) \
@@ -49,7 +49,7 @@ ifneq ($(target_config), $(wildcard $(target_config)))
 		--with-zlib=$(prefix_path) \
 		--with-ssl=$(prefix_path)
 
-	$(TOUCH) $(target_config)
+	$(TOUCH) $(config_ok_path)
 endif
 
 .PHONY: all clean distclean list

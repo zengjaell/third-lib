@@ -25,7 +25,7 @@ include $(TO_top_dir)/configs/com_var_def.mk
 target           		:= lua-cjson
 target_version 			:= 2.1.0
 target_dir 				:= $(target)-$(target_version)
-target_config    		:= $(build_DIR)/$(target_dir)-config-ok
+config_ok_path    		:= $(build_DIR)/$(target_dir)-config-ok
 target_download_path 	:= https://www.kyne.com.au/~mark/software/download
 prefix_path 			:= $(ROOT)/../../$(INSTALL_DIR)
 LUA_DIR 	       		:= ../../install/include/lua.h
@@ -46,7 +46,7 @@ $(target_dir)-make: $(target_dir)-config
 	cd $(@:-make=) && $(make) && make install
 
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(target_config), $(wildcard $(target_config)))
+ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	$(MKDIR) $(build_DIR)/$(@:-config=)
 	awk '{sub(/\/usr\/local/, "$(prefix_path)"); \
 		print > "$(@:-config=)/Makefile"};' \
@@ -61,7 +61,7 @@ ifeq ($(host)-x, mips-linux-gnu-x)
 endif
 endif
 
-	$(TOUCH) $(target_config)
+	$(TOUCH) $(config_ok_path)
 endif
 
 clean:

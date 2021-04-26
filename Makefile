@@ -43,8 +43,14 @@ include $(sub_target_path)/define_func.mk
 include $(sub_target_path)/common_target.mk
 
 list:
-	$(ECHO) "support compiled projects"
+	$(ECHO) "support compiled projects: "
+	$(ECHO) ""
 	$(call run_dir_makefile_make_target, $(makefile_list), list)
+	$(ECHO) ""
+	$(ECHO) ""
+	$(ECHO) "\teg: make project=zlib           - compile zlib"
+	$(ECHO) "\teg: make project=htop           - compile htop"
+	$(ECHO) ""
 
 clean:
 	$(ECHO) "clean all build projects"

@@ -35,11 +35,11 @@ include $(sub_target_path)/common_sub_target.mk
 depend_lib: check_libpcap
 
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(target_config), $(wildcard $(target_config)))
-	$(MKDIR) build/$(@:-config=)
+ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+	$(MKDIR) $(build_path)/$(@:-config=)
 
-	cd build/$(@:-config=) && \
-		$(project_path)/$(@:-config=)/configure \
+	cd $(build_path)/$(@:-config=) && \
+		$(src_path)/$(@:-config=)/configure \
 		CC=$(GCC) CXX=$(CXX) \
 		CFLAGS="-pipe -I$(prefix_path)/include" \
 		LDFLAGS="-L$(prefix_path)/lib" \
@@ -49,7 +49,7 @@ ifneq ($(target_config), $(wildcard $(target_config)))
 		--host=$(host) \
 		--target=$(host)
 
-	$(TOUCH) $(target_config)
+	$(TOUCH) $(config_ok_path)
 endif
 
 .PHONY: all clean distclean list

@@ -33,16 +33,16 @@ all: $(target_dir)-make
 include $(sub_target_path)/common_sub_target.mk
 
 $(target_dir)-config: $(target_dir)-bz2-src
-ifneq ($(target_config), $(wildcard $(target_config)))
-	$(MKDIR) build/$(@:-config=)
+ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+	$(MKDIR) $(build_path)/$(@:-config=)
 
-	cd $(@:-config=) && ./autogen.sh
-	cd $(@:-config=) && \
+	cd $(src_path)/$(@:-config=) && \
+		./autogen.sh && \
 		sed 's/armv7\*)/armv7\*|arm\*)/g' ./configure > ./configure-bak && \
 		chmod +x ./configure-bak
 
-	cd build/$(@:-config=) && \
-		$(project_path)/$(@:-config=)/configure-bak \
+	cd $(build_path)/$(@:-config=) && \
+		$(src_path)/$(@:-config=)/configure-bak \
 		CC=$(GCC) CXX=$(CXX) \
 		--program-prefix=$(program_prefix) \
 		--prefix=$(prefix_path) \
@@ -57,7 +57,7 @@ ifneq ($(target_config), $(wildcard $(target_config)))
 # 增加目录路径：
 # 	export VALGRIND_LIB=/lib/valgrind
 
-	$(TOUCH) $(target_config)
+	$(TOUCH) $(config_ok_path)
 endif
 
 .PHONY: all clean distclean debug

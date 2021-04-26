@@ -105,3 +105,19 @@ ifneq ($(_libpcap_dir), $(wildcard $(_libpcap_dir)))
 	$(ECHO) ''
 	exit 1
 endif
+
+_mbedtls_dir := $(prefix_path)/include/mbedtls
+check_mbedtls:
+ifneq ($(_mbedtls_dir), $(wildcard $(_mbedtls_dir)))
+	$(ECHO) "\tuse \"make project=mbedtls\" first to compile mbedtls."
+	$(ECHO) ''
+	exit 1
+endif
+
+_libuv_dir := $(prefix_path)/include/uv
+check_libuv:
+ifneq ($(_libuv_dir), $(wildcard $(_libuv_dir)))
+	$(ECHO) "\tuse \"make project=libuv\" first to compile libuv."
+	$(ECHO) ''
+	exit 1
+endif

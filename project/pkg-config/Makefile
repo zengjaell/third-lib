@@ -33,17 +33,17 @@ all: $(target_dir)-strip-make
 include $(sub_target_path)/common_sub_target.mk
 
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(target_config), $(wildcard $(target_config)))
-	$(MKDIR) build/$(@:-config=)
+ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+	$(MKDIR) $(build_path)/$(@:-config=)
 
 	# https://blog.csdn.net/hexf9632/article/details/102625696
 	# 编译glib出现的问题，加了下面的echo语句和-C选项
-	cd build/$(@:-config=) && \
+	cd $(build_path)/$(@:-config=) && \
 		echo "glib_cv_stack_grows=yes" 			 > config.cache && \
 		echo "ac_cv_func_posix_getpwuid_r=yes" 	>> config.cache && \
 		echo "glib_cv_uscore=yes" 				>> config.cache && \
 		echo "ac_cv_func_posix_getgrgid_r=yes" 	>> config.cache && \
-		$(project_path)/$(@:-config=)/configure \
+		$(src_path)/$(@:-config=)/configure \
 			CC=$(GCC) CXX=$(CXX) \
 			-C \
 			--with-internal-glib \
@@ -52,7 +52,7 @@ ifneq ($(target_config), $(wildcard $(target_config)))
 			--host=$(host) \
 			--target=$(host)
 
-	$(TOUCH) $(target_config)
+	$(TOUCH) $(config_ok_path)
 endif
 
 .PHONY: all clean distclean list

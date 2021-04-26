@@ -36,7 +36,7 @@ depend_lib: check_cjson check_openssl check_cares check_libwebsockets
 
 $(target_dir)-make_inside: $(target_dir)-config
 	$(call echo-make-msg, $(@:-make_inside=))
-	cd build/$(@:-make_inside=) && \
+	cd $(build_path)/$(@:-make_inside=) && \
 		export CC=gcc \
 		export CROSS_COMPILE=$(cross_prefix) \
 		export CPPFLAGS=-I$(prefix_path)/include \
@@ -45,21 +45,21 @@ $(target_dir)-make_inside: $(target_dir)-config
 		$(make) && make uninstall && make install
 
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(target_config), $(wildcard $(target_config)))
-	$(MKDIR) build/$(@:-config=)
+ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+	$(MKDIR) $(build_path)/$(@:-config=)
 
-	cd build/$(@:-config=) && \
-		$(CP) ../../$(@:-config=)/* ./
+	cd $(build_path)/$(@:-config=) && \
+		$(CP) $(src_path)/$(@:-config=)/* ./
 
-	sed -i 's/WITH_SRV:=no/WITH_SRV:=yes/' build/$(@:-config=)/config.mk
-	sed -i 's/WITH_DOCS:=yes/WITH_SRV:=no/' build/$(@:-config=)/config.mk
-	sed -i 's/WITH_WEBSOCKETS:=no/WITH_WEBSOCKETS:=yes/' build/$(@:-config=)/config.mk
-
-	sed -i 's/{DESTDIR}\/etc\/mosquitto/{prefix}\/etc\/mosquitto/g' build/$(@:-config=)/Makefile
+	cd $(build_path)/$(@:-config=) && \
+		sed -i 's/WITH_SRV:=no/WITH_SRV:=yes/' config.mk && \
+		sed -i 's/WITH_DOCS:=yes/WITH_SRV:=no/' config.mk && \
+		sed -i 's/WITH_WEBSOCKETS:=no/WITH_WEBSOCKETS:=yes/' config.mk && \
+		sed -i 's/{DESTDIR}\/etc\/mosquitto/{prefix}\/etc\/mosquitto/g' Makefile
 
 	exit
 	
-	$(TOUCH) $(target_config)
+	$(TOUCH) $(config_ok_path)
 endif
 
 .PHONY: all clean distclean list

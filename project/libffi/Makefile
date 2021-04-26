@@ -33,18 +33,18 @@ all: $(target_dir)-strip-make
 include $(sub_target_path)/common_sub_target.mk
 
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(target_config), $(wildcard $(target_config)))
-	$(MKDIR) build/$(@:-config=)
+ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+	$(MKDIR) $(build_path)/$(@:-config=)
 
-	cd build/$(@:-config=) && \
-		$(project_path)/$(@:-config=)/configure \
+	cd $(build_path)/$(@:-config=) && \
+		$(src_path)/$(@:-config=)/configure \
 		CC=$(GCC) CXX=$(CXX) \
 		--prefix=$(prefix_path) \
 		--build=$(build) \
 		--host=$(host) \
 		--target=$(host)
 
-	$(TOUCH) $(target_config)
+	$(TOUCH) $(config_ok_path)
 endif
 
 .PHONY: all clean distclean list

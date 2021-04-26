@@ -18,7 +18,7 @@
 #     last modified: 05/12 2019 17:42
 # ===============================================================
 
-toolchains_path 	:= /opt/toolchains/rk3308/host
+toolchains_path 	:= $(base_toolchains_path)/rk3308/host
 toolchains_bin_path := $(toolchains_path)/bin
 gcc_prefix 			:= arm-linux-
 host         		:= arm-linux
@@ -26,4 +26,4 @@ host         		:= arm-linux
 CFLAGS 				:=
 LDFLAGS 			:=
 
-prefix_path 		:= $(HOME)/data/install/rk3308
+prefix_path 		:= $(base_prefix_path)/rk3308

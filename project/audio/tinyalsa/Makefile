@@ -48,12 +48,12 @@ $(target_dir)-make_inside: $(target_dir)-config
 		$(make) && make install
 
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(target_config), $(wildcard $(target_config)))
+ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	$(MKDIR) $(build_DIR)/$(@:-config=)
 	cd $(build_DIR)/$(@:-config=) && \
 		$(CP) ../../$(@:-config=)/* ./
 
-	$(TOUCH) $(target_config)
+	$(TOUCH) $(config_ok_path)
 endif
 
 .PHONY: all clean distclean list

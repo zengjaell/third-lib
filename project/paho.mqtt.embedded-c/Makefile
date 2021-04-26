@@ -39,20 +39,19 @@ install_depend:
 
 $(target_dir)-make_inside: $(target_dir)-config
 	$(call echo-make-msg, $(@:-make_inside=))
-	cd build/$(@:-make_inside=) && \
+	cd $(build_path)/$(@:-make_inside=) && \
 		export CC=$(CC) export exec_prefix=$(prefix_path) && \
 		$(make) && make uninstall && make install
 
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(target_config), $(wildcard $(target_config)))
-	$(MKDIR) build/$(@:-config=)
+ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+	$(MKDIR) $(build_path)/$(@:-config=)
 
-	cd build/$(@:-config=) && \
-		$(CP) ../../$(@:-config=)/* ./
-	
-	sed -i '/\/sbin\/ldconfig $(DESTDIR)${libdir}/d' build/$(@:-config=)/Makefile
+	cd $(build_path)/$(@:-config=) && \
+		$(CP) $(src_path)/$(@:-config=)/* ./ && \
+		sed -i '/\/sbin\/ldconfig $(DESTDIR)${libdir}/d' Makefile
 
-	$(TOUCH) $(target_config)
+	$(TOUCH) $(config_ok_path)
 endif
 
 .PHONY: all clean distclean list install_depend

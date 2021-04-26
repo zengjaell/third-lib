@@ -35,14 +35,14 @@ include $(sub_target_path)/common_sub_target.mk
 depend_lib: check_ncurses
 
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(target_config), $(wildcard $(target_config)))
-	$(MKDIR) build/$(@:-config=)
+ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+	$(MKDIR) $(build_path)/$(@:-config=)
 
-	cd $(@:-config=) && ./autogen.sh
+	cd $(src_path)/$(@:-config=) && ./autogen.sh
 
-	cd build/$(@:-config=) && \
-		$(RM) $(project_path)/$(@:-config=)/config.h && \
-		$(project_path)/$(@:-config=)/configure \
+	cd $(build_path)/$(@:-config=) && \
+		$(RM) $(src_path)/$(@:-config=)/config.h && \
+		$(src_path)/$(@:-config=)/configure \
 		HTOP_NCURSES_CONFIG_SCRIPT=$(prefix_path)/bin/ncurses6-config \
 		CC=$(GCC) CXX=$(CXX) \
 		PKG_CONFIG_PATH=$(prefix_path)/lib/pkgconfig \
@@ -52,7 +52,7 @@ ifneq ($(target_config), $(wildcard $(target_config)))
         --host=$(host) \
         --disable-unicode
 
-	$(TOUCH) $(target_config)
+	$(TOUCH) $(config_ok_path)
 endif
 
 .PHONY: all clean distclean list

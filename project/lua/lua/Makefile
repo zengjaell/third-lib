@@ -25,7 +25,7 @@ include $(TO_top_dir)/configs/com_var_def.mk
 target           		:= lua
 target_version 			:= 5.1.5
 target_dir 				:= $(target)-$(target_version)
-target_config    		:= $(build_DIR)/$(target_dir)-config-ok
+config_ok_path    		:= $(build_DIR)/$(target_dir)-config-ok
 target_download_path 	:= http://www.lua.org/ftp
 prefix_path 			:= $(ROOT)/../../$(INSTALL_DIR)
 
@@ -40,7 +40,7 @@ $(target_dir)-make: $(target_dir)-config
 	cd $(@:-make=) && $(make) linux && make install
 
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(target_config), $(wildcard $(target_config)))
+ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	$(MKDIR) $(build_DIR)/$(@:-config=)
 	sed -i 's/^#define LUA_USE_READLINE/\/\/#define LUA_USE_READLINE/g' \
 		$(@:-config=)/src/luaconf.h
@@ -82,7 +82,7 @@ ifeq ($(host)-x, mips-linux-gnu-x)
 endif
 endif
 
-	$(TOUCH) $(target_config)
+	$(TOUCH) $(config_ok_path)
 endif
 
 clean:

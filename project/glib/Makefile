@@ -36,19 +36,19 @@ depend_lib: check_zlib check_libffi
 
 $(target_dir)-inside-make: $(target_dir)-config
 	$(call echo-make-msg, $(@:-inside-make=))
-	cd build/$(@:-inside-make=) && \
+	cd $(build_path)/$(@:-inside-make=) && \
 		ninja -j$(PARALLEL_JOBS) && \
 		meson install
 
 $(target_dir)-config: $(target_dir)-rename-gz-src
-ifneq ($(target_config), $(wildcard $(target_config)))
-	$(MKDIR) build/$(@:-config=)
+ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+	$(MKDIR) $(build_path)/$(@:-config=)
 
 #		echo "pkgconfig         = '/usr/bin/pkg-config'" 			>> cross_file.txt && \
 #		echo "sys_root          = '${prefix_path}'" 				>> cross_file.txt && \
 #		echo "pkg_config_libdir = '${prefix_path}/lib/pkgconfig'" 	>> cross_file.txt &&
 
-	cd build/$(@:-config=) && \
+	cd $(build_path)/$(@:-config=) && \
 		echo "[binaries]" 										 	> cross_file.txt && \
 		echo "c                 = '${cross_prefix}' + 'gcc'" 		>> cross_file.txt && \
 		echo "cpp               = '${cross_prefix}' + 'g++'" 		>> cross_file.txt && \
@@ -75,15 +75,15 @@ ifneq ($(target_config), $(wildcard $(target_config)))
 		echo "selinux           = 'disabled'" 						>> cross_file.txt && \
 		echo "libelf            = 'disabled'" 						>> cross_file.txt
 
-		cd $(project_path)/$(@:-config=) && \
+		cd $(src_path)/$(@:-config=) && \
 			sed -i "/^libffi_dep/a libffi_dep = dependency(\'libffi\', required : false)" meson.build && \
 			sed -i "/'ffi_dep'])/d" meson.build && \
 			meson \
 			--prefix ${prefix_path} \
-			--cross-file $(build_dir_path)/$(project_target)-$(target_version)/cross_file.txt \
-			$(build_dir_path)/$(project_target)-$(target_version)
+			--cross-file $(build_path)/$(target_dir)/cross_file.txt \
+			$(build_path)/$(target_dir)
 
-	$(TOUCH) $(target_config)
+	$(TOUCH) $(config_ok_path)
 endif
 
 .PHONY: all clean distclean list

@@ -30,4 +30,5 @@ node_modules/
 compile_commands.json
 package-lock.json
 
-project/*
+build/
+src/

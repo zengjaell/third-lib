@@ -18,7 +18,7 @@
 #     last modified: 05/12 2019 17:33
 # ===============================================================
 
-toolchains_path 	:= /opt/toolchains/unione/arm-linux-hf-4.9
+toolchains_path 	:= $(base_toolchains_path)/unione/arm-linux-hf-4.9
 toolchains_bin_path := $(toolchains_path)/bin
 gcc_prefix 			:= arm-linux-
 host         		:= arm-linux
@@ -26,4 +26,4 @@ host         		:= arm-linux
 CFLAGS 				:=
 LDFLAGS 			:=
 
-prefix_path 		:= $(HOME)/data/install/unione
+prefix_path 		:= $(base_prefix_path)/unione

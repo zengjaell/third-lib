@@ -40,30 +40,31 @@ CONFIG_COM := no-tests \
 	--with-zlib-lib=$(prefix_path)/lib
 
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(target_config), $(wildcard $(target_config)))
-	$(MKDIR) build/$(@:-config=)
+ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+	$(MKDIR) $(build_path)/$(@:-config=)
 
 	case $(host) in 											\
 	    x86*) 													\
 			CONFIG_CONTENT= 									\
-			cd build/$(@:-config=) &&  					\
-				$(project_path)/$(@:-config=)/Configure 			\
+			cd $(build_path)/$(@:-config=) &&  					\
+				$(src_path)/$(@:-config=)/Configure 			\
 				linux-x86_64 $(CONFIG_COM) 						\
 				--cross-compile-prefix=$(cross_prefix) 			\
 				--prefix=$(prefix_path) 						\
 	        ;; 													\
 	    arm*) 													\
-			cd build/$(@:-config=) && 					\
-				$(project_path)/$(@:-config=)/Configure 			\
+			cd $(build_path)/$(@:-config=) && 					\
+				$(src_path)/$(@:-config=)/Configure 			\
 				linux-generic32 shared no-async $(CONFIG_COM) 	\
 				--cross-compile-prefix=$(cross_prefix) 			\
 				--prefix=$(prefix_path) 						\
 	        ;; 													\
 	esac
 
-	sed -i 's/^install: install_sw install_ssldirs install_docs/install: install_sw install_ssldirs/' build/$(@:-config=)/Makefile
+	cd $(build_path)/$(@:-config=) && \
+		sed -i 's/^install: install_sw install_ssldirs install_docs/install: install_sw install_ssldirs/' Makefile
 
-	$(TOUCH) $(target_config)
+	$(TOUCH) $(config_ok_path)
 endif
 
 .PHONY: all clean distclean list
