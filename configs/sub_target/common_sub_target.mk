@@ -71,9 +71,9 @@ clean:
 
 distclean: clean
 	$(ECHO) "    rm src/$(target_dir)"
-	$(RM) $(target_dir)
-	$(RM) $(target_dir).tar.gz*
-	$(RM) $(target_dir).tar.bz2*
+	$(RM) $(src_path)/$(target_dir)
+	$(RM) $(src_path)/$(target_dir).tar.gz*
+	$(RM) $(src_path)/$(target_dir).tar.bz2*
 
 list:
 ifneq ($(makefile_list), ) # 在顶层显示
