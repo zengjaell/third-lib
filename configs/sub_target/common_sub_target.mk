@@ -64,6 +64,22 @@ ifneq ($(src_path)/$(target_dir), $(wildcard $(src_path)/$(target_dir)))
 		$(RM) $(@:-rename-gz-src=).tar.gz
 endif
 
+$(target_dir)-xz-src:
+ifneq ($(src_path)/$(target_dir), $(wildcard $(src_path)/$(target_dir)))
+	cd $(src_path) && \
+		$(WGET) $(target_download_path)/$(@:-xz-src=).tar.xz && \
+		$(TAR_XZ) $(@:-xz-src=).tar.xz && \
+		$(RM) $(@:-xz-src=).tar.xz
+endif
+
+$(target_dir)-rename-xz-src:
+ifneq ($(src_path)/$(target_dir), $(wildcard $(src_path)/$(target_dir)))
+	cd $(src_path) && \
+		$(WGET) $(target_download_path) -O $(project_target)-$(target_version).tar.xz && \
+		$(TAR_XZ) $(@:-rename-xz-src=).tar.xz && \
+		$(RM) $(@:-rename-xz-src=).tar.xz
+endif
+
 clean:
 	$(ECHO) "    rm build/$(target_dir)"
 	$(RM) $(build_path)/$(target_dir)

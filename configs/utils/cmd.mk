@@ -28,3 +28,4 @@ LN 				:= ln -sf
 
 TAR_BZ2 		?= tar -xjvf
 TAR_GZ 			?= tar -xzvf
+TAR_XZ 			?= tar -xvf
