@@ -30,4 +30,4 @@ LDFLAGS 			:=
 STAGING_DIR 		:= $(toolchains_bin_path)
 export STAGING_DIR
 
-prefix_path 		:= $(base_prefix_path)/r328
+prefix_path 		?= $(base_prefix_path)/r328

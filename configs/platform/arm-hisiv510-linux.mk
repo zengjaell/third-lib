@@ -27,4 +27,4 @@ host         		:= $(platform)
 CFLAGS 				:=
 LDFLAGS 			:=
 
-prefix_path 		:= $(base_prefix_path)/hisi-linux/$(platform)
+prefix_path 		?= $(base_prefix_path)/hisi-linux/$(platform)

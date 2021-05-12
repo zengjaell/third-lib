@@ -26,4 +26,4 @@ host         		:= arm-linux
 CFLAGS 				:=
 LDFLAGS 			:=
 
-prefix_path 		:= $(base_prefix_path)/ats3607d
+prefix_path 		?= $(base_prefix_path)/ats3607d

@@ -26,4 +26,4 @@ host         		:= arm-linux
 CFLAGS 				:=
 LDFLAGS 			:=
 
-prefix_path 		:= $(base_prefix_path)/rk3308
+prefix_path 		?= $(base_prefix_path)/rk3308

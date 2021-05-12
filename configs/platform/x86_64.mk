@@ -26,4 +26,4 @@ host         		:= $(build)
 CFLAGS 				:=
 LDFLAGS 			:=
 
-prefix_path 		:= $(HOME)/data/usr/local
+prefix_path 		?= $(HOME)/data/usr/local
