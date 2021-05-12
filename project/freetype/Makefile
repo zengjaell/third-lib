@@ -49,7 +49,7 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 			--with-zlib=yes \
 			--with-png=yes \
 			--with-harfbuzz=no \
-			PKG_CONFIG_PATH=$(prefix_path)/lib/pkgconfig
+			PKG_CONFIG_PATH=$(pkg_config_path)
 
 	$(TOUCH) $(config_ok_path)
 endif

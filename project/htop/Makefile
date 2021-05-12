@@ -43,14 +43,15 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	cd $(build_path)/$(@:-config=) && \
 		$(RM) $(src_path)/$(@:-config=)/config.h && \
 		$(src_path)/$(@:-config=)/configure \
-		HTOP_NCURSES_CONFIG_SCRIPT=$(prefix_path)/bin/ncurses6-config \
-		CC=$(GCC) CXX=$(CXX) \
-		PKG_CONFIG_PATH=$(prefix_path)/lib/pkgconfig \
-		--program-prefix=$(program_prefix) \
-		--prefix=$(prefix_path) \
-		--build=$(build) \
-        --host=$(host) \
-        --disable-unicode
+			CC=$(GCC) CXX=$(CXX) \
+			--program-prefix=$(program_prefix) \
+			--prefix=$(prefix_path) \
+			--build=$(build) \
+        	--host=$(host) \
+			\
+        	--disable-unicode \
+			HTOP_NCURSES_CONFIG_SCRIPT=$(prefix_path)/bin/ncurses6-config \
+			PKG_CONFIG_PATH=$(pkg_config_path)
 
 	$(TOUCH) $(config_ok_path)
 endif
