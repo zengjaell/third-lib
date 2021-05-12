@@ -47,7 +47,7 @@ ifneq ($(platform), x86_64)
 cross_prefix 	:= $(toolchains_bin_path)/$(gcc_prefix)
 endif
 
-pkg_config_path := $(prefix_path)/lib/pkgconfig
+pkg_config_path ?= $(prefix_path)/lib/pkgconfig
 
 AR 	    		:= $(cross_prefix)ar
 AS 	    		:= $(cross_prefix)as
