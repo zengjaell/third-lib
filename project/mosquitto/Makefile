@@ -32,15 +32,15 @@ all: depend_lib $(target_dir)-make_inside
 
 include $(sub_target_path)/common_sub_target.mk
 
-depend_lib: check_cjson check_openssl check_cares check_libwebsockets
+depend_lib: check_cjson check_mbedtls check_cares check_libwebsockets
 
 $(target_dir)-make_inside: $(target_dir)-config
 	$(call echo-make-msg, $(@:-make_inside=))
 	cd $(build_path)/$(@:-make_inside=) && \
 		export CC=gcc \
 		export CROSS_COMPILE=$(cross_prefix) \
-		export CPPFLAGS=-I$(prefix_path)/include \
-		export LDFLAGS="-L$(prefix_path)/lib -lssl -lcrypto -lcares -lz" \
+		export CPPFLAGS="-I$(prefix_path)/include -pipe"\
+		export LDFLAGS="-L$(prefix_path)/lib -lmbedcrypto -lmbedtls -lmbedx509 -luv -lssl -lcrypto -lcares -lz" \
 		export prefix=$(prefix_path) && \
 		$(make) && make uninstall && make install
 

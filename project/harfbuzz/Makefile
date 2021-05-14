@@ -42,22 +42,24 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 		./autogen.sh && \
 		make distclean
 
-	cd $(build_path)/$(@:-config=) && \
-		$(src_path)/$(@:-config=)/configure \
-			CC=$(GCC) CXX=$(CXX) \
-			--prefix=$(prefix_path) \
-			--build=$(build) \
-			--host=$(host) \
-			--target=$(host) \
-			\
-			--with-glib=yes \
-			--with-gobject=yes \
-			--with-freetype=yes \
-			--with-icu=no \
-			LIBS="-lfreetype -lpng -lz" \
-			CPPFLAGS="-I$(prefix_path)/include" \
-			LDFLAGS="-L$(prefix_path)/lib" \
-			PKG_CONFIG_PATH=$(pkg_config_path)
+	cd $(build_path)/$(@:-config=) && 				\
+		$(src_path)/$(@:-config=)/configure 		\
+			CC=$(GCC) CXX=$(CXX) 					\
+			CPPFLAGS="$(cppflags_com)" 				\
+			CFLAGS="$(cflags_com)" 					\
+			CXXFLAGS="$(cxxflags_com)" 				\
+			LDFLAGS="$(ldflags_com)" 				\
+			LIBS="$(libs_com) -lfreetype -lpng -lz" \
+			PKG_CONFIG_PATH="$(pkg_config_path)" 	\
+			--prefix=$(prefix_path) 				\
+			--build=$(build) 						\
+			--host=$(host) 							\
+			--target=$(host) 						\
+													\
+			--with-glib=yes 						\
+			--with-gobject=yes 						\
+			--with-freetype=yes 					\
+			--with-icu=no
 
 	$(TOUCH) $(config_ok_path)
 endif

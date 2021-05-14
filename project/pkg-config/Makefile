@@ -43,14 +43,21 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 		echo "ac_cv_func_posix_getpwuid_r=yes" 	>> config.cache && \
 		echo "glib_cv_uscore=yes" 				>> config.cache && \
 		echo "ac_cv_func_posix_getgrgid_r=yes" 	>> config.cache && \
-		$(src_path)/$(@:-config=)/configure \
-			CC=$(GCC) CXX=$(CXX) \
+		$(src_path)/$(@:-config=)/configure 		\
+			CC=$(GCC) CXX=$(CXX) 					\
+			CPPFLAGS="$(cppflags_com)" 				\
+			CFLAGS="$(cflags_com)" 					\
+			CXXFLAGS="$(cxxflags_com)" 				\
+			LDFLAGS="$(ldflags_com)" 				\
+			LIBS="$(libs_com)" 						\
+			PKG_CONFIG_PATH="$(pkg_config_path)" 	\
+			--prefix=$(prefix_path) 				\
+			--build=$(build) 						\
+			--host=$(host) 							\
+			--target=$(host) 						\
+			\
 			-C \
 			--with-internal-glib \
-			--prefix=$(prefix_path) \
-			--build=$(build) \
-			--host=$(host) \
-			--target=$(host)
 
 	$(TOUCH) $(config_ok_path)
 endif

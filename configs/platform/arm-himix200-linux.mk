@@ -24,7 +24,10 @@ gcc_prefix 			:= $(platform)-
 program_prefix 		:= $(platform)-
 host         		:= $(platform)
 
-CFLAGS 				:=
-LDFLAGS 			:=
+cppflags_com 		:=
+cflags_com 			:=
+cxxflags_com 		:=
+ldflags_com 		:=
+libs_com 			:= 
 
 prefix_path 		?= $(base_prefix_path)/hisi-linux/$(platform)

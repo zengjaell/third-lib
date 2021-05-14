@@ -38,16 +38,31 @@ $(target_dir)-config: $(target_dir)-gz-src
 ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
-	cd $(build_path)/$(@:-config=) && \
-		$(src_path)/$(@:-config=)/configure \
-		CC=$(GCC) CXX=$(CXX) \
-		CFLAGS="-pipe -I$(prefix_path)/include" \
-		LDFLAGS="-L$(prefix_path)/lib" \
-		LIBS="-lpcap" \
-		--prefix=$(prefix_path) \
-		--build=$(build) \
-		--host=$(host) \
-		--target=$(host)
+	cd $(build_path)/$(@:-config=) && 				\
+		$(src_path)/$(@:-config=)/configure 		\
+			CC=$(GCC) CXX=$(CXX) 					\
+			CPPFLAGS="$(cppflags_com)" 				\
+			CFLAGS="$(cflags_com)" 					\
+			CXXFLAGS="$(cxxflags_com)" 				\
+			LDFLAGS="$(ldflags_com)" 				\
+			LIBS="$(libs_com)" 						\
+			PKG_CONFIG_PATH="$(pkg_config_path)" 	\
+			--prefix=$(prefix_path) 				\
+			--build=$(build) 						\
+			--host=$(host) 							\
+			--target=$(host)
+#	cd $(build_path)/$(@:-config=) && \
+#		$(src_path)/$(@:-config=)/configure \
+#			CC=$(GCC) CXX=$(CXX) \
+#			CPPFLAGS=$(cppflags_com) \
+#			CFLAGS="$(cflags_com) -pipe -I$(prefix_path)/include" \
+#			CXXFLAGS=$(cxxflags_com) \
+#			LDFLAGS="${ldflags_com} -L$(prefix_path)/lib" \
+#			LIBS="-lpcap ${libs_com}" \
+#			--prefix=$(prefix_path) \
+#			--build=$(build) \
+#			--host=$(host) \
+#			--target=$(host)
 
 	$(TOUCH) $(config_ok_path)
 endif

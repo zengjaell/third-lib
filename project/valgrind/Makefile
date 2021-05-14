@@ -41,14 +41,19 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 		sed 's/armv7\*)/armv7\*|arm\*)/g' ./configure > ./configure-bak && \
 		chmod +x ./configure-bak
 
-	cd $(build_path)/$(@:-config=) && \
-		$(src_path)/$(@:-config=)/configure-bak \
-		CC=$(GCC) CXX=$(CXX) \
-		--program-prefix=$(program_prefix) \
-		--prefix=$(prefix_path) \
-		--build=$(build) \
-		--host=$(host) \
-		--target=$(host)
+	cd $(build_path)/$(@:-config=) && 				\
+		$(src_path)/$(@:-config=)/configure-bak 	\
+			CC=$(GCC) CXX=$(CXX) 					\
+			CPPFLAGS="$(cppflags_com)" 				\
+			CFLAGS="$(cflags_com)" 					\
+			CXXFLAGS="$(cxxflags_com)" 				\
+			LDFLAGS="$(ldflags_com)" 				\
+			LIBS="$(libs_com)" 						\
+			PKG_CONFIG_PATH="$(pkg_config_path)" 	\
+			--prefix=$(prefix_path) 				\
+			--build=$(build) 						\
+			--host=$(host) 							\
+			--target=$(host)
 
 # 注意：只支持 armV7、armV8两种arm CPU架构。
 # 
