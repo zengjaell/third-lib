@@ -33,7 +33,7 @@ ifdef project
 else
 	$(ECHO) "the instructions are as follows:"
 	$(ECHO) ''
-	$(ECHO) "\tmake help  \t\t- help info."
+	$(ECHO) "\tmake test  \t\t- test gcc is working."
 	$(ECHO) "\tmake list  \t\t- show all projects that can be compiled."
 	$(ECHO) "\tmake clean \t\t- clean all build projects."
 	$(ECHO) "\tmake distclean\t\t- clean all projects."
@@ -42,17 +42,14 @@ endif
 
 include $(sub_target_path)/define_func.mk
 include $(sub_target_path)/common_target.mk
+include $(top_dir)/configs/platform/platform_config.mk
 
-help:
-	$(ECHO) "help info: "
+test:
+	$(ECHO) "gcc path: "
+	$(ECHO) "    $(CC)"
 	$(ECHO) ""
-	$(ECHO) "\teg: make project=htop           - compile htop"
-	$(ECHO) "\teg: make project=zlib           - compile zlib"
-	$(ECHO) ""
-	$(ECHO) "\teg: make project=zlib V=1       - compile zlib with verbose info"
-	$(ECHO) "\teg: make project=zlib_clean     - clean zlib with build(./build/zlib-x.x.x) dir"
-	$(ECHO) "\teg: make project=zlib_distclan  - clean zlib with build(./build/zlib/-x.x.x) and src(./src/zlib-x.x.x) dir"
-	$(ECHO) ""
+	$(ECHO) "gcc version: "
+	$(CC) --version
 
 list:
 	$(ECHO) "support compiled projects: "
@@ -62,6 +59,10 @@ list:
 	$(ECHO) ""
 	$(ECHO) "\teg: make project=zlib           - compile zlib"
 	$(ECHO) "\teg: make project=htop           - compile htop"
+	$(ECHO) ""
+	$(ECHO) "\teg: make project=zlib V=1       - compile zlib with verbose info"
+	$(ECHO) "\teg: make project=zlib_clean     - clean zlib with build(./build/zlib-x.x.x) dir"
+	$(ECHO) "\teg: make project=zlib_distclan  - clean zlib with build(./build/zlib/-x.x.x) and src(./src/zlib-x.x.x) dir"
 	$(ECHO) ""
 
 clean:
