@@ -22,8 +22,6 @@ include $(top_dir)/configs/platform/platform_config.mk
 include $(sub_target_path)/common_target.mk
 include $(sub_target_path)/check_lib.mk
 
-target_dir_path := $(src_path)/$(target_dir)
-
 $(target_dir)-strip-make: $(target_dir)-config
 	$(call echo-make-msg, $(@:-strip-make=))
 	cd $(build_path)/$(@:-strip-make=) && $(make) && make install-strip

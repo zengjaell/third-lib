@@ -28,11 +28,13 @@ make 			:= $(hostmake) -j$(PARALLEL_JOBS)
 make_j1 		:= $(hostmake)
 
 sub_target_path := $(top_dir)/configs/sub_target
+project_path 	:= $(top_dir)/project
 src_path 		:= $(top_dir)/src
 build_path 		:= $(top_dir)/build
 
 include $(top_dir)/configs/utils/cmd.mk
 
 target_dir 		?= $(project_target)-$(target_version)
+target_dir_path := $(src_path)/$(target_dir)
 config_ok_path 	?= $(build_path)/$(target_dir)-config-ok
 

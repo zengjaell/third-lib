@@ -8,3 +8,4 @@
 * [编译`libwebsockets`](project/libwebsockets/README.md)
 * [编译`htop`](project/htop/README.md)
 * [编译`tslib`](project/tslib/README.md)
+* [编译`qt-5.12.10`](project/qt-everywhere-src/README.md)
