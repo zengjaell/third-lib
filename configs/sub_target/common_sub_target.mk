@@ -22,6 +22,8 @@ include $(top_dir)/configs/platform/platform_config.mk
 include $(sub_target_path)/common_target.mk
 include $(sub_target_path)/check_lib.mk
 
+target_dir_path := $(src_path)/$(target_dir)
+
 $(target_dir)-strip-make: $(target_dir)-config
 	$(call echo-make-msg, $(@:-strip-make=))
 	cd $(build_path)/$(@:-strip-make=) && $(make) && make install-strip
@@ -30,54 +32,64 @@ $(target_dir)-make: $(target_dir)-config
 	$(call echo-make-msg, $(@:-inside-make=))
 	cd $(build_path)/$(@:-make=) && $(make) && make install
 
-# cd build/$(@:-make=) && $(make) VERBOSE=1 && make install
-
 $(target_dir)-bz2-src:
-ifneq ($(src_path)/$(target_dir), $(wildcard $(src_path)/$(target_dir)))
+ifneq ($(target_dir_path), $(wildcard $(target_dir_path)))
+ifneq ($(target_dir_path).tar.bz2, $(wildcard $(target_dir_path).tar.bz2))
 	cd $(src_path) && \
-		$(WGET) $(target_download_path) && \
-		$(TAR_BZ2) $(@:-bz2-src=).tar.bz2 && \
-		$(RM) $(@:-bz2-src=).tar.bz2
+		$(WGET) $(target_download_path)
+endif
+	cd $(src_path) && \
+		$(TAR_BZ2) $(@:-bz2-src=).tar.bz2
 endif
 
 $(target_dir)-rename-bz2-src:
-ifneq ($(src_path)/$(target_dir), $(wildcard $(src_path)/$(target_dir)))
+ifneq ($(target_dir_path), $(wildcard $(target_dir_path)))
+ifneq ($(target_dir_path).tar.bz2, $(wildcard $(target_dir_path).tar.bz2))
 	cd $(src_path) && \
-		$(WGET) $(target_download_path) -O $(project_target)-$(target_version).tar.bz2 && \
-		$(TAR_BZ2) $(@:-rename-bz2-src=).tar.bz2 && \
-		$(RM) $(@:-rename-bz2-src=).tar.bz2
+		$(WGET) $(target_download_path) -O $(@:-rename-bz2-src=).tar.bz2
+endif
+	cd $(src_path) && \
+		$(TAR_BZ2) $(@:-rename-bz2-src=).tar.bz2
 endif
 
 $(target_dir)-gz-src:
-ifneq ($(src_path)/$(target_dir), $(wildcard $(src_path)/$(target_dir)))
+ifneq ($(target_dir_path), $(wildcard $(target_dir_path)))
+ifneq ($(target_dir_path).tar.gz, $(wildcard $(target_dir_path).tar.gz))
 	cd $(src_path) && \
-		$(WGET) $(target_download_path) && \
-		$(TAR_GZ) $(@:-gz-src=).tar.gz && \
-		$(RM) $(@:-gz-src=).tar.gz
+		$(WGET) $(target_download_path)
+endif
+	cd $(src_path) && \
+		$(TAR_GZ) $(@:-gz-src=).tar.gz
 endif
 
 $(target_dir)-rename-gz-src:
-ifneq ($(src_path)/$(target_dir), $(wildcard $(src_path)/$(target_dir)))
+ifneq ($(target_dir_path), $(wildcard $(target_dir_path)))
+ifneq ($(target_dir_path).tar.gz, $(wildcard $(target_dir_path).tar.gz))
 	cd $(src_path) && \
-		$(WGET) $(target_download_path) -O $(project_target)-$(target_version).tar.gz && \
-		$(TAR_GZ) $(@:-rename-gz-src=).tar.gz && \
-		$(RM) $(@:-rename-gz-src=).tar.gz
+		$(WGET) $(target_download_path) -O $(@:-rename-gz-src=).tar.gz
+endif
+	cd $(src_path) && \
+		$(TAR_GZ) $(@:-rename-gz-src=).tar.gz
 endif
 
 $(target_dir)-xz-src:
-ifneq ($(src_path)/$(target_dir), $(wildcard $(src_path)/$(target_dir)))
+ifneq ($(target_dir_path), $(wildcard $(target_dir_path)))
+ifneq ($(target_dir_path).tar.xz, $(wildcard $(target_dir_path).tar.xz))
 	cd $(src_path) && \
-		$(WGET) $(target_download_path) && \
-		$(TAR_XZ) $(@:-xz-src=).tar.xz && \
-		$(RM) $(@:-xz-src=).tar.xz
+		$(WGET) $(target_download_path)
+endif
+	cd $(src_path) && \
+		$(TAR_XZ) $(@:-xz-src=).tar.xz
 endif
 
 $(target_dir)-rename-xz-src:
-ifneq ($(src_path)/$(target_dir), $(wildcard $(src_path)/$(target_dir)))
+ifneq ($(target_dir_path), $(wildcard $(target_dir_path)))
+ifneq ($(target_dir_path).tar.xz, $(wildcard $(target_dir_path).tar.xz))
 	cd $(src_path) && \
-		$(WGET) $(target_download_path) -O $(project_target)-$(target_version).tar.xz && \
-		$(TAR_XZ) $(@:-rename-xz-src=).tar.xz && \
-		$(RM) $(@:-rename-xz-src=).tar.xz
+		$(WGET) $(target_download_path) -O $(@:-rename-xz-src=).tar.xz
+endif
+	cd $(src_path) && \
+		$(TAR_XZ) $(@:-rename-xz-src=).tar.xz
 endif
 
 clean:
