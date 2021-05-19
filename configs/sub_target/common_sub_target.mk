@@ -35,7 +35,7 @@ $(target_dir)-make: $(target_dir)-config
 $(target_dir)-bz2-src:
 ifneq ($(src_path)/$(target_dir), $(wildcard $(src_path)/$(target_dir)))
 	cd $(src_path) && \
-		$(WGET) $(target_download_path)/$(@:-bz2-src=).tar.bz2 && \
+		$(WGET) $(target_download_path) && \
 		$(TAR_BZ2) $(@:-bz2-src=).tar.bz2 && \
 		$(RM) $(@:-bz2-src=).tar.bz2
 endif
@@ -51,7 +51,7 @@ endif
 $(target_dir)-gz-src:
 ifneq ($(src_path)/$(target_dir), $(wildcard $(src_path)/$(target_dir)))
 	cd $(src_path) && \
-		$(WGET) $(target_download_path)/$(@:-gz-src=).tar.gz && \
+		$(WGET) $(target_download_path) && \
 		$(TAR_GZ) $(@:-gz-src=).tar.gz && \
 		$(RM) $(@:-gz-src=).tar.gz
 endif
@@ -67,7 +67,7 @@ endif
 $(target_dir)-xz-src:
 ifneq ($(src_path)/$(target_dir), $(wildcard $(src_path)/$(target_dir)))
 	cd $(src_path) && \
-		$(WGET) $(target_download_path)/$(@:-xz-src=).tar.xz && \
+		$(WGET) $(target_download_path) && \
 		$(TAR_XZ) $(@:-xz-src=).tar.xz && \
 		$(RM) $(@:-xz-src=).tar.xz
 endif

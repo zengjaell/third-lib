@@ -24,7 +24,7 @@ endif
 
 project_target 			:= c-ares
 target_version 			:= 1.17.1
-target_download_path 	:= https://c-ares.haxx.se/download
+target_download_path 	:= https://c-ares.haxx.se/download/$(project_target)-$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 

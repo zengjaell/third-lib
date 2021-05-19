@@ -24,7 +24,7 @@ endif
 
 project_target          := freetype
 target_version 			:= 2.10.4
-target_download_path 	:= https://iweb.dl.sourceforge.net/project/freetype/freetype2/$(target_version)
+target_download_path 	:= https://iweb.dl.sourceforge.net/project/freetype/freetype2/$(target_version)/$(project_target)-$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 

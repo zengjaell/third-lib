@@ -24,7 +24,7 @@ endif
 
 project_target 			:= libffi
 target_version 			:= 3.3
-target_download_path 	:= ftp://sourceware.org/pub/libffi
+target_download_path 	:= ftp://sourceware.org/pub/libffi/$(project_target)-$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 

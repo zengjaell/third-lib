@@ -24,7 +24,7 @@ endif
 
 project_target          := pcre2
 target_version 			:= 10.36
-target_download_path 	:= https://udomain.dl.sourceforge.net/project/pcre/$(project_target)/$(target_version)
+target_download_path 	:= https://udomain.dl.sourceforge.net/project/pcre/$(project_target)/$(target_version)/$(project_target)-$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 

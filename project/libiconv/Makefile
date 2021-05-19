@@ -24,7 +24,7 @@ endif
 
 project_target          := libiconv
 target_version 			:= 1.15
-target_download_path 	:= https://ftp.gnu.org/pub/gnu/libiconv
+target_download_path 	:= https://ftp.gnu.org/pub/gnu/libiconv/$(project_target)-$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 

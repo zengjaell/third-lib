@@ -24,7 +24,7 @@ endif
 
 project_target  		:= gdb
 target_version 			:= 10.1
-target_download_path 	:= http://ftp.gnu.org/gnu/gdb
+target_download_path 	:= http://ftp.gnu.org/gnu/gdb/$(project_target)-$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 

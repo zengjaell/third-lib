@@ -25,7 +25,7 @@ endif
 project_target          := libpng
 target_version 			:= 1.6.37
 target_version_2  		:= 16
-target_download_path 	:= https://nchc.dl.sourceforge.net/project/libpng/libpng$(target_version_2)/$(target_version)
+target_download_path 	:= https://nchc.dl.sourceforge.net/project/libpng/libpng$(target_version_2)/$(target_version)/$(project_target)-$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 

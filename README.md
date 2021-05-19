@@ -84,13 +84,23 @@ $ make clean        // 清除build目录下的所有编译文件
 $ make distclean    // 清除build和src目录的所有文件
 ```
 
-* 编译`zlib`
+* 在根目录下编译`zlib`
 
 ```shell
 $ make project=zlib             // 编译zlib
 $ make project=zlib V=1         // 编译zlib，并输出详细的编译信息
 $ make project=zlib_clean       // 清除build下zlib相关文件
 $ make project=zlib_distclan    // 清除src和build下zlib相关文件
+```
+
+* 在项目目录下编译
+
+```shell
+$ cd project/zlib
+$ make             // 编译zlib
+$ make V=1         // 编译zlib，并输出详细的编译信息
+$ make clean       // 清除build下zlib相关文件
+$ make distclan    // 清除src和build下zlib相关文件
 ```
 
 ### 增加新的项目

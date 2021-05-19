@@ -24,7 +24,7 @@ endif
 
 project_target         	:= ncurses
 target_version 			:= 6.2
-target_download_path 	:= http://ftp.gnu.org/gnu/ncurses
+target_download_path 	:= http://ftp.gnu.org/gnu/ncurses/$(project_target)-$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
@@ -54,13 +54,10 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 			--with-pkg-config=$(prefix_path)/lib/pkgconfig \
 			--with-shared \
 			\
-			--without-cxx \
-			--without-cxx-binding \
-			--without-ada \
-			--without-manpages \
-			--without-tests \
 			--without-progs \
-			--without-debug
+			--without-tests \
+			--without-debug \
+			--without-manpages
 
 	$(TOUCH) $(config_ok_path)
 endif

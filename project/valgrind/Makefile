@@ -24,7 +24,7 @@ endif
 
 project_target         	:= valgrind
 target_version 			:= 3.17.0
-target_download_path 	:= https://sourceware.org/pub/valgrind
+target_download_path 	:= https://sourceware.org/pub/valgrind/$(project_target)-$(target_version).tar.bz2
 
 include $(top_dir)/configs/common_var.mk
 

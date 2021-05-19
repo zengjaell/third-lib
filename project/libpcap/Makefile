@@ -24,7 +24,7 @@ endif
 
 project_target          := libpcap
 target_version 			:= 1.9.1
-target_download_path 	:= http://www.tcpdump.org/release
+target_download_path 	:= http://www.tcpdump.org/release/$(project_target)-$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 

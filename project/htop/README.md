@@ -218,6 +218,24 @@ $ make
 $ make install
 ```
 
+* 出现如下错误
+
+```txt
+/opt/data/opt/toolchains/hisi-linux/arm-himix200-linux/bin/arm-himix200-linux-gcc -DHAVE_CONFIG_H -I. -I/opt/data/office/xia/3rd-lib/project/htop/../../src/htop-2.2.0  -DNDEBUG -I/opt/data/install/hisi-linux/arm-himix200-linux/include -pipe -pedantic -Wall -Wextra -std=c99 -D_XOPEN_SOURCE_EXTENDED -DSYSCONFDIR=\"/opt/data/install/hisi-linux/arm-himix200-linux/etc\" -I"/opt/data/office/xia/3rd-lib/project/htop/../../src/htop-2.2.0/linux" -rdynamic -D_DEFAULT_SOURCE -D_XOPEN_SOURCE=600 -I/opt/data/install/hisi-linux/arm-himix200-linux/include/ncurses -I/opt/data/install/hisi-linux/arm-himix200-linux/include   -MT AvailableMetersPanel.o -MD -MP -MF $depbase.Tpo -c -o AvailableMetersPanel.o /opt/data/office/xia/3rd-lib/project/htop/../../src/htop-2.2.0/AvailableMetersPanel.c &&\
+mv -f $depbase.Tpo $depbase.Po
+In file included from /opt/data/office/xia/3rd-lib/project/htop/../../src/htop-2.2.0/Object.h:12:0,
+                 from /opt/data/office/xia/3rd-lib/project/htop/../../src/htop-2.2.0/Process.h:29,
+                 from /opt/data/office/xia/3rd-lib/project/htop/../../src/htop-2.2.0/Settings.h:14,
+                 from /opt/data/office/xia/3rd-lib/project/htop/../../src/htop-2.2.0/AvailableMetersPanel.h:12,
+                 from /opt/data/office/xia/3rd-lib/project/htop/../../src/htop-2.2.0/AvailableMetersPanel.c:8:
+/opt/data/office/xia/3rd-lib/project/htop/../../src/htop-2.2.0/RichString.h:19:29: fatal error: ncursesw/curses.h: No such file or directory
+ #include <ncursesw/curses.h>
+                             ^
+```
+
+问题跟上面是一样的，都是影子编译造成的
+
+
 ## 交叉编译`arm-himix200-linux`版本
 
 > 前提是编译好了`ncurses`，这边把编译好的库放在`/opt/htop/_build/arm-himix200-linux/install`目录下

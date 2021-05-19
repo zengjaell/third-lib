@@ -24,7 +24,7 @@ endif
 
 project_target          := zlib
 target_version 			:= 1.2.11
-target_download_path 	:= https://nchc.dl.sourceforge.net/project/libpng/zlib/$(target_version)
+target_download_path 	:= https://nchc.dl.sourceforge.net/project/libpng/zlib/$(target_version)/$(project_target)-$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 

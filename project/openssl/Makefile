@@ -24,7 +24,7 @@ endif
 
 project_target          := openssl
 target_version 			:= 1.1.1i
-target_download_path 	:= https://www.openssl.org/source
+target_download_path 	:= https://www.openssl.org/source/$(project_target)-$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 

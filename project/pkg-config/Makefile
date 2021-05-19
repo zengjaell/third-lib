@@ -24,7 +24,7 @@ endif
 
 project_target          := pkg-config
 target_version 			:= 0.29.2
-target_download_path 	:= https://pkgconfig.freedesktop.org/releases
+target_download_path 	:= https://pkgconfig.freedesktop.org/releases/$(project_target)-$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 

@@ -24,7 +24,7 @@ endif
 
 project_target          := curl
 target_version 			:= 7.76.1
-target_download_path 	:= https://curl.se/download
+target_download_path 	:= https://curl.se/download/$(project_target)-$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 

@@ -24,7 +24,7 @@ endif
 
 project_target          := libevent
 target_version          := 2.1.12-stable
-target_download_path    := https://download.fastgit.org/libevent/libevent/releases/download/release-$(target_version)
+target_download_path    := https://download.fastgit.org/libevent/libevent/releases/download/release-$(target_version)/$(project_target)-$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 

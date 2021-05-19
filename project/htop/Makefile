@@ -24,7 +24,7 @@ endif
 
 project_target     		:= htop
 target_version 			:= 2.2.0
-target_download_path 	:= http://hisham.hm/htop/releases/$(target_version)
+target_download_path 	:= http://hisham.hm/htop/releases/$(target_version)/$(project_target)-$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
@@ -38,7 +38,9 @@ $(target_dir)-config: $(target_dir)-gz-src
 ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
-	cd $(src_path)/$(@:-config=) && ./autogen.sh
+	cd $(src_path)/$(@:-config=) && \
+		./autogen.sh && \
+		$(RM) config.h
 
 	cd $(build_path)/$(@:-config=) && 				\
 		$(src_path)/$(@:-config=)/configure 		\

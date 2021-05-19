@@ -24,7 +24,7 @@ endif
 
 project_target 			:= mosquitto
 target_version 			:= 2.0.10
-target_download_path 	:= https://mosquitto.org/files/source
+target_download_path 	:= https://mosquitto.org/files/source/$(project_target)-$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 

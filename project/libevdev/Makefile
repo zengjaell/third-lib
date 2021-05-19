@@ -24,7 +24,7 @@ endif
 
 project_target          := libevdev
 target_version 			:= 1.11.0
-target_download_path 	:= https://www.freedesktop.org/software/libevdev
+target_download_path 	:= https://www.freedesktop.org/software/libevdev/$(project_target)-$(target_version).tar.xz
 
 include $(top_dir)/configs/common_var.mk
 

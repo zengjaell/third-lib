@@ -24,7 +24,7 @@ endif
 
 project_target  		:= tcpdump
 target_version 			:= 4.99.0
-target_download_path 	:= https://www.tcpdump.org/release
+target_download_path 	:= https://www.tcpdump.org/release/$(project_target)-$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
