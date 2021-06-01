@@ -41,7 +41,7 @@ $(target_dir)-config: $(target_dir)-xz-src
 ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
-    case $(host) in                                     \
+	case $(host) in                                     \
         x86*)                                           \
             ;;                                          \
         arm-himix200-linux)                             \
