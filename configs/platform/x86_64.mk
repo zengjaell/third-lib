@@ -18,12 +18,17 @@
 #     last modified: 05/12 2019 17:31
 # ===============================================================
 
-toolchains_path     :=
-toolchains_bin_path := $(toolchains_path)/bin
+toolchains_version  := x86_64-linux-gnu
+gcc_name            :=
+
+toolchains_bin_path :=
 gcc_prefix          :=
 host                := $(build)
 
-CFLAGS              :=
-LDFLAGS             :=
+cppflags_com        :=
+cflags_com          :=
+cxxflags_com        :=
+ldflags_com         :=
+libs_com            := 
 
-prefix_path         ?= $(HOME)/data/usr/local
+prefix_path         ?= $(base_prefix_path)/$(platform)/$(toolchains_version)

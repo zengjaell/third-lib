@@ -22,8 +22,7 @@
 toolchains_version  := arm-himix200-linux
 gcc_name            := arm-himix200-linux
 
-toolchains_path     := $(base_toolchains_path)/$(platform)
-toolchains_bin_path := $(toolchains_path)/$(toolchains_version)/bin
+toolchains_bin_path := $(base_toolchains_path)/$(platform)/$(toolchains_version)/bin
 gcc_prefix          := $(gcc_name)-
 program_prefix      := $(gcc_name)-
 host                := $(gcc_name)

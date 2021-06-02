@@ -19,12 +19,12 @@
 # ===============================================================
 
 toolchains_version  := gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu
+gcc_name            := aarch64-linux-gnu
 
-toolchains_path     := $(base_toolchains_path)/$(platform)
-toolchains_bin_path := $(toolchains_path)/$(toolchains_version)/bin
-gcc_prefix          := aarch64-linux-gnu-
-program_prefix      := aarch64-linux-gnu-
-host                := aarch64-linux-gnu
+toolchains_bin_path := $(base_toolchains_path)/$(platform)/$(toolchains_version)/bin
+gcc_prefix          := $(gcc_name)-
+program_prefix      := $(gcc_name)-
+host                := $(gcc_name)
 
 cppflags_com        :=
 cflags_com          :=

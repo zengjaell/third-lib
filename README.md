@@ -29,10 +29,15 @@
 ├── build                               // 编译输出目录
 ├── configs
 │   ├── common_var.mk
-│   ├── platform                        // 每一种gcc对应一个文件
-│   │   ├── arm-himix200-linux.mk
-│   │   ├── arm-hisiv510-linux.mk
+│   ├── platform                        // gcc相关信息
+│   │   ├── ats3607d.mk
+│   │   ├── hisi.mk
+│   │   ├── linaro.mk
 │   │   ├── platform_config.mk          // 平台配置文件
+│   │   ├── r328.mk
+│   │   ├── rk3308.mk
+│   │   ├── unione.mk
+│   │   ├── x1830.mk
 │   │   └── x86_64.mk
 │   ├── sub_target
 │   │   ├── check_lib.mk
@@ -42,7 +47,7 @@
 │   └── utils
 │       └── cmd.mk
 ├── LICENSE
-├── Makefile                            // 项目顶层Makefile
+├── Makefile
 ├── project
 │   ├── htop
 │   │   ├── Makefile                    // 第三方库编译Makefile
@@ -50,7 +55,7 @@
 │   └── zlib
 │       └── Makefile
 ├── README.md
-├── src
+├── src                                 // 源码目录
 └── SUMMARY.md
 ```
 
@@ -68,12 +73,33 @@
 #       unione
 #       x1830
 #       ats3607d
-#       arm-hisiv510-linux
-#       arm-himix200-linux
+#       hisi
+#       linaro
 platform := x86_64
 ```
 
 > 如果没有对应的平台，可以增加相应的平台配置文件
+
+* 修改平台文件中关系gcc路径的配置
+
+```txt
+# arm-himix200-linux, arm-hisiv510-linux
+toolchains_version  := arm-himix200-linux
+gcc_name            := arm-himix200-linux
+
+toolchains_bin_path := $(base_toolchains_path)/$(platform)/$(toolchains_version)/bin    // gcc路径
+gcc_prefix          := $(gcc_name)-
+program_prefix      := $(gcc_name)-
+host                := $(gcc_name)
+
+cppflags_com        :=
+cflags_com          :=
+cxxflags_com        :=
+ldflags_com         :=
+libs_com            := 
+
+prefix_path         ?= $(base_prefix_path)/$(platform)/$(toolchains_version)            // 安装路径
+```
 
 * 在根目录下执行`make`，获取相关信息
 
@@ -121,7 +147,7 @@ target_download_path    := url      // 填写项目url
 
 include $(top_dir)/configs/common_var.mk
 
-all: depend_lib $(target_dir)-strip-make
+all: depend_lib $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
 
@@ -154,11 +180,19 @@ endif
 
 ### 手动下载大软件包
 
-* 通过下载工具下载软件包，比如迅雷下载
+* 通过下载工具下载源码包，比如迅雷下载
 
-* 把下载好的软件包放到`src`目录下
+* 把下载好的源码包放到`src`目录下
 
 * 执行上面的编译步骤
+
+> 事先下载源码包的情况:
+>
+> 1, 源码包较大的情况下，如qt
+>
+> 2, 一些源码包下载速度很忙，出现多次掉线的情况下
+>
+> 3，编译机器所在的网络不好，可以从其他地方下载
 
 ## 相关说明文档
 
