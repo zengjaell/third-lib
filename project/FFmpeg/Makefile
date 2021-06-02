@@ -1,0 +1,66 @@
+# ===============================================================
+# 
+# Release under GPLv-3.0.
+# 
+# @file    Makefile
+# @brief   
+# @author  gnsyxiang <gnsyxiang@163.com>
+# @date    02/06 2021 10:36
+# @version v0.0.1
+# 
+# @since    note
+# @note     note
+# 
+#     change log:
+#     NO.     Author              Date            Modified
+#     00      zhenquan.qiu        02/06 2021      create the file
+# 
+#     last modified: 02/06 2021 10:36
+# ===============================================================
+
+ifndef top_dir
+top_dir     := $(shell pwd)/../..
+endif
+
+project_target          := FFmpeg
+target_version          := n4.4
+target_download_path    := https://archive.fastgit.org/FFmpeg/FFmpeg/archive/refs/tags/$(target_version).tar.gz
+
+include $(top_dir)/configs/common_var.mk
+
+all: depend_lib $(target_dir)-make
+
+include $(sub_target_path)/common_sub_target.mk
+
+depend_lib:
+
+# 临时指定配置信息
+# prefix_path := /opt/data/nfs/meian/3rd_lib/tslib
+# pkg_config_path := $(base_prefix_path)/hisi-linux/$(platform)/lib/pkgconfig
+
+$(target_dir)-config: $(target_dir)-rename-gz-src
+ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+	$(MKDIR) $(build_path)/$(@:-config=)
+
+	case $(host) in                                     \
+        x86*)                                           \
+            ;;                                          \
+        arm-*)                                          \
+            cd $(build_path)/$(@:-config=) &&           \
+                $(src_path)/$(@:-config=)/configure     \
+                    --prefix=$(prefix_path)             \
+                    --cross-prefix=$(cross_prefix)      \
+                    --enable-cross-compile              \
+                    --target-os=linux                   \
+                    --arch=arm                          \
+                    --enable-shared                     \
+                    \
+                    --disable-debug                     \
+                    --disable-doc                       \
+        ;;                                              \
+    esac
+
+	$(TOUCH) $(config_ok_path)
+endif
+
+.PHONY: all clean distclean list
