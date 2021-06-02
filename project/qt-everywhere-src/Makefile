@@ -43,6 +43,19 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 
 	case $(host) in                                         \
         x86*)                                               \
+            cd $(build_path)/$(@:-config=) &&               \
+                $(src_path)/$(@:-config=)/configure         \
+                    -prefix ${prefix_path}                  \
+                    -opensource                             \
+                    -confirm-license                        \
+                    -release                                \
+                    -shared                                 \
+                    -optimize-size                          \
+                    -ccache                                 \
+                    -pch                                    \
+                    -I${prefix_path}/include                \
+                    -L${prefix_path}/lib                    \
+                    -nomake tests                           \
             ;;                                              \
         arm-*|aarch*)                                       \
             $(CP) $(project_path)/$(project_target)/linux-arm-$(platform)-g++ $(src_path)/$(@:-config=)/qtbase/mkspecs && \

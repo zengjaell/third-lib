@@ -23,7 +23,7 @@ gcc_name            :=
 
 toolchains_bin_path :=
 gcc_prefix          :=
-host                := $(build)
+host                := x86_64-linux-gnu
 
 cppflags_com        :=
 cflags_com          :=

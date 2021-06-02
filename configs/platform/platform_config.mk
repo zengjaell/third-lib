@@ -18,9 +18,9 @@
 #     last modified: 05/12 2019 16:40
 # ===============================================================
 
-data_disk_path := /opt/data
+data_disk_path       := /opt/data
 base_toolchains_path := $(data_disk_path)/opt/toolchains
-base_prefix_path := $(data_disk_path)/install
+base_prefix_path     := $(data_disk_path)/install
 
 # 可选的平台有: 
 #       pc
