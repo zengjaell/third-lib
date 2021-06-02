@@ -28,7 +28,7 @@ target_download_path 	:= https://www.freedesktop.org/software/libevdev/$(project
 
 include $(top_dir)/configs/common_var.mk
 
-all: depend_lib $(target_dir)-strip-make
+all: depend_lib $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
 

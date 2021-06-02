@@ -28,7 +28,7 @@ target_download_path 	:= https://udomain.dl.sourceforge.net/project/pcre/$(proje
 
 include $(top_dir)/configs/common_var.mk
 
-all: $(target_dir)-strip-make
+all: $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
 

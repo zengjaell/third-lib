@@ -28,7 +28,7 @@ target_download_path 	:= https://archive.fastgit.org/libts/tslib/archive/refs/ta
 
 include $(top_dir)/configs/common_var.mk
 
-all: depend_lib $(target_dir)-strip-make
+all: depend_lib $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
 

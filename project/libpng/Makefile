@@ -29,7 +29,7 @@ target_download_path 	:= https://nchc.dl.sourceforge.net/project/libpng/libpng$(
 
 include $(top_dir)/configs/common_var.mk
 
-all: depend_lib $(target_dir)-strip-make
+all: depend_lib $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
 
