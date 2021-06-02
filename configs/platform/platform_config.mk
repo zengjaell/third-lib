@@ -23,7 +23,7 @@ base_toolchains_path := $(data_disk_path)/opt/toolchains
 base_prefix_path := $(data_disk_path)/install
 
 # 可选的平台有: 
-#       x86_64
+#       pc
 #       r328
 #       rk3308
 #       unione
@@ -31,7 +31,7 @@ base_prefix_path := $(data_disk_path)/install
 #       ats3607d
 #       hisi
 #       linaro
-platform := hisi
+platform := pc
 
 include $(top_dir)/configs/platform/$(platform).mk
 
@@ -43,7 +43,7 @@ include $(top_dir)/configs/platform/$(platform).mk
 build   := x86_64-linux-gnu
 target  := $(host)
 
-ifneq ($(platform), x86_64)
+ifneq ($(platform), pc)
 cross_prefix    := $(toolchains_bin_path)/$(gcc_prefix)
 endif
 
