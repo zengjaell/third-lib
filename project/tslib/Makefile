@@ -23,8 +23,8 @@ top_dir 	:= $(shell pwd)/../..
 endif
 
 project_target          := tslib
-target_version 			:= 1.22
-target_download_path 	:= https://archive.fastgit.org/libts/tslib/archive/refs/tags/$(target_version).tar.gz
+target_version          := 1.22
+target_download_path    := https://archive.fastgit.org/libts/tslib/archive/refs/tags/$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
@@ -43,27 +43,27 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
 	cd $(src_path)/$(@:-config=) && \
-		./autogen.sh
+        ./autogen.sh
 
-	cd $(build_path)/$(@:-config=) && 				\
-		$(src_path)/$(@:-config=)/configure 		\
-			CC=$(GCC) CXX=$(CXX) 					\
-			CPPFLAGS="$(cppflags_com)" 				\
-			CFLAGS="$(cflags_com)" 					\
-			CXXFLAGS="$(cxxflags_com)" 				\
-			LDFLAGS="$(ldflags_com)" 				\
-			LIBS="$(libs_com)" 						\
-			PKG_CONFIG_PATH="$(pkg_config_path)" 	\
-			--prefix=$(prefix_path) 				\
-			--build=$(build) 						\
-			--host=$(host) 							\
-			--target=$(host) 						\
-			\
-			--enable-input-evdev
+	cd $(build_path)/$(@:-config=) &&               \
+        $(src_path)/$(@:-config=)/configure         \
+            CC=$(GCC) CXX=$(CXX)                    \
+            CPPFLAGS="$(cppflags_com)"              \
+            CFLAGS="$(cflags_com)"                  \
+            CXXFLAGS="$(cxxflags_com)"              \
+            LDFLAGS="$(ldflags_com)"                \
+            LIBS="$(libs_com)"                      \
+            PKG_CONFIG_PATH="$(pkg_config_path)"    \
+            --prefix=$(prefix_path)                 \
+            --build=$(build)                        \
+            --host=$(host)                          \
+            --target=$(host)                        \
+            \
+            --enable-input-evdev
 
 	cd $(build_path)/$(@:-config=) && \
-		sed -i '/#define VERSION/a #define ABS_MT_TOOL_Y 0x3d' config.h && \
-		sed -i '/#define VERSION/a #define ABS_MT_TOOL_X 0x3c' config.h
+        sed -i '/#define VERSION/a #define ABS_MT_TOOL_Y 0x3d' config.h && \
+        sed -i '/#define VERSION/a #define ABS_MT_TOOL_X 0x3c' config.h
 
 	$(TOUCH) $(config_ok_path)
 endif

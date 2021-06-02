@@ -22,9 +22,9 @@ ifndef top_dir
 top_dir := $(shell pwd)/../..
 endif
 
-project_target  		:= libuv
-target_version 			:= 1.41.0
-target_download_path 	:= https://archive.fastgit.org/libuv/libuv/archive/refs/tags/v$(target_version).tar.gz
+project_target          := libuv
+target_version          := 1.41.0
+target_download_path    := https://archive.fastgit.org/libuv/libuv/archive/refs/tags/v$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
@@ -37,21 +37,21 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
 	cd $(src_path)/$(@:-config=) && \
-		./autogen.sh
+        ./autogen.sh
 
-	cd $(build_path)/$(@:-config=) && 				\
-		$(src_path)/$(@:-config=)/configure 		\
-			CC=$(GCC) CXX=$(CXX) 					\
-			CPPFLAGS="$(cppflags_com)" 				\
-			CFLAGS="$(cflags_com)" 					\
-			CXXFLAGS="$(cxxflags_com)" 				\
-			LDFLAGS="$(ldflags_com)" 				\
-			LIBS="$(libs_com)" 						\
-			PKG_CONFIG_PATH="$(pkg_config_path)" 	\
-			--prefix=$(prefix_path) 				\
-			--build=$(build) 						\
-			--host=$(host) 							\
-			--target=$(host)
+	cd $(build_path)/$(@:-config=) &&               \
+        $(src_path)/$(@:-config=)/configure         \
+            CC=$(GCC) CXX=$(CXX)                    \
+            CPPFLAGS="$(cppflags_com)"              \
+            CFLAGS="$(cflags_com)"                  \
+            CXXFLAGS="$(cxxflags_com)"              \
+            LDFLAGS="$(ldflags_com)"                \
+            LIBS="$(libs_com)"                      \
+            PKG_CONFIG_PATH="$(pkg_config_path)"    \
+            --prefix=$(prefix_path)                 \
+            --build=$(build)                        \
+            --host=$(host)                          \
+            --target=$(host)
 
 	$(TOUCH) $(config_ok_path)
 endif

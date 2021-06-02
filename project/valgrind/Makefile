@@ -19,12 +19,12 @@
 # ===============================================================
 
 ifndef top_dir
-top_dir 	:= $(shell pwd)/../..
+top_dir     := $(shell pwd)/../..
 endif
 
-project_target         	:= valgrind
-target_version 			:= 3.17.0
-target_download_path 	:= https://sourceware.org/pub/valgrind/$(project_target)-$(target_version).tar.bz2
+project_target          := valgrind
+target_version          := 3.17.0
+target_download_path    := https://sourceware.org/pub/valgrind/$(project_target)-$(target_version).tar.bz2
 
 include $(top_dir)/configs/common_var.mk
 
@@ -37,23 +37,23 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
 	cd $(src_path)/$(@:-config=) && \
-		./autogen.sh && \
-		sed 's/armv7\*)/armv7\*|arm\*)/g' ./configure > ./configure-bak && \
-		chmod +x ./configure-bak
+        ./autogen.sh && \
+        sed 's/armv7\*)/armv7\*|arm\*)/g' ./configure > ./configure-bak && \
+        chmod +x ./configure-bak
 
-	cd $(build_path)/$(@:-config=) && 				\
-		$(src_path)/$(@:-config=)/configure-bak 	\
-			CC=$(GCC) CXX=$(CXX) 					\
-			CPPFLAGS="$(cppflags_com)" 				\
-			CFLAGS="$(cflags_com)" 					\
-			CXXFLAGS="$(cxxflags_com)" 				\
-			LDFLAGS="$(ldflags_com)" 				\
-			LIBS="$(libs_com)" 						\
-			PKG_CONFIG_PATH="$(pkg_config_path)" 	\
-			--prefix=$(prefix_path) 				\
-			--build=$(build) 						\
-			--host=$(host) 							\
-			--target=$(host)
+	cd $(build_path)/$(@:-config=) &&               \
+        $(src_path)/$(@:-config=)/configure-bak     \
+            CC=$(GCC) CXX=$(CXX)                    \
+            CPPFLAGS="$(cppflags_com)"              \
+            CFLAGS="$(cflags_com)"                  \
+            CXXFLAGS="$(cxxflags_com)"              \
+            LDFLAGS="$(ldflags_com)"                \
+            LIBS="$(libs_com)"                      \
+            PKG_CONFIG_PATH="$(pkg_config_path)"    \
+            --prefix=$(prefix_path)                 \
+            --build=$(build)                        \
+            --host=$(host)                          \
+            --target=$(host)
 
 # 注意：只支持 armV7、armV8两种arm CPU架构。
 # 

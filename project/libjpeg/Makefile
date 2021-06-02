@@ -19,12 +19,12 @@
 # ===============================================================
 
 ifndef top_dir
-top_dir 	:= $(shell pwd)/../..
+top_dir     := $(shell pwd)/../..
 endif
 
 project_target          := libjpeg
-target_version 			:= 9d
-target_download_path 	:= http://www.ijg.org/files/jpegsrc.v$(target_version).tar.gz
+target_version          := 9d
+target_download_path    := http://www.ijg.org/files/jpegsrc.v$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
@@ -36,19 +36,19 @@ $(target_dir)-config: $(target_dir)-jpeg-src
 ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
-	cd $(build_path)/$(@:-config=) && 				\
-		$(src_path)/$(@:-config=)/configure 		\
-			CC=$(GCC) CXX=$(CXX) 					\
-			CPPFLAGS="$(cppflags_com)" 				\
-			CFLAGS="$(cflags_com)" 					\
-			CXXFLAGS="$(cxxflags_com)" 				\
-			LDFLAGS="$(ldflags_com)" 				\
-			LIBS="$(libs_com)" 						\
-			PKG_CONFIG_PATH="$(pkg_config_path)" 	\
-			--prefix=$(prefix_path) 				\
-			--build=$(build) 						\
-			--host=$(host) 							\
-			--target=$(host)
+	cd $(build_path)/$(@:-config=) &&               \
+        $(src_path)/$(@:-config=)/configure         \
+            CC=$(GCC) CXX=$(CXX)                    \
+            CPPFLAGS="$(cppflags_com)"              \
+            CFLAGS="$(cflags_com)"                  \
+            CXXFLAGS="$(cxxflags_com)"              \
+            LDFLAGS="$(ldflags_com)"                \
+            LIBS="$(libs_com)"                      \
+            PKG_CONFIG_PATH="$(pkg_config_path)"    \
+            --prefix=$(prefix_path)                 \
+            --build=$(build)                        \
+            --host=$(host)                          \
+            --target=$(host)
 
 	$(TOUCH) $(config_ok_path)
 endif
@@ -56,10 +56,10 @@ endif
 $(target_dir)-jpeg-src:
 ifneq ($(target_dir), $(wildcard $(target_dir)))
 	cd $(src_path) && \
-		$(WGET) $(target_download_path) -O $(project_target)-$(target_version).tar.gz && \
-		$(MKDIR) $(project_target)-$(target_version) && \
-		$(TAR_GZ) $(@:-jpeg-src=).tar.gz -C $(project_target)-$(target_version) --strip-components 1 && \
-		$(RM) $(@:-jpeg-src=).tar.gz
+        $(WGET) $(target_download_path) -O $(project_target)-$(target_version).tar.gz && \
+        $(MKDIR) $(project_target)-$(target_version) && \
+        $(TAR_GZ) $(@:-jpeg-src=).tar.gz -C $(project_target)-$(target_version) --strip-components 1 && \
+        $(RM) $(@:-jpeg-src=).tar.gz
 endif
 
 .PHONY: all clean distclean list

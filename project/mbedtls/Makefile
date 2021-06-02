@@ -19,12 +19,12 @@
 # ===============================================================
 
 ifndef top_dir
-top_dir 	:= $(shell pwd)/../..
+top_dir     := $(shell pwd)/../..
 endif
 
-project_target 			:= mbedtls
-target_version 			:= 2.26.0
-target_download_path 	:= https://archive.fastgit.org/ARMmbed/mbedtls/archive/refs/tags/v$(target_version).tar.gz
+project_target          := mbedtls
+target_version          := 2.26.0
+target_download_path    := https://archive.fastgit.org/ARMmbed/mbedtls/archive/refs/tags/v$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
@@ -37,15 +37,15 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
 	cd $(build_path)/$(@:-config=) && \
-		cmake \
-		$(src_path)/$(@:-config=) \
-		-DCMAKE_INSTALL_PREFIX=$(prefix_path) \
-		-DCMAKE_C_COMPILER=$(CC) \
-		-DCMAKE_CXX_COMPILER=$(CXX) \
-		\
-		-DCMAKE_BUILD_TYPE=RELEASE \
-		-DUSE_SHARED_MBEDTLS_LIBRARY:BOOL=ON \
-		-DENABLE_TESTING:BOOL=OFF
+        cmake \
+        $(src_path)/$(@:-config=) \
+        -DCMAKE_INSTALL_PREFIX=$(prefix_path) \
+        -DCMAKE_C_COMPILER=$(CC) \
+        -DCMAKE_CXX_COMPILER=$(CXX) \
+        \
+        -DCMAKE_BUILD_TYPE=RELEASE \
+        -DUSE_SHARED_MBEDTLS_LIBRARY:BOOL=ON \
+        -DENABLE_TESTING:BOOL=OFF
 
 	$(TOUCH) $(config_ok_path)
 endif

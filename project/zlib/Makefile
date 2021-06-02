@@ -19,12 +19,12 @@
 # ===============================================================
 
 ifndef top_dir
-top_dir 	:= $(shell pwd)/../..
+top_dir     := $(shell pwd)/../..
 endif
 
 project_target          := zlib
-target_version 			:= 1.2.11
-target_download_path 	:= https://nchc.dl.sourceforge.net/project/libpng/zlib/$(target_version)/$(project_target)-$(target_version).tar.gz
+target_version          := 1.2.11
+target_download_path    := https://nchc.dl.sourceforge.net/project/libpng/zlib/$(target_version)/$(project_target)-$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
@@ -37,9 +37,9 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
 	cd $(build_path)/$(@:-config=) && \
-		export CC=$(CC) export CXX=$(CXX) && \
-		$(src_path)/$(@:-config=)/configure \
-		--prefix=$(prefix_path)
+        export CC=$(CC) export CXX=$(CXX) && \
+        $(src_path)/$(@:-config=)/configure \
+        --prefix=$(prefix_path)
 
 	$(TOUCH) $(config_ok_path)
 endif

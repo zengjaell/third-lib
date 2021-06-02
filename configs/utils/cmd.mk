@@ -18,14 +18,14 @@
 #     last modified: 05/12 2019 17:55
 # ===============================================================
 
-MKDIR 			:= mkdir -p
-RM 				:= rm -rf
-CP 				:= cp -ar
-TOUCH   		:= touch
-ECHO 			:= echo
-WGET   			:= wget
-LN 				:= ln -sf
+MKDIR           := mkdir -p
+RM              := rm -rf
+CP              := cp -ar
+TOUCH           := touch
+ECHO            := echo
+WGET            := wget
+LN              := ln -sf
 
-TAR_BZ2 		?= tar -xjvf
-TAR_GZ 			?= tar -xzvf
-TAR_XZ 			?= tar -xvf
+TAR_BZ2         ?= tar -xjvf
+TAR_GZ          ?= tar -xzvf
+TAR_XZ          ?= tar -xvf

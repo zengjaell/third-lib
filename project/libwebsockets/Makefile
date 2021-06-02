@@ -19,12 +19,12 @@
 # ===============================================================
 
 ifndef top_dir
-top_dir 	:= $(shell pwd)/../..
+top_dir     := $(shell pwd)/../..
 endif
 
-project_target 			:= libwebsockets
-target_version 			:= 4.2.0
-target_download_path 	:= https://archive.fastgit.org/warmcat/libwebsockets/archive/refs/tags/v$(target_version).tar.gz
+project_target          := libwebsockets
+target_version          := 4.2.0
+target_download_path    := https://archive.fastgit.org/warmcat/libwebsockets/archive/refs/tags/v$(target_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
@@ -38,27 +38,25 @@ $(target_dir)-config: $(target_dir)-rename-gz-src
 ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
-	echo $(prefix_path)
-
 	cd $(build_path)/$(@:-config=) && \
-		cmake \
-		$(src_path)/$(@:-config=) \
-		-DCMAKE_INSTALL_PREFIX=$(prefix_path) \
-		-DCMAKE_C_COMPILER=$(CC) \
-		-DCMAKE_CXX_COMPILER=$(CXX) \
-		\
-		-DLWS_WITH_LIBUV:BOOL=ON \
-		-DLWS_LIBUV_LIBRARIES="$(prefix_path)/lib/libuv.so" \
-		-DLWS_LIBUV_INCLUDE_DIRS="$(prefix_path)/include"\
-		\
-		-DLWS_WITH_ZLIB:BOOL=ON \
-		-DLWS_ZLIB_INCLUDE_DIRS="$(prefix_path)/include" \
-		-DLWS_ZLIB_LIBRARIES="$(prefix_path)/lib/libz.so" \
-		\
-		-DLWS_WITH_LWSWS:BOOL=ON \
-		-DLWS_WITH_MBEDTLS:BOOL=ON \
-		-DLWS_MBEDTLS_LIBRARIES="$(prefix_path)/lib/libmbedcrypto.so;$(prefix_path)/lib/libmbedtls.so;$(prefix_path)/lib/libmbedx509.so" \
-		-DLWS_MBEDTLS_INCLUDE_DIRS="$(prefix_path)/include"
+        cmake \
+        $(src_path)/$(@:-config=) \
+        -DCMAKE_INSTALL_PREFIX=$(prefix_path) \
+        -DCMAKE_C_COMPILER=$(CC) \
+        -DCMAKE_CXX_COMPILER=$(CXX) \
+        \
+        -DLWS_WITH_LIBUV:BOOL=ON \
+        -DLWS_LIBUV_LIBRARIES="$(prefix_path)/lib/libuv.so" \
+        -DLWS_LIBUV_INCLUDE_DIRS="$(prefix_path)/include"\
+        \
+        -DLWS_WITH_ZLIB:BOOL=ON \
+        -DLWS_ZLIB_INCLUDE_DIRS="$(prefix_path)/include" \
+        -DLWS_ZLIB_LIBRARIES="$(prefix_path)/lib/libz.so" \
+        \
+        -DLWS_WITH_LWSWS:BOOL=ON \
+        -DLWS_WITH_MBEDTLS:BOOL=ON \
+        -DLWS_MBEDTLS_LIBRARIES="$(prefix_path)/lib/libmbedcrypto.so;$(prefix_path)/lib/libmbedtls.so;$(prefix_path)/lib/libmbedx509.so" \
+        -DLWS_MBEDTLS_INCLUDE_DIRS="$(prefix_path)/include"
 
 	$(TOUCH) $(config_ok_path)
 endif
