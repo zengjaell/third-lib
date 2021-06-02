@@ -32,7 +32,7 @@ all: depend_lib $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
 
-depend_lib:
+depend_lib: check_zlib
 
 # 临时指定配置信息
 # prefix_path := /opt/data/nfs/meian/3rd_lib/tslib
@@ -57,7 +57,9 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
             --prefix=$(prefix_path)                 \
             --build=$(build)                        \
             --host=$(host)                          \
-            --target=$(host)
+            --target=$(host)                        \
+            \
+            --with-zlib
 
 	$(TOUCH) $(config_ok_path)
 endif

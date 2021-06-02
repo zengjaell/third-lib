@@ -26,6 +26,14 @@ ifneq ($(_zlib_file), $(wildcard $(_zlib_file)))
 	exit 1
 endif
 
+_libiconv_file := $(prefix_path)/include/iconv.h
+check_libiconv:
+ifneq ($(_libiconv_file), $(wildcard $(_libiconv_file)))
+	$(ECHO) "\tuse \"make project=libiconv \" first to compile iconv."
+	$(ECHO) ''
+	exit 1
+endif
+
 _openssl_dir := $(prefix_path)/include/openssl
 check_openssl: check_zlib
 ifneq ($(_openssl_dir), $(wildcard $(_openssl_dir)))

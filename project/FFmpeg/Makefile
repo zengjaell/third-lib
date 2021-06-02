@@ -32,7 +32,7 @@ all: depend_lib $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
 
-depend_lib:
+depend_lib: check_zlib check_libiconv
 
 # 临时指定配置信息
 # prefix_path := /opt/data/nfs/meian/3rd_lib/tslib
@@ -42,22 +42,32 @@ $(target_dir)-config: $(target_dir)-rename-gz-src
 ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
-	case $(host) in                                     \
-        x86*)                                           \
-            ;;                                          \
-        arm-*)                                          \
-            cd $(build_path)/$(@:-config=) &&           \
-                $(src_path)/$(@:-config=)/configure     \
-                    --prefix=$(prefix_path)             \
-                    --cross-prefix=$(cross_prefix)      \
-                    --enable-cross-compile              \
-                    --target-os=linux                   \
-                    --arch=arm                          \
-                    --enable-shared                     \
+	case $(host) in                                                     \
+        x86*)                                                           \
+            ;;                                                          \
+        arm-*)                                                          \
+            cd $(build_path)/$(@:-config=) &&                           \
+                $(src_path)/$(@:-config=)/configure                     \
+                    --prefix=$(prefix_path)                             \
+                    --enable-version3                                   \
+                    --enable-cross-compile                              \
+                    --target-os=linux                                   \
+                    --arch=arm                                          \
+                    --cross-prefix=$(cross_prefix)                      \
+                    --extra-cflags="$(cflags_com) $(cppflags_com)"      \
+                    --extra-cxxflags="$(cxxflags_com) $(cppflags_com)"  \
+                    --extra-ldflags="$(ldflags_com)"                    \
+                    --extra-libs="$(libs_com) -lz -liconv"              \
+                    --extra-objcflags=                                  \
+                    --extra-ldexeflags=                                 \
+                    --extra-ldsoflags=                                  \
+                    --enable-shared                                     \
                     \
-                    --disable-debug                     \
-                    --disable-doc                       \
-        ;;                                              \
+                    --enable-iconv                                      \
+                    --enable-zlib                                       \
+                    --disable-debug                                     \
+                    --disable-doc                                       \
+        ;;                                                              \
     esac
 
 	$(TOUCH) $(config_ok_path)
