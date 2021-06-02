@@ -129,3 +129,11 @@ ifneq ($(_libuv_dir), $(wildcard $(_libuv_dir)))
 	$(ECHO) ''
 	exit 1
 endif
+
+_libx264_file := $(prefix_path)/include/x264.h
+check_libx264:
+ifneq ($(_libx264_file), $(wildcard $(_libx264_file)))
+	$(ECHO) "\tuse \"make project=libx264\" first to compile libx264."
+	$(ECHO) ''
+	exit 1
+endif

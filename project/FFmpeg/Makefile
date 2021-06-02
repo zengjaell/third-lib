@@ -32,7 +32,7 @@ all: depend_lib $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
 
-depend_lib: check_zlib check_libiconv
+depend_lib: check_zlib check_libiconv check_libx264
 
 # 临时指定配置信息
 # prefix_path := /opt/data/nfs/meian/3rd_lib/tslib
@@ -49,7 +49,6 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
             cd $(build_path)/$(@:-config=) &&                           \
                 $(src_path)/$(@:-config=)/configure                     \
                     --prefix=$(prefix_path)                             \
-                    --enable-version3                                   \
                     --enable-cross-compile                              \
                     --target-os=linux                                   \
                     --arch=arm                                          \
@@ -63,8 +62,10 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
                     --extra-ldsoflags=                                  \
                     --enable-shared                                     \
                     \
+                    --enable-gpl                                        \
                     --enable-iconv                                      \
                     --enable-zlib                                       \
+                    --enable-libx264                                    \
                     --disable-debug                                     \
                     --disable-doc                                       \
         ;;                                                              \
