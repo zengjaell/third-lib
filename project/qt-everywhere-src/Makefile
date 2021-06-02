@@ -41,56 +41,33 @@ $(target_dir)-config: $(target_dir)-xz-src
 ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
-	case $(host) in                                     \
-        x86*)                                           \
-            ;;                                          \
-        arm-himix200-linux)                             \
-            $(CP) $(project_path)/$(project_target)/linux-arm-himix200-g++ $(src_path)/$(@:-config=)/qtbase/mkspecs && \
-                                                        \
-            cd $(build_path)/$(@:-config=) &&           \
+	case $(host) in                                         \
+        x86*)                                               \
+            ;;                                              \
+        arm-*|aarch*)                                       \
+            $(CP) $(project_path)/$(project_target)/linux-arm-$(platform)-g++ $(src_path)/$(@:-config=)/qtbase/mkspecs && \
+                                                            \
+            cd $(build_path)/$(@:-config=) &&               \
                 $(src_path)/$(@:-config=)/qtbase/configure  \
-                    -prefix ${prefix_path}              \
-                    -opensource                         \
-                    -confirm-license                    \
-                    -release                            \
-                    -shared                             \
-                    -optimize-size                      \
-                    -ccache                             \
-                    -pch                                \
-                    -I${prefix_path}/include            \
-                    -L${prefix_path}/lib                \
-                    -nomake tests                       \
-                    -nomake examples                    \
-                    -no-dbus                            \
-                    -no-iconv                           \
+                    -prefix ${prefix_path}                  \
+                    -opensource                             \
+                    -confirm-license                        \
+                    -release                                \
+                    -shared                                 \
+                    -optimize-size                          \
+                    -ccache                                 \
+                    -pch                                    \
+                    -I${prefix_path}/include                \
+                    -L${prefix_path}/lib                    \
+                    -nomake tests                           \
+                    -nomake examples                        \
+                    -no-dbus                                \
+                    -no-iconv                               \
                     \
-                    -tslib                              \
-                    -no-opengl                          \
-                    -xplatform linux-arm-himix200-g++   \
-            ;;                                          \
-        aarch64-linux-gnu)                              \
-            $(CP) $(project_path)/$(project_target)/linux-arm-linaro-g++ $(src_path)/$(@:-config=)/qtbase/mkspecs && \
-                                                        \
-            cd $(build_path)/$(@:-config=) &&           \
-                $(src_path)/$(@:-config=)/qtbase/configure  \
-                    -prefix ${prefix_path}              \
-                    -opensource                         \
-                    -confirm-license                    \
-                    -release                            \
-                    -shared                             \
-                    -optimize-size                      \
-                    -ccache                             \
-                    -pch                                \
-                    -I${prefix_path}/include            \
-                    -L${prefix_path}/lib                \
-                    -nomake tests                       \
-                    -nomake examples                    \
-                    -no-dbus                            \
-                    -no-iconv                           \
-                    \
-                    -no-opengl                          \
-                    -xplatform linux-arm-linaro-g++     \
-            ;;                                          \
+                    -tslib                                  \
+                    -no-opengl                              \
+                    -xplatform linux-arm-$(platform)-g++    \
+            ;;                                              \
     esac
 
 	$(TOUCH) $(config_ok_path)
