@@ -32,7 +32,7 @@ all: depend_lib $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
 
-depend_lib:
+depend_lib: check_libevdev
 
 # 临时指定配置信息
 # prefix_path := /opt/data/nfs/meian/3rd_lib/tslib

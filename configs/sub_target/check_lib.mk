@@ -137,3 +137,20 @@ ifneq ($(_libx264_file), $(wildcard $(_libx264_file)))
 	$(ECHO) ''
 	exit 1
 endif
+
+_libevdev_dir := $(prefix_path)/include/libevdev-1.0
+check_libevdev:
+ifneq ($(_libevdev_dir), $(wildcard $(_libevdev_dir)))
+	$(ECHO) "\tuse \"make project=libevdev\" first to compile libevdev."
+	$(ECHO) ''
+	exit 1
+endif
+
+_tslib_file := $(prefix_path)/include/tslib.h
+check_tslib:
+ifneq ($(_tslib_file), $(wildcard $(_tslib_file)))
+	$(ECHO) "\tuse \"make project=tslib\" first to compile tslib."
+	$(ECHO) ''
+	exit 1
+endif
+
