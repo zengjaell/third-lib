@@ -2,7 +2,7 @@
 # 
 # Release under GPLv-3.0.
 # 
-# @file    himix200.mk
+# @file    hisi.mk
 # @brief   
 # @author  gnsyxiang <gnsyxiang@163.com>
 # @date    16/04 2021 15:17
@@ -18,11 +18,15 @@
 #     last modified: 16/04 2021 15:17
 # ===============================================================
 
-toolchains_path     := $(base_toolchains_path)/hisi-linux/$(platform)
-toolchains_bin_path := $(toolchains_path)/bin
-gcc_prefix          := $(platform)-
-program_prefix      := $(platform)-
-host                := $(platform)
+# arm-himix200-linux, arm-hisiv510-linux
+toolchains_version  := arm-himix200-linux
+gcc_name            := arm-himix200-linux
+
+toolchains_path     := $(base_toolchains_path)/$(platform)
+toolchains_bin_path := $(toolchains_path)/$(toolchains_version)/bin
+gcc_prefix          := $(gcc_name)-
+program_prefix      := $(gcc_name)-
+host                := $(gcc_name)
 
 cppflags_com        :=
 cflags_com          :=
@@ -30,4 +34,4 @@ cxxflags_com        :=
 ldflags_com         :=
 libs_com            := 
 
-prefix_path         ?= $(base_prefix_path)/hisi-linux/$(platform)
+prefix_path         ?= $(base_prefix_path)/$(platform)/$(toolchains_version)

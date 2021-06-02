@@ -29,11 +29,9 @@ base_prefix_path := $(data_disk_path)/install
 #       unione
 #       x1830
 #       ats3607d
-#       arm-hisiv510-linux
-#       arm-himix200-linux
+#       hisi
 #       linaro
-platform := linaro
-# platform := arm-himix200-linux
+platform := hisi
 
 include $(top_dir)/configs/platform/$(platform).mk
 
