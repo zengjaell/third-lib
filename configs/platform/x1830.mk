@@ -18,12 +18,12 @@
 #     last modified: 05/12 2019 17:40
 # ===============================================================
 
-toolchains_path 	:= 
+toolchains_path     := 
 toolchains_bin_path := $(toolchains_path)/bin
-gcc_prefix 			:= mips-linux-gnu-
-host         		:= mips-linux
+gcc_prefix          := mips-linux-gnu-
+host                := mips-linux
 
-CFLAGS 				:=
-LDFLAGS 			:=
+CFLAGS              :=
+LDFLAGS             :=
 
-prefix_path 		?= $(base_prefix_path)/x1830
+prefix_path         ?= $(base_prefix_path)/x1830

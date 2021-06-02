@@ -18,16 +18,16 @@
 #     last modified: 16/04 2021 15:17
 # ===============================================================
 
-toolchains_path 	:= $(base_toolchains_path)/hisi-linux/$(platform)
+toolchains_path     := $(base_toolchains_path)/hisi-linux/$(platform)
 toolchains_bin_path := $(toolchains_path)/bin
-gcc_prefix 			:= $(platform)-
-program_prefix 		:= $(platform)-
-host         		:= $(platform)
+gcc_prefix          := $(platform)-
+program_prefix      := $(platform)-
+host                := $(platform)
 
-cppflags_com 		:=
-cflags_com 			:=
-cxxflags_com 		:=
-ldflags_com 		:=
-libs_com 			:= 
+cppflags_com        :=
+cflags_com          :=
+cxxflags_com        :=
+ldflags_com         :=
+libs_com            := 
 
-prefix_path 		?= $(base_prefix_path)/hisi-linux/$(platform)
+prefix_path         ?= $(base_prefix_path)/hisi-linux/$(platform)

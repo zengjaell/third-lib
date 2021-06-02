@@ -18,16 +18,16 @@
 #     last modified: 05/12 2019 16:27
 # ===============================================================
 
-toolchains_path 	:= $(base_toolchains_path)/allwinner/toolchain-sunxi-arm9-glibc/toolchain
+toolchains_path     := $(base_toolchains_path)/allwinner/toolchain-sunxi-arm9-glibc/toolchain
 toolchains_bin_path := $(toolchains_path)/bin
-TOOLCHAINS_INC_DIR 	:= $(toolchains_path)/include
-gcc_prefix 			:= arm-openwrt-linux-
-host         		:= arm-linux
+TOOLCHAINS_INC_DIR  := $(toolchains_path)/include
+gcc_prefix          := arm-openwrt-linux-
+host                := arm-linux
 
-CFLAGS 				:=
-LDFLAGS 			:=
+CFLAGS              :=
+LDFLAGS             :=
 
-STAGING_DIR 		:= $(toolchains_bin_path)
+STAGING_DIR         := $(toolchains_bin_path)
 export STAGING_DIR
 
-prefix_path 		?= $(base_prefix_path)/r328
+prefix_path         ?= $(base_prefix_path)/r328
