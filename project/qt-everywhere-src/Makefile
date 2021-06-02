@@ -23,8 +23,8 @@ top_dir     := $(shell pwd)/../..
 endif
 
 project_target          := qt-everywhere-src
-target_version_major    := 5.12
-target_version_patch    := 10
+target_version_major    := 5.14
+target_version_patch    := 2
 target_version          := $(target_version_major).$(target_version_patch)
 mirror_url              := http://mirrors.tuna.tsinghua.edu.cn/qt
 target_download_path    := $(mirror_url)/archive/qt/$(target_version_major)/$(target_version)/single/$(project_target)-$(target_version).tar.xz
@@ -67,6 +67,29 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
                     -tslib                              \
                     -no-opengl                          \
                     -xplatform linux-arm-himix200-g++   \
+            ;;                                          \
+        aarch64-linux-gnu)                              \
+            $(CP) $(project_path)/$(project_target)/linux-arm-linaro-g++ $(src_path)/$(@:-config=)/qtbase/mkspecs && \
+                                                        \
+            cd $(build_path)/$(@:-config=) &&           \
+                $(src_path)/$(@:-config=)/qtbase/configure  \
+                    -prefix ${prefix_path}              \
+                    -opensource                         \
+                    -confirm-license                    \
+                    -release                            \
+                    -shared                             \
+                    -optimize-size                      \
+                    -ccache                             \
+                    -pch                                \
+                    -I${prefix_path}/include            \
+                    -L${prefix_path}/lib                \
+                    -nomake tests                       \
+                    -nomake examples                    \
+                    -no-dbus                            \
+                    -no-iconv                           \
+                    \
+                    -no-opengl                          \
+                    -xplatform linux-arm-linaro-g++     \
             ;;                                          \
     esac
 
