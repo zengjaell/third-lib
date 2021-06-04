@@ -50,6 +50,14 @@ ifneq ($(_png_file), $(wildcard $(_png_file)))
 	exit 1
 endif
 
+_jpeglib_file := $(prefix_path)/include/jpeglib.h
+check_jpeglib:
+ifneq ($(_jpeglib_file), $(wildcard $(_jpeglib_file)))
+	$(ECHO) "\tuse \"make project=libjpeg \" first to compile libjpeg."
+	$(ECHO) ''
+	exit 1
+endif
+
 _libffi_file := $(prefix_path)/include/ffi.h
 check_libffi:
 ifneq ($(_libffi_file), $(wildcard $(_libffi_file)))
