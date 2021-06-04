@@ -36,5 +36,6 @@ include $(top_dir)/configs/utils/cmd.mk
 
 target_dir      ?= $(project_target)-$(target_version)
 target_dir_path := $(src_path)/$(target_dir)
+target_tar_path := $(src_path)/.$(target_dir)-src-ok
 config_ok_path  ?= $(build_path)/.$(target_dir)-config-ok
 
