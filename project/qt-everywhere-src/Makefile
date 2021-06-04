@@ -23,7 +23,7 @@ top_dir     := $(shell pwd)/../..
 endif
 
 project_target          := qt-everywhere-src
-target_version_major    := 5.14
+target_version_major    := 5.15
 target_version_patch    := 2
 target_version          := $(target_version_major).$(target_version_patch)
 mirror_url              := http://mirrors.tuna.tsinghua.edu.cn/qt
@@ -55,8 +55,8 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
                     -optimize-size                          \
                     -ccache                                 \
                     -pch                                    \
-                    -I${prefix_path}/include                \
-                    -L${prefix_path}/lib                    \
+                    -I${include_path}/                      \
+                    -L${lib_path}                           \
                     -nomake tests                           \
                     -nomake examples                        \
                     -skip qtwebengine                       \
@@ -74,8 +74,8 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
                     -optimize-size                          \
                     -ccache                                 \
                     -pch                                    \
-                    -I${prefix_path}/include                \
-                    -L${prefix_path}/lib                    \
+                    -I${include_path}/                      \
+                    -L${lib_path}                           \
                     -nomake tests                           \
                     -nomake examples                        \
                     -no-dbus                                \

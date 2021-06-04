@@ -41,8 +41,8 @@ $(target_dir)-make_inside: $(target_dir)-config
 	cd $(build_path)/$(@:-make_inside=) && \
         export CC=gcc \
         export CROSS_COMPILE=$(cross_prefix) \
-        export CPPFLAGS="-I$(prefix_path)/include -pipe"\
-        export LDFLAGS="-L$(prefix_path)/lib -lmbedcrypto -lmbedtls -lmbedx509 -luv -lssl -lcrypto -lcares -lz" \
+        export CPPFLAGS="-I$(include_path) -pipe"\
+        export LDFLAGS="-L$(lib_path) -lmbedcrypto -lmbedtls -lmbedx509 -luv -lssl -lcrypto -lcares -lz" \
         export prefix=$(prefix_path) && \
         $(make) && make uninstall && make install
 

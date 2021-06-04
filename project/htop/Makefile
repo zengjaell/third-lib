@@ -31,6 +31,7 @@ include $(top_dir)/configs/common_var.mk
 all: depend_lib $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
+HTOP_NCURSES_CONFIG_SCRIPT := $(prefix_path)/bin/ncurses6-config
 
 depend_lib: check_ncurses
 
@@ -59,7 +60,7 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
             --target=$(host)                        \
             \
             --disable-unicode                       \
-            HTOP_NCURSES_CONFIG_SCRIPT=$(prefix_path)/bin/ncurses6-config
+            HTOP_NCURSES_CONFIG_SCRIPT=$(HTOP_NCURSES_CONFIG_SCRIPT)
 
 	$(TOUCH) $(config_ok_path)
 endif

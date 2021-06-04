@@ -55,7 +55,7 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
             --target=$(host)                        \
             \
             --enable-pc-files \
-            --with-pkg-config=$(prefix_path)/lib/pkgconfig \
+            --with-pkg-config=$(lib_path)/pkgconfig \
             --with-shared \
             \
             --without-progs \

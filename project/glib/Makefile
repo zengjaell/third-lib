@@ -46,10 +46,6 @@ $(target_dir)-config: $(target_dir)-rename-gz-src
 ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
-#       echo "pkgconfig         = '/usr/bin/pkg-config'"            >> cross_file.txt && \
-#       echo "sys_root          = '${prefix_path}'"                 >> cross_file.txt && \
-#       echo "pkg_config_libdir = '${prefix_path}/lib/pkgconfig'"   >> cross_file.txt &&
-
 	cd $(build_path)/$(@:-config=) && \
         echo "[binaries]"                                           > cross_file.txt && \
         echo "c                 = '${cross_prefix}' + 'gcc'"        >> cross_file.txt && \
@@ -60,8 +56,8 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
         \
         echo ""                                                     >> cross_file.txt && \
         echo "[properties]"                                         >> cross_file.txt && \
-        echo "c_args            = ['-I${prefix_path}/include']"     >> cross_file.txt && \
-        echo "c_link_args       = ['-L${prefix_path}/lib', '-lz', '-lffi']" >> cross_file.txt && \
+        echo "c_args            = ['-I${include_path}']"            >> cross_file.txt && \
+        echo "c_link_args       = ['-L${lib_path}', '-lz', '-lffi']">> cross_file.txt && \
         \
         echo ""                                                     >> cross_file.txt && \
         echo "[host_machine]"                                       >> cross_file.txt && \

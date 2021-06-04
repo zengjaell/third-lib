@@ -38,8 +38,8 @@ include $(top_dir)/configs/platform/platform_config_tmp.mk
 
 CONFIG_COM := no-tests \
     zlib \
-    --with-zlib-include=$(prefix_path)/include \
-    --with-zlib-lib=$(prefix_path)/lib
+    --with-zlib-include=$(include_path) \
+    --with-zlib-lib=$(lib_path)
 
 $(target_dir)-config: $(target_dir)-gz-src
 ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))

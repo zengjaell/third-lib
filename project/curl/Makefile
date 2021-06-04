@@ -33,6 +33,8 @@ all: depend_lib $(target_dir)-make
 include $(sub_target_path)/common_sub_target.mk
 
 depend_lib: check_zlib check_openssl
+_zlib_path := $(prefix_path)
+_ssl_path  := $(prefix_path)
 
 include $(top_dir)/configs/platform/platform_config_tmp.mk
 
@@ -54,8 +56,8 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
             --host=$(host)                          \
             --target=$(host)                        \
             \
-            --with-zlib=$(prefix_path)              \
-            --with-ssl=$(prefix_path)
+            --with-zlib=$(_zlib_path)               \
+            --with-ssl=$(_ssl_path)
 
 	$(TOUCH) $(config_ok_path)
 endif

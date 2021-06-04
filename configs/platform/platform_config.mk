@@ -67,7 +67,9 @@ cppflags_com    += -I$(prefix_path)/include -pipe
 cflags_com      +=
 cxxflags_com    +=
 ldflags_com     += -L$(prefix_path)/lib
-libs_com        += 
+libs_com        +=
 
-pkg_config_path := $(prefix_path)/lib/pkgconfig
+include_path    := $(prefix_path)/include
+lib_path        := $(prefix_path)/lib
+pkg_config_path := $(lib_path)/pkgconfig
 

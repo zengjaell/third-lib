@@ -48,17 +48,17 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
         -DCMAKE_CXX_COMPILER=$(CXX) \
         \
         -DLWS_WITH_LIBUV:BOOL=ON \
-        -DLWS_LIBUV_LIBRARIES="$(prefix_path)/lib/libuv.so" \
-        -DLWS_LIBUV_INCLUDE_DIRS="$(prefix_path)/include"\
+        -DLWS_LIBUV_LIBRARIES="$(lib_path)/libuv.so" \
+        -DLWS_LIBUV_INCLUDE_DIRS="$(include_path)"\
         \
         -DLWS_WITH_ZLIB:BOOL=ON \
-        -DLWS_ZLIB_INCLUDE_DIRS="$(prefix_path)/include" \
-        -DLWS_ZLIB_LIBRARIES="$(prefix_path)/lib/libz.so" \
+        -DLWS_ZLIB_INCLUDE_DIRS="$(include_path)" \
+        -DLWS_ZLIB_LIBRARIES="$(lib_path)/libz.so" \
         \
         -DLWS_WITH_LWSWS:BOOL=ON \
         -DLWS_WITH_MBEDTLS:BOOL=ON \
-        -DLWS_MBEDTLS_LIBRARIES="$(prefix_path)/lib/libmbedcrypto.so;$(prefix_path)/lib/libmbedtls.so;$(prefix_path)/lib/libmbedx509.so" \
-        -DLWS_MBEDTLS_INCLUDE_DIRS="$(prefix_path)/include"
+        -DLWS_MBEDTLS_LIBRARIES="$(lib_path)/libmbedcrypto.so;$(lib_path)/libmbedtls.so;$(lib_path)/libmbedx509.so" \
+        -DLWS_MBEDTLS_INCLUDE_DIRS="$(include_path)"
 
 	$(TOUCH) $(config_ok_path)
 endif
