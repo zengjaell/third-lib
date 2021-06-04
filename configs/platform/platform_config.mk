@@ -69,5 +69,5 @@ cxxflags_com    +=
 ldflags_com     += -L$(prefix_path)/lib
 libs_com        += 
 
-pkg_config_path ?= $(prefix_path)/lib/pkgconfig
+pkg_config_path := $(prefix_path)/lib/pkgconfig
 
