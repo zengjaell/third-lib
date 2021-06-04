@@ -26,6 +26,11 @@ $(target_dir)-make: $(target_dir)-config
 	$(call echo-make-msg, $(@:-inside-make=))
 	cd $(build_path)/$(@:-make=) && $(make) && make install
 
+$(target_dir)-reconfig: $(target_dir)-rm-config_ok_path $(target_dir)-config
+
+$(target_dir)-rm-config_ok_path:
+	$(RM) $(config_ok_path)
+
 $(target_dir)-bz2-src:
 ifneq ($(target_dir_path), $(wildcard $(target_dir_path)))
 ifneq ($(target_tar_path), $(wildcard $(target_tar_path)))
