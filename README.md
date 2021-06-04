@@ -34,6 +34,7 @@
 │   │   ├── hisi.mk
 │   │   ├── linaro.mk
 │   │   ├── platform_config.mk          // 平台配置文件
+│   │   ├── platform_config_tmp.mk      // 平台配置文件，覆盖上面文件的相关变量
 │   │   ├── r328.mk
 │   │   ├── rk3308.mk
 │   │   ├── unione.mk
@@ -79,6 +80,15 @@ platform := x86_64
 ```
 
 > 如果没有对应的平台，可以增加相应的平台配置文件
+
+* 在`platform_config_tmp.mk`中配置的信息会覆盖`platform_config.mk`相关变量
+
+```txt
+prefix_path := 指定最终的安装路径
+```
+
+> prefix_path只会修改最终的安装路径，方便交叉编译的部署，体系中的相关依赖不会改变
+
 
 * 修改平台文件中关系gcc路径的配置
 
