@@ -35,9 +35,31 @@ all: depend_lib $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
 
-depend_lib: check_tslib
+depend_lib: check_zlib check_libpng check_jpeglib check_tslib
 
 include $(top_dir)/configs/platform/platform_config_tmp.mk
+
+_common_base_var :=                         \
+    -prefix ${prefix_path}                  \
+    -opensource                             \
+    -confirm-license                        \
+    -release                                \
+    -shared                                 \
+    -optimize-size                          \
+    -ccache                                 \
+    -pch
+
+_common_3rd_lib :=                          \
+    -I${include_path}                       \
+    -L${lib_path}                           \
+    -system-zlib                            \
+    -system-libpng                          \
+    -system-libjpeg
+
+_common_module :=                           \
+    -nomake tests                           \
+    -nomake examples                        \
+    -skip qtwebengine
 
 $(target_dir)-config: $(target_dir)-xz-src
 ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
@@ -46,50 +68,24 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	case $(host) in                                         \
         x86*)                                               \
             cd $(build_path)/$(@:-config=) &&               \
-                $(src_path)/$(@:-config=)/configure         \
-                    -prefix ${prefix_path}                  \
-                    -opensource                             \
-                    -confirm-license                        \
-                    -release                                \
-                    -shared                                 \
-                    -optimize-size                          \
-                    -ccache                                 \
-                    -pch                                    \
-                    \
-                    -I${include_path}                       \
-                    -L${lib_path}                           \
-                    -system-zlib                            \
-                    -system-libpng                          \
-                    -system-libjpeg                         \
-                    -nomake tests                           \
-                    -nomake examples                        \
-                    -skip qtwebengine                       \
+                $(src_path)/$(@:-config=)/qtbase/configure  \
+                    $(_common_base_var)                     \
+                    $(_common_3rd_lib)                      \
+                    $(_common_module)                       \
             ;;                                              \
         arm-*|aarch*)                                       \
             $(CP) $(project_path)/$(project_target)/linux-arm-$(platform)-g++ $(src_path)/$(@:-config=)/qtbase/mkspecs && \
                                                             \
             cd $(build_path)/$(@:-config=) &&               \
                 $(src_path)/$(@:-config=)/qtbase/configure  \
-                    -prefix ${prefix_path}                  \
-                    -opensource                             \
-                    -confirm-license                        \
-                    -release                                \
-                    -shared                                 \
-                    -optimize-size                          \
-                    -ccache                                 \
-                    -pch                                    \
+                    $(_common_base_var)                     \
+                    $(_common_3rd_lib)                      \
+                    $(_common_module)                       \
                     \
                     -xplatform linux-arm-$(platform)-g++    \
-                    -I${include_path}                       \
-                    -L${lib_path}                           \
-                    -nomake tests                           \
-                    -nomake examples                        \
                     -no-dbus                                \
                     -no-opengl                              \
                     -no-iconv                               \
-                    -system-zlib                            \
-                    -system-libpng                          \
-                    -system-libjpeg                         \
                     -tslib                                  \
             ;;                                              \
     esac
