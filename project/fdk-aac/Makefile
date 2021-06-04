@@ -34,9 +34,7 @@ include $(sub_target_path)/common_sub_target.mk
 
 depend_lib:
 
-# 临时指定配置信息
-# prefix_path := /opt/data/nfs/meian/3rd_lib/tslib
-# pkg_config_path := $(base_prefix_path)/hisi-linux/$(platform)/lib/pkgconfig
+include $(top_dir)/configs/platform/platform_config_tmp.mk
 
 $(target_dir)-config: $(target_dir)-gz-src
 ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))

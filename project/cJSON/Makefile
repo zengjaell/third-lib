@@ -28,9 +28,13 @@ target_download_path    := https://archive.fastgit.org/DaveGamble/cJSON/archive/
 
 include $(top_dir)/configs/common_var.mk
 
-all: $(target_dir)-make_inside
+all: depend_lib $(target_dir)-make_inside
 
 include $(sub_target_path)/common_sub_target.mk
+
+depend_lib:
+
+include $(top_dir)/configs/platform/platform_config_tmp.mk
 
 $(target_dir)-make_inside: $(target_dir)-config
 	$(call echo-make-msg, $(@:-make_inside=))

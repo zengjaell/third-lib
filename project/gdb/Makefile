@@ -28,9 +28,13 @@ target_download_path    := http://ftp.gnu.org/gnu/gdb/$(project_target)-$(target
 
 include $(top_dir)/configs/common_var.mk
 
-all: $(target_dir)-make
+all: depend_lib $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
+
+depend_lib:
+
+include $(top_dir)/configs/platform/platform_config_tmp.mk
 
 # --without-x                   取消x windows 支持
 # --disable-gdbtk               取消gdbtk,应该也是图形界面相关的

@@ -37,6 +37,8 @@ include $(sub_target_path)/common_sub_target.mk
 
 depend_lib: check_tslib
 
+include $(top_dir)/configs/platform/platform_config_tmp.mk
+
 $(target_dir)-config: $(target_dir)-xz-src
 ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
@@ -56,6 +58,8 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
                     -I${prefix_path}/include                \
                     -L${prefix_path}/lib                    \
                     -nomake tests                           \
+                    -nomake examples                        \
+                    -skip qtwebengine                       \
             ;;                                              \
         arm-*|aarch*)                                       \
             $(CP) $(project_path)/$(project_target)/linux-arm-$(platform)-g++ $(src_path)/$(@:-config=)/qtbase/mkspecs && \

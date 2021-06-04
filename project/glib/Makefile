@@ -34,6 +34,8 @@ include $(sub_target_path)/common_sub_target.mk
 
 depend_lib: check_zlib check_libffi
 
+include $(top_dir)/configs/platform/platform_config_tmp.mk
+
 $(target_dir)-inside-make: $(target_dir)-config
 	$(call echo-make-msg, $(@:-inside-make=))
 	cd $(build_path)/$(@:-inside-make=) && \

@@ -34,6 +34,8 @@ include $(sub_target_path)/common_sub_target.mk
 
 depend_lib: check_zlib
 
+include $(top_dir)/configs/platform/platform_config_tmp.mk
+
 CONFIG_COM := no-tests \
     zlib \
     --with-zlib-include=$(prefix_path)/include \

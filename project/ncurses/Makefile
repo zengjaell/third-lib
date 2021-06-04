@@ -28,9 +28,13 @@ target_download_path    := http://ftp.gnu.org/gnu/ncurses/$(project_target)-$(ta
 
 include $(top_dir)/configs/common_var.mk
 
-all: $(target_dir)-make
+all: depend_lib $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
+
+depend_lib:
+
+include $(top_dir)/configs/platform/platform_config_tmp.mk
 
 $(target_dir)-config: $(target_dir)-gz-src
 ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))

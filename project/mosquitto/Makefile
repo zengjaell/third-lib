@@ -34,6 +34,8 @@ include $(sub_target_path)/common_sub_target.mk
 
 depend_lib: check_cjson check_mbedtls check_cares check_libwebsockets
 
+include $(top_dir)/configs/platform/platform_config_tmp.mk
+
 $(target_dir)-make_inside: $(target_dir)-config
 	$(call echo-make-msg, $(@:-make_inside=))
 	cd $(build_path)/$(@:-make_inside=) && \
