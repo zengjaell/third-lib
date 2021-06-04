@@ -26,7 +26,7 @@ $(target_dir)-make: $(target_dir)-config
 	$(call echo-make-msg, $(@:-inside-make=))
 	cd $(build_path)/$(@:-make=) && $(make) && make install
 
-$(target_dir)-reconfig: $(target_dir)-rm-config_ok_path $(target_dir)-config
+reconfig: $(target_dir)-rm-config_ok_path $(target_dir)-config
 
 $(target_dir)-rm-config_ok_path:
 	$(RM) $(config_ok_path)
