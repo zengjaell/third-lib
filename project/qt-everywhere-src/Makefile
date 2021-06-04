@@ -55,8 +55,12 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
                     -optimize-size                          \
                     -ccache                                 \
                     -pch                                    \
-                    -I${include_path}/                      \
+                    \
+                    -I${include_path}                       \
                     -L${lib_path}                           \
+                    -system-zlib                            \
+                    -system-libpng                          \
+                    -system-libjpeg                         \
                     -nomake tests                           \
                     -nomake examples                        \
                     -skip qtwebengine                       \
@@ -74,16 +78,19 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
                     -optimize-size                          \
                     -ccache                                 \
                     -pch                                    \
-                    -I${include_path}/                      \
+                    \
+                    -xplatform linux-arm-$(platform)-g++    \
+                    -I${include_path}                       \
                     -L${lib_path}                           \
                     -nomake tests                           \
                     -nomake examples                        \
                     -no-dbus                                \
-                    -no-iconv                               \
-                    \
-                    -tslib                                  \
                     -no-opengl                              \
-                    -xplatform linux-arm-$(platform)-g++    \
+                    -no-iconv                               \
+                    -system-zlib                            \
+                    -system-libpng                          \
+                    -system-libjpeg                         \
+                    -tslib                                  \
             ;;                                              \
     esac
 
