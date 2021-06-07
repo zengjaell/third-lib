@@ -105,7 +105,7 @@ endif
 endif
 
 clean:
-	$(ECHO) "    rm build/$(target_dir)"
+	$(ECHO) "    rm build/$(platform)/$(target_dir)"
 	$(RM) $(build_path)/$(target_dir)
 	$(RM) $(config_ok_path)
 
