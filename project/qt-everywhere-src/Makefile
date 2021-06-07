@@ -23,8 +23,8 @@ top_dir     := $(shell pwd)/../..
 endif
 
 project_target          := qt-everywhere-src
-target_version_major    := 5.15
-target_version_patch    := 2
+target_version_major    := 5.12
+target_version_patch    := 11
 target_version          := $(target_version_major).$(target_version_patch)
 mirror_url              := http://mirrors.tuna.tsinghua.edu.cn/qt
 target_download_path    := $(mirror_url)/archive/qt/$(target_version_major)/$(target_version)/single/$(project_target)-$(target_version).tar.xz
@@ -56,11 +56,6 @@ _common_3rd_lib :=                          \
     -system-libpng                          \
     -system-libjpeg
 
-_common_module :=                           \
-    -nomake tests                           \
-    -nomake examples                        \
-    -skip qtwebengine
-
 $(target_dir)-config: $(target_dir)-xz-src
 ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
@@ -68,10 +63,14 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	case $(host) in                                         \
         x86*)                                               \
             cd $(build_path)/$(@:-config=) &&               \
-                $(src_path)/$(@:-config=)/qtbase/configure  \
+                $(src_path)/$(@:-config=)/configure         \
                     $(_common_base_var)                     \
                     $(_common_3rd_lib)                      \
-                    $(_common_module)                       \
+                    \
+                    -nomake tests                           \
+                    -nomake examples                        \
+                    -skip qtdoc                             \
+                    -skip qtwebengine                       \
             ;;                                              \
         arm-*|aarch*)                                       \
             $(CP) $(project_path)/$(project_target)/linux-arm-$(platform)-g++ $(src_path)/$(@:-config=)/qtbase/mkspecs && \
@@ -80,7 +79,6 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
                 $(src_path)/$(@:-config=)/qtbase/configure  \
                     $(_common_base_var)                     \
                     $(_common_3rd_lib)                      \
-                    $(_common_module)                       \
                     \
                     -xplatform linux-arm-$(platform)-g++    \
                     -no-dbus                                \
