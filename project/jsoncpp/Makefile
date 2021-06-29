@@ -1,0 +1,59 @@
+# ===============================================================
+# 
+# Release under GPLv-3.0.
+# 
+# @file    Makefile
+# @brief   
+# @author  gnsyxiang <gnsyxiang@163.com>
+# @date    29/06 2021 09:34
+# @version v0.0.1
+# 
+# @since    note
+# @note     note
+# 
+#     change log:
+#     NO.     Author              Date            Modified
+#     00      zhenquan.qiu        29/06 2021      create the file
+# 
+#     last modified: 29/06 2021 09:34
+# ===============================================================
+
+ifndef top_dir
+top_dir     := $(shell pwd)/../..
+endif
+
+project_target          := jsoncpp
+target_version          := 1.9.4
+target_download_path    := https://archive.fastgit.org/open-source-parsers/jsoncpp/archive/refs/tags/$(target_version).tar.gz
+
+include $(top_dir)/configs/common_var.mk
+
+all: depend_lib $(target_dir)-make
+
+include $(sub_target_path)/common_sub_target.mk
+
+depend_lib:
+
+include $(top_dir)/configs/platform/platform_config_tmp.mk
+
+$(target_dir)-config: $(target_dir)-rename-gz-src
+ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+	$(MKDIR) $(build_path)/$(@:-config=)
+
+	cd $(build_path)/$(@:-config=) && \
+        cmake $(src_path)/$(@:-config=) \
+        -DCMAKE_INSTALL_PREFIX=${prefix_path} \
+        \
+        -DJSONCPP_WITH_TESTS=off \
+        \
+        -DCMAKE_SYSTEM_NAME="Linux" \
+        -DCMAKE_C_COMPILER=${CC} \
+        -DCMAKE_CXX_COMPILER=${CXX} \
+        -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER \
+        -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY \
+        -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY
+
+	$(TOUCH) $(config_ok_path)
+endif
+
+.PHONY: all clean distclean list
