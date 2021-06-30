@@ -36,37 +36,45 @@ depend_lib: check_zlib check_libiconv check_libx264
 
 include $(top_dir)/configs/platform/platform_config_tmp.mk
 
+_common_base_var :=                                     \
+    --prefix=$(prefix_path)                             \
+    --cross-prefix=$(cross_prefix)                      \
+    --extra-cflags="$(cflags_com) $(cppflags_com)"      \
+    --extra-cxxflags="$(cxxflags_com) $(cppflags_com)"  \
+    --extra-ldflags="$(ldflags_com)"                    \
+    --extra-libs="$(libs_com) -lz -liconv"              \
+    --extra-objcflags=                                  \
+    --extra-ldexeflags=                                 \
+    --extra-ldsoflags=                                  \
+    --enable-shared                                     \
+    \
+    --enable-gpl                                        \
+    --enable-iconv                                      \
+    --enable-zlib                                       \
+    --enable-libx264                                    \
+    --disable-debug                                     \
+    --disable-doc
+
 $(target_dir)-config: $(target_dir)-rename-gz-src
 ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
 	case $(host) in                                                     \
         x86*)                                                           \
+            cd $(build_path)/$(@:-config=) &&                           \
+                $(src_path)/$(@:-config=)/configure                     \
+                    $(_common_base_var)                                 \
+                    --disable-x86asm                                    \
             ;;                                                          \
         arm-*)                                                          \
             cd $(build_path)/$(@:-config=) &&                           \
                 $(src_path)/$(@:-config=)/configure                     \
-                    --prefix=$(prefix_path)                             \
+                    $(_common_base_var)                                 \
+                    \
                     --enable-cross-compile                              \
                     --target-os=linux                                   \
                     --arch=arm                                          \
-                    --cross-prefix=$(cross_prefix)                      \
-                    --extra-cflags="$(cflags_com) $(cppflags_com)"      \
-                    --extra-cxxflags="$(cxxflags_com) $(cppflags_com)"  \
-                    --extra-ldflags="$(ldflags_com)"                    \
-                    --extra-libs="$(libs_com) -lz -liconv"              \
-                    --extra-objcflags=                                  \
-                    --extra-ldexeflags=                                 \
-                    --extra-ldsoflags=                                  \
-                    --enable-shared                                     \
-                    \
-                    --enable-gpl                                        \
-                    --enable-iconv                                      \
-                    --enable-zlib                                       \
-                    --enable-libx264                                    \
-                    --disable-debug                                     \
-                    --disable-doc                                       \
-        ;;                                                              \
+            ;;                                              \
     esac
 
 	$(TOUCH) $(config_ok_path)
