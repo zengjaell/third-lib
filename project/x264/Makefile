@@ -45,6 +45,8 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
             --prefix=$(prefix_path)                         \
             --cross-prefix=$(cross_prefix)                  \
             --host=$(host)                                  \
+            \
+            --disable-asm                                   \
             --enable-static                                 \
             --enable-shared                                 \
             --extra-cflags="$(cflags_com) $(cppflags_com)"  \

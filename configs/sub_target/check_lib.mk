@@ -141,7 +141,7 @@ endif
 _libx264_file := $(prefix_path)/include/x264.h
 check_libx264:
 ifneq ($(_libx264_file), $(wildcard $(_libx264_file)))
-	$(ECHO) "\tuse \"make project=libx264\" first to compile libx264."
+	$(ECHO) "\tuse \"make project=x264\" first to compile x264."
 	$(ECHO) ''
 	exit 1
 endif
