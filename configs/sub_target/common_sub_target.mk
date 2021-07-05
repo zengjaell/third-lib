@@ -111,6 +111,7 @@ clean:
 
 distclean: clean
 	$(ECHO) "    rm src/$(target_dir)"
+	$(RM) $(target_tar_path)
 	$(RM) $(src_path)/$(target_dir)
 	$(RM) $(src_path)/$(target_dir).tar.gz*
 	$(RM) $(src_path)/$(target_dir).tar.bz2*
