@@ -1,4 +1,4 @@
-# README
+# Cross-compiling third-party libraries(交叉编译第三方库)
 
 <!-- vim-markdown-toc GFM -->
 
@@ -53,8 +53,9 @@
 │   ├── htop
 │   │   ├── Makefile                    // 第三方库编译Makefile
 │   │   └── README.md
-│   └── zlib
-│       └── Makefile
+│   ├── zlib
+│   │   ├── Makefile
+│   │   └── README.md
 ├── README.md
 ├── src                                 // 源码目录
 └── SUMMARY.md
@@ -90,7 +91,7 @@ prefix_path := 指定最终的安装路径
 > prefix_path只会修改最终的安装路径，方便交叉编译的部署，体系中的相关依赖不会改变
 
 
-* 修改平台文件中关系gcc路径的配置
+* 修改平台文件中关于gcc路径的配置
 
 ```txt
 # arm-himix200-linux, arm-hisiv510-linux
@@ -140,6 +141,8 @@ $ make clean       // 清除build下zlib相关文件
 $ make distclan    // 清除src和build下zlib相关文件
 ```
 
+> note: 在项目目录下编译，可以少写关于项目的指定
+
 ### 增加新的项目
 
 * 在project目录下创建对应的目录
@@ -163,7 +166,7 @@ include $(sub_target_path)/common_sub_target.mk
 
 depend_lib: xxx_check               // 填写项目依赖的第三方库的检查
 
-$(target_dir)-config: $(target_dir)-gz-src
+$(target_dir)-config: $(target_dir)-gz-src      // 后面依赖要看压缩包类型，如gz/xz/bz2
 ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
     $(MKDIR) $(build_path)/$(@:-config=)
 
@@ -190,7 +193,7 @@ endif
 
 ### 手动下载大软件包
 
-* 通过下载工具下载源码包，比如迅雷下载
+* 通过下载工具下载大源码包，比如迅雷下载
 
 * 把下载好的源码包放到`src`目录下，同时增加标注文件
 
@@ -207,6 +210,8 @@ endif
 > 2, 一些源码包下载速度很忙，出现多次掉线的情况下
 >
 > 3，编译机器所在的网络不好，可以从其他地方下载
+>
+> 4, 所在机器没有网络
 
 ## 相关说明文档
 
