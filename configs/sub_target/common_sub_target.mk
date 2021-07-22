@@ -31,6 +31,18 @@ reconfig: $(target_dir)-rm-config_ok_path $(target_dir)-config
 $(target_dir)-rm-config_ok_path:
 	$(RM) $(config_ok_path)
 
+$(target_dir)-zip-src:
+ifneq ($(target_dir_path), $(wildcard $(target_dir_path)))
+ifneq ($(target_tar_path), $(wildcard $(target_tar_path)))
+	cd $(src_path) && \
+		$(RM) $(@:-zip-src=).zip && \
+		$(WGET) $(target_download_path) && \
+		touch $(target_tar_path)
+endif
+	cd $(src_path) && \
+		$(UNZIP) $(@:-zip-src=).zip
+endif
+
 $(target_dir)-bz2-src:
 ifneq ($(target_dir_path), $(wildcard $(target_dir_path)))
 ifneq ($(target_tar_path), $(wildcard $(target_tar_path)))
