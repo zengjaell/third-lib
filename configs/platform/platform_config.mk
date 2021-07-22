@@ -30,8 +30,9 @@ base_prefix_path     := $(data_disk_path)/install
 #       x1830
 #       ats3607d
 #       hisi
+#       fulhan
 #       linaro
-platform := pc
+platform := fulhan
 
 include $(top_dir)/configs/platform/$(platform).mk
 

@@ -31,6 +31,7 @@
 │   ├── common_var.mk
 │   ├── platform                        // gcc相关信息
 │   │   ├── ats3607d.mk
+│   │   ├── fulhan.mk
 │   │   ├── hisi.mk
 │   │   ├── linaro.mk
 │   │   ├── platform_config.mk          // 平台配置文件
@@ -76,6 +77,7 @@
 #       x1830
 #       ats3607d
 #       hisi
+#       fulhan
 #       linaro
 platform := x86_64
 ```
