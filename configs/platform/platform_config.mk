@@ -31,6 +31,7 @@ base_prefix_path     := $(data_disk_path)/install
 #       ats3607d
 #       hisi
 #       fulhan
+#       mstar
 #       linaro
 platform := fulhan
 

@@ -47,7 +47,7 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
         $(src_path)/$(@:-config=)/configure         \
             CC=$(GCC) CXX=$(CXX)                    \
             CPPFLAGS="$(cppflags_com)"              \
-            CFLAGS="$(cflags_com)"                  \
+            CFLAGS="$(cflags_com) -std=c11"         \
             CXXFLAGS="$(cxxflags_com)"              \
             LDFLAGS="$(ldflags_com)"                \
             LIBS="$(libs_com)"                      \

@@ -31,6 +31,7 @@
 │   ├── common_var.mk
 │   ├── platform                        // gcc相关信息
 │   │   ├── ats3607d.mk
+│   │   ├── mstar.mk
 │   │   ├── fulhan.mk
 │   │   ├── hisi.mk
 │   │   ├── linaro.mk
@@ -78,6 +79,7 @@
 #       ats3607d
 #       hisi
 #       fulhan
+#       mstar
 #       linaro
 platform := x86_64
 ```
