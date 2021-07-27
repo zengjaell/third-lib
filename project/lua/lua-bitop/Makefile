@@ -23,10 +23,10 @@ TO_top_dir := ../../..
 include $(TO_top_dir)/configs/com_var_def.mk
 
 target           		:= LuaBitOp
-target_version 			:= 1.0.2
-target_dir 				:= $(target)-$(target_version)
-config_ok_path    		:= $(build_DIR)/$(target_dir)-config-ok
-target_download_path 	:= bitop.luajit.org/download
+project_version 			:= 1.0.2
+target_dir 				:= $(target)-$(project_version)
+config_ok_mark_path    		:= $(build_DIR)/$(target_dir)-config-ok
+project_download_url 	:= bitop.luajit.org/download
 prefix_path 			:= $(ROOT)/../../$(INSTALL_DIR)
 LUA_DIR 	       		:= ../../install/include/lua.h
 
@@ -46,7 +46,7 @@ $(target_dir)-make: $(target_dir)-config
 	cd $(@:-make=) && $(make) && make install
 
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_DIR)/$(@:-config=)
 	awk '{sub(/\/usr\/local/, "$(prefix_path)"); \
 		print > "$(@:-config=)/Makefile"};' \
@@ -65,7 +65,7 @@ ifeq ($(host)-x, mips-linux-gnu-x)
 endif
 endif
 
-	# $(TOUCH) $(config_ok_path)
+	# $(TOUCH) $(config_ok_mark_path)
 endif
 
 clean:

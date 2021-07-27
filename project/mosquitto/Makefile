@@ -22,9 +22,9 @@ ifndef top_dir
 top_dir     := $(shell pwd)/../..
 endif
 
-project_target          := mosquitto
-target_version          := 2.0.10
-target_download_path    := https://mosquitto.org/files/source/$(project_target)-$(target_version).tar.gz
+project                 := mosquitto
+project_version         := 2.0.10
+project_download_url    := https://mosquitto.org/files/source/mosquitto-$(project_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
@@ -34,20 +34,18 @@ include $(sub_target_path)/common_sub_target.mk
 
 depend_lib: check_cjson check_mbedtls check_cares check_libwebsockets
 
-include $(top_dir)/configs/platform/platform_config_tmp.mk
-
 $(target_dir)-make_inside: $(target_dir)-config
 	$(call echo-make-msg, $(@:-make_inside=))
-	cd $(build_path)/$(@:-make_inside=) && \
-        export CC=gcc \
-        export CROSS_COMPILE=$(cross_prefix) \
-        export CPPFLAGS="-I$(include_path) -pipe"\
+	cd $(build_path)/$(@:-make_inside=) &&          \
+        export CC=gcc                               \
+        export CROSS_COMPILE=$(cross_gcc)        \
+        export CPPFLAGS="-I$(include_path) -pipe"   \
         export LDFLAGS="-L$(lib_path) -lmbedcrypto -lmbedtls -lmbedx509 -luv -lssl -lcrypto -lcares -lz" \
-        export prefix=$(prefix_path) && \
+        export prefix=$(prefix_path) &&             \
         $(make) && make uninstall && make install
 
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
 	cd $(build_path)/$(@:-config=) && \
@@ -59,7 +57,8 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
         sed -i 's/WITH_WEBSOCKETS:=no/WITH_WEBSOCKETS:=yes/' config.mk && \
         sed -i 's/{DESTDIR}\/etc\/mosquitto/{prefix}\/etc\/mosquitto/g' Makefile
 
-	$(TOUCH) $(config_ok_path)
+	$(TOUCH) $(config_ok_mark_path)
 endif
 
 .PHONY: all clean distclean list
+

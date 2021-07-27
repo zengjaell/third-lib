@@ -22,9 +22,9 @@ ifndef top_dir
 top_dir 	:= $(shell pwd)/../..
 endif
 
-project_target          := tslib
-target_version          := 1.22
-target_download_path    := https://archive.fastgit.org/libts/tslib/archive/refs/tags/$(target_version).tar.gz
+project                 := tslib
+project_version         := 1.22
+project_download_url    := https://archive.fastgit.org/libts/tslib/archive/refs/tags/$(project_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
@@ -34,10 +34,8 @@ include $(sub_target_path)/common_sub_target.mk
 
 depend_lib: check_libevdev
 
-include $(top_dir)/configs/platform/platform_config_tmp.mk
-
 $(target_dir)-config: $(target_dir)-rename-gz-src
-ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
 	cd $(src_path)/$(@:-config=) && \
@@ -63,7 +61,8 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
         sed -i '/#define VERSION/a #define ABS_MT_TOOL_Y 0x3d' config.h && \
         sed -i '/#define VERSION/a #define ABS_MT_TOOL_X 0x3c' config.h
 
-	$(TOUCH) $(config_ok_path)
+	$(TOUCH) $(config_ok_mark_path)
 endif
 
 .PHONY: all clean distclean list
+

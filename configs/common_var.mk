@@ -27,15 +27,17 @@ hostmake        := $(shell which make || echo make)
 make            := $(hostmake) -j$(PARALLEL_JOBS)
 make_j1         := $(hostmake)
 
-sub_target_path ?= $(top_dir)/configs/sub_target
+sub_target_path ?= $(top_dir)/configs/makefile
+vender_path     ?= $(top_dir)/configs/vender
 project_path    ?= $(top_dir)/project
 src_path        ?= $(top_dir)/src
-build_path      ?= $(top_dir)/build/$(platform)
+build_path      ?= $(top_dir)/build/$(vender)
 
-include $(top_dir)/configs/utils/cmd.mk
+target_dir      ?= $(project)-$(project_version)
+target_dir_path ?= $(src_path)/$(target_dir)
 
-target_dir      ?= $(project_target)-$(target_version)
-target_dir_path := $(src_path)/$(target_dir)
-target_tar_path := $(src_path)/.$(target_dir)-src-ok
-config_ok_path  ?= $(build_path)/.$(target_dir)-config-ok
+src_tar_mark_path   ?= $(src_path)/.$(target_dir)-download-src-ok
+config_ok_mark_path ?= $(build_path)/.$(target_dir)-config-src-ok
+
+include $(top_dir)/configs/cmd.mk
 

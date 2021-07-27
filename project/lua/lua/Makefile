@@ -23,10 +23,10 @@ TO_top_dir := ../../..
 include $(TO_top_dir)/configs/com_var_def.mk
 
 target           		:= lua
-target_version 			:= 5.1.5
-target_dir 				:= $(target)-$(target_version)
-config_ok_path    		:= $(build_DIR)/$(target_dir)-config-ok
-target_download_path 	:= http://www.lua.org/ftp
+project_version 			:= 5.1.5
+target_dir 				:= $(target)-$(project_version)
+config_ok_mark_path    		:= $(build_DIR)/$(target_dir)-config-ok
+project_download_url 	:= http://www.lua.org/ftp
 prefix_path 			:= $(ROOT)/../../$(INSTALL_DIR)
 
 TAB='\\t'
@@ -40,7 +40,7 @@ $(target_dir)-make: $(target_dir)-config
 	cd $(@:-make=) && $(make) linux && make install
 
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_DIR)/$(@:-config=)
 	sed -i 's/^#define LUA_USE_READLINE/\/\/#define LUA_USE_READLINE/g' \
 		$(@:-config=)/src/luaconf.h
@@ -54,7 +54,7 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	sed -i 's/$$(make) $$@/$$(make) $$@ R=$$(R) VV=$$(VV)/g' $(@:-config=)/Makefile
 	sed -i 's/^TO_LIB=/TO_LIB= liblua.so.$$(R)/g' $(@:-config=)/Makefile
 	sed -i 's/$$(INSTALL_DATA) $$(TO_LIB)/$$(INSTALL_EXEC) $$(TO_LIB)/g' $(@:-config=)/Makefile
-	sed -i '/$$(INSTALL_EXEC) $$(TO_LIB)/a ln -s lib$(target).so.$(target_version) $$(INSTALL_LIB)/liblua.so.5' $(@:-config=)/Makefile
+	sed -i '/$$(INSTALL_EXEC) $$(TO_LIB)/a ln -s lib$(target).so.$(project_version) $$(INSTALL_LIB)/liblua.so.5' $(@:-config=)/Makefile
 	sed -i '/$$(INSTALL_EXEC) $$(TO_LIB)/a ln -s liblua.so.5 $$(INSTALL_LIB)/liblua.so' $(@:-config=)/Makefile
 	sed -i 's/^ln/$(TAB)&/g' $(@:-config=)/Makefile
 	\
@@ -82,7 +82,7 @@ ifeq ($(host)-x, mips-linux-gnu-x)
 endif
 endif
 
-	$(TOUCH) $(config_ok_path)
+	$(TOUCH) $(config_ok_mark_path)
 endif
 
 clean:

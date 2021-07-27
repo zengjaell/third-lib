@@ -22,9 +22,9 @@ ifndef top_dir
 top_dir     := $(shell pwd)/../..
 endif
 
-project_target          := htop
-target_version          := 2.2.0
-target_download_path    := http://hisham.hm/htop/releases/$(target_version)/$(project_target)-$(target_version).tar.gz
+project                 := htop
+project_version         := 2.2.0
+project_download_url    := http://hisham.hm/htop/releases/$(project_version)/htop-$(project_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
@@ -35,10 +35,8 @@ HTOP_NCURSES_CONFIG_SCRIPT := $(prefix_path)/bin/ncurses6-config
 
 depend_lib: check_ncurses
 
-include $(top_dir)/configs/platform/platform_config_tmp.mk
-
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
 	cd $(src_path)/$(@:-config=) && \
@@ -62,7 +60,7 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
             --disable-unicode                       \
             HTOP_NCURSES_CONFIG_SCRIPT=$(HTOP_NCURSES_CONFIG_SCRIPT)
 
-	$(TOUCH) $(config_ok_path)
+	$(TOUCH) $(config_ok_mark_path)
 endif
 
 .PHONY: all clean distclean list

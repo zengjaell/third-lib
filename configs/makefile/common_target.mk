@@ -2,7 +2,7 @@
 # 
 # Release under GPLv-3.0.
 # 
-# @file    com_target_def.mk
+# @file    common_target.mk
 # @brief   
 # @author  gnsyxiang <gnsyxiang@163.com>
 # @date    15/11 2019 13:47

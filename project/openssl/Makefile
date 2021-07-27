@@ -22,9 +22,9 @@ ifndef top_dir
 top_dir     := $(shell pwd)/../..
 endif
 
-project_target          := openssl
-target_version          := 1.1.1i
-target_download_path    := https://www.openssl.org/source/$(project_target)-$(target_version).tar.gz
+project                 := openssl
+project_version         := 1.1.1i
+project_download_url    := https://www.openssl.org/source/openssl-$(project_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
@@ -34,15 +34,13 @@ include $(sub_target_path)/common_sub_target.mk
 
 depend_lib: check_zlib
 
-include $(top_dir)/configs/platform/platform_config_tmp.mk
-
 CONFIG_COM := no-tests \
     zlib \
     --with-zlib-include=$(include_path) \
     --with-zlib-lib=$(lib_path)
 
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
 	case $(host) in                                             \
@@ -51,14 +49,14 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
             cd $(build_path)/$(@:-config=) &&                   \
                 $(src_path)/$(@:-config=)/Configure             \
                 linux-x86_64 $(CONFIG_COM)                      \
-                --cross-compile-prefix=$(cross_prefix)          \
+                --cross-compile-prefix=$(cross_gcc)          \
                 --prefix=$(prefix_path)                         \
             ;;                                                  \
         arm*)                                                   \
             cd $(build_path)/$(@:-config=) &&                   \
                 $(src_path)/$(@:-config=)/Configure             \
                 linux-generic32 shared no-async $(CONFIG_COM)   \
-                --cross-compile-prefix=$(cross_prefix)          \
+                --cross-compile-prefix=$(cross_gcc)          \
                 --prefix=$(prefix_path)                         \
             ;;                                                  \
     esac
@@ -66,7 +64,8 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 	cd $(build_path)/$(@:-config=) && \
         sed -i 's/^install: install_sw install_ssldirs install_docs/install: install_sw install_ssldirs/' Makefile
 
-	$(TOUCH) $(config_ok_path)
+	$(TOUCH) $(config_ok_mark_path)
 endif
 
 .PHONY: all clean distclean list
+

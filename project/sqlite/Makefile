@@ -22,9 +22,9 @@ ifndef top_dir
 top_dir     := $(shell pwd)/../..
 endif
 
-project_target          := sqlite-version
-target_version          := 3.35.5
-target_download_path    := https://archive.fastgit.org/sqlite/sqlite/archive/refs/tags/version-$(target_version).tar.gz
+project                 := sqlite-version
+project_version         := 3.35.5
+project_download_url    := https://archive.fastgit.org/sqlite/sqlite/archive/refs/tags/version-$(project_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
@@ -34,10 +34,8 @@ include $(sub_target_path)/common_sub_target.mk
 
 depend_lib: check_zlib
 
-include $(top_dir)/configs/platform/platform_config_tmp.mk
-
 $(target_dir)-config: $(target_dir)-rename-gz-src
-ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
 	cd $(build_path)/$(@:-config=) &&               \
@@ -54,7 +52,8 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
             --host=$(host)                          \
             --target=$(host)
 
-	$(TOUCH) $(config_ok_path)
+	$(TOUCH) $(config_ok_mark_path)
 endif
 
 .PHONY: all clean distclean list
+

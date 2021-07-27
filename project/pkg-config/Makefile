@@ -22,9 +22,9 @@ ifndef top_dir
 top_dir     := $(shell pwd)/../..
 endif
 
-project_target          := pkg-config
-target_version          := 0.29.2
-target_download_path    := https://pkgconfig.freedesktop.org/releases/$(project_target)-$(target_version).tar.gz
+project                 := pkg-config
+project_version         := 0.29.2
+project_download_url    := https://pkgconfig.freedesktop.org/releases/pkg-config-$(project_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
@@ -34,10 +34,8 @@ include $(sub_target_path)/common_sub_target.mk
 
 depend_lib:
 
-include $(top_dir)/configs/platform/platform_config_tmp.mk
-
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
     # https://blog.csdn.net/hexf9632/article/details/102625696
@@ -63,7 +61,8 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
             -C \
             --with-internal-glib \
 
-	$(TOUCH) $(config_ok_path)
+	$(TOUCH) $(config_ok_mark_path)
 endif
 
 .PHONY: all clean distclean list
+

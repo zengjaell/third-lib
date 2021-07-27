@@ -22,10 +22,10 @@ ifndef top_dir
 top_dir 	:= $(shell pwd)/../..
 endif
 
-project_target 			:= paho.mqtt.embedded-c
-target_version 			:= 1.1.0
-target_download_path 	:= https://codeload.github.com/eclipse/paho.mqtt.embedded-c/tar.gz/v$(target_version)
-GITHUB_FLAG 			:= yes
+project                 := paho.mqtt.embedded-c
+project_version         := 1.1.0
+project_download_url    := https://codeload.github.com/eclipse/paho.mqtt.embedded-c/tar.gz/v$(project_version)
+GITHUB_FLAG             := yes
 
 include $(top_dir)/configs/common_var.mk
 
@@ -44,14 +44,14 @@ $(target_dir)-make_inside: $(target_dir)-config
 		$(make) && make uninstall && make install
 
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
 	cd $(build_path)/$(@:-config=) && \
 		$(CP) $(src_path)/$(@:-config=)/* ./ && \
 		sed -i '/\/sbin\/ldconfig $(DESTDIR)${libdir}/d' Makefile
 
-	$(TOUCH) $(config_ok_path)
+	$(TOUCH) $(config_ok_mark_path)
 endif
 
 .PHONY: all clean distclean list install_depend

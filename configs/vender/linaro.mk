@@ -18,13 +18,12 @@
 #     last modified: 01/06 2021 20:18
 # ===============================================================
 
-toolchains_version  := gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu
-gcc_name            := aarch64-linux-gnu
+gcc_version         := gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu
 
-toolchains_bin_path := $(base_toolchains_path)/$(platform)/$(toolchains_version)/bin
-gcc_prefix          := $(gcc_name)-
-program_prefix      := $(gcc_name)-
-host                := $(gcc_name)
+toolchains_path     := $(base_toolchains_path)/$(vender)/$(gcc_version)/bin
+gcc_prefix          := aarch64-linux-gnu-
+program_prefix      := aarch64-linux-gnu-
+host                := aarch64-linux-gnu
 
 cppflags_com        :=
 cflags_com          :=
@@ -32,4 +31,4 @@ cxxflags_com        :=
 ldflags_com         :=
 libs_com            := 
 
-prefix_path         ?= $(base_prefix_path)/$(platform)/$(toolchains_version)
+prefix_path         ?= $(base_prefix_path)/$(vender)/$(gcc_version)

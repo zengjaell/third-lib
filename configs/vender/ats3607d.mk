@@ -19,7 +19,7 @@
 # ===============================================================
 
 toolchains_path     := $(base_toolchains_path)/gnu_arm_embedded/gcc-arm-none-eabi-10-2020-q4-major
-toolchains_bin_path := $(toolchains_path)/bin
+toolchains_path     := $(toolchains_path)/bin
 gcc_prefix          := arm-none-eabi-
 host                := arm-linux
 

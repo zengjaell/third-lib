@@ -22,9 +22,9 @@ ifndef top_dir
 top_dir     := $(shell pwd)/../..
 endif
 
-project_target          := libffi
-target_version          := 3.3
-target_download_path    := ftp://sourceware.org/pub/libffi/$(project_target)-$(target_version).tar.gz
+project                 := libffi
+project_version         := 3.3
+project_download_url    := ftp://sourceware.org/pub/libffi/libffi-$(project_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
@@ -33,7 +33,7 @@ all: $(target_dir)-make
 include $(sub_target_path)/common_sub_target.mk
 
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
 	cd $(build_path)/$(@:-config=) &&               \
@@ -50,7 +50,8 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
             --host=$(host)                          \
             --target=$(host)
 
-	$(TOUCH) $(config_ok_path)
+	$(TOUCH) $(config_ok_mark_path)
 endif
 
 .PHONY: all clean distclean list
+

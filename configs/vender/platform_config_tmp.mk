@@ -19,4 +19,4 @@
 # ===============================================================
 
 # 临时指定配置信息
-# prefix_path := /opt/data/nfs/meian/smart_home/3rd_lib/$(project_target)
+# prefix_path := /opt/data/nfs/meian/smart_home/3rd_lib/$(project)

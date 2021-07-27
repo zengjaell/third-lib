@@ -22,12 +22,12 @@ ifndef top_dir
 top_dir     := $(shell pwd)/../..
 endif
 
-project_target          := qt-everywhere-src
+project                 := qt-everywhere-src
 target_version_major    := 5.12
 target_version_patch    := 11
-target_version          := $(target_version_major).$(target_version_patch)
+project_version         := $(target_version_major).$(target_version_patch)
 mirror_url              := http://mirrors.tuna.tsinghua.edu.cn/qt
-target_download_path    := $(mirror_url)/archive/qt/$(target_version_major)/$(target_version)/single/$(project_target)-$(target_version).tar.xz
+project_download_url    := $(mirror_url)/archive/qt/$(target_version_major)/$(project_version)/single/$(project)-$(project_version).tar.xz
 
 include $(top_dir)/configs/common_var.mk
 
@@ -36,8 +36,6 @@ all: depend_lib $(target_dir)-make
 include $(sub_target_path)/common_sub_target.mk
 
 depend_lib: check_zlib check_libpng check_jpeglib check_tslib
-
-include $(top_dir)/configs/platform/platform_config_tmp.mk
 
 _common_base_var :=                         \
     -prefix ${prefix_path}                  \
@@ -57,7 +55,7 @@ _common_3rd_lib :=                          \
     -system-libjpeg
 
 $(target_dir)-config: $(target_dir)-xz-src
-ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
 	case $(host) in                                         \
@@ -73,14 +71,14 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
                     -skip qtwebengine                       \
             ;;                                              \
         arm-*|aarch*)                                       \
-            $(CP) $(project_path)/$(project_target)/linux-arm-$(platform)-g++ $(src_path)/$(@:-config=)/qtbase/mkspecs && \
+            $(CP) $(project_path)/$(project)/linux-arm-$(vender)-g++ $(src_path)/$(@:-config=)/qtbase/mkspecs && \
                                                             \
             cd $(build_path)/$(@:-config=) &&               \
                 $(src_path)/$(@:-config=)/qtbase/configure  \
                     $(_common_base_var)                     \
                     $(_common_3rd_lib)                      \
                     \
-                    -xplatform linux-arm-$(platform)-g++    \
+                    -xplatform linux-arm-$(vender)-g++      \
                     -no-dbus                                \
                     -no-opengl                              \
                     -no-iconv                               \
@@ -88,7 +86,8 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
             ;;                                              \
     esac
 
-	$(TOUCH) $(config_ok_path)
+	$(TOUCH) $(config_ok_mark_path)
 endif
 
 .PHONY: all clean distclean list
+

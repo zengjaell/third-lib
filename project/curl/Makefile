@@ -22,9 +22,9 @@ ifndef top_dir
 top_dir     := $(shell pwd)/../..
 endif
 
-project_target          := curl
-target_version          := 7.76.1
-target_download_path    := https://curl.se/download/$(project_target)-$(target_version).tar.gz
+project                 := curl
+project_version         := 7.76.1
+project_download_url    := https://curl.se/download/curl-$(project_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
@@ -33,13 +33,9 @@ all: depend_lib $(target_dir)-make
 include $(sub_target_path)/common_sub_target.mk
 
 depend_lib: check_zlib check_openssl
-_zlib_path := $(prefix_path)
-_ssl_path  := $(prefix_path)
-
-include $(top_dir)/configs/platform/platform_config_tmp.mk
 
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
 	cd $(build_path)/$(@:-config=) &&               \
@@ -56,10 +52,11 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
             --host=$(host)                          \
             --target=$(host)                        \
             \
-            --with-zlib=$(_zlib_path)               \
-            --with-ssl=$(_ssl_path)
+            --with-zlib=$(prefix_path)              \
+            --with-ssl=$(prefix_path)
 
-	$(TOUCH) $(config_ok_path)
+	$(TOUCH) $(config_ok_mark_path)
 endif
 
 .PHONY: all clean distclean list
+

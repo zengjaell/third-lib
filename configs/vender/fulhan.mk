@@ -18,13 +18,12 @@
 #     last modified: 22/07 2021 16:53
 # ===============================================================
 
-toolchains_version  := molchipv500-armgcc-uclibc
-gcc_name            := arm-mol-linux-uclibcgnueabihf
+gcc_version         := molchipv500-armgcc-uclibc
 
-toolchains_bin_path := $(base_toolchains_path)/$(platform)/$(toolchains_version)/bin
-gcc_prefix          := $(gcc_name)-
-program_prefix      := $(gcc_name)-
-host                := $(gcc_name)
+toolchains_path     := $(base_toolchains_path)/$(vender)/$(gcc_version)/bin
+gcc_prefix          := arm-mol-linux-uclibcgnueabihf-
+program_prefix      := arm-mol-linux-uclibcgnueabihf-
+host                := arm-mol-linux
 
 cppflags_com        :=
 cflags_com          :=
@@ -32,4 +31,4 @@ cxxflags_com        :=
 ldflags_com         :=
 libs_com            := 
 
-prefix_path         ?= $(base_prefix_path)/$(platform)/$(toolchains_version)
+prefix_path         ?= $(base_prefix_path)/$(vender)/$(gcc_version)

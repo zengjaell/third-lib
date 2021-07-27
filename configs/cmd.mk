@@ -2,10 +2,10 @@
 # 
 # Release under GPLv-3.0.
 # 
-# @file    unione.mk
+# @file    cmd.mk
 # @brief   
 # @author  gnsyxiang <gnsyxiang@163.com>
-# @date    05/12 2019 17:33
+# @date    05/12 2019 17:55
 # @version v0.0.1
 # 
 # @since    note
@@ -15,15 +15,19 @@
 #     NO.     Author              Date            Modified
 #     00      zhenquan.qiu        05/12 2019      create the file
 # 
-#     last modified: 05/12 2019 17:33
+#     last modified: 05/12 2019 17:55
 # ===============================================================
 
-toolchains_path     := $(base_toolchains_path)/unione/arm-linux-hf-4.9
-toolchains_bin_path := $(toolchains_path)/bin
-gcc_prefix          := arm-linux-
-host                := arm-linux
+MKDIR           := mkdir -p
+RM              := rm -rf
+CP              := cp -ar
+TOUCH           := touch
+ECHO            := $(shell which echo) -e
+WGET            := wget
+LN              := ln -sf
 
-CFLAGS              :=
-LDFLAGS             :=
+TAR_BZ2         ?= tar -xjvf
+TAR_GZ          ?= tar -xzvf
+TAR_XZ          ?= tar -xvf
+UNZIP           ?= unzip
 
-prefix_path         ?= $(base_prefix_path)/unione

@@ -22,9 +22,9 @@ ifndef top_dir
 top_dir     := $(shell pwd)/../..
 endif
 
-project_target          := harfbuzz
-target_version          := 2.8.0
-target_download_path    := https://archive.fastgit.org/harfbuzz/harfbuzz/archive/refs/tags/$(target_version).tar.gz
+project                 := harfbuzz
+project_version         := 2.8.0
+project_download_url    := https://archive.fastgit.org/harfbuzz/harfbuzz/archive/refs/tags/$(project_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
@@ -34,14 +34,12 @@ include $(sub_target_path)/common_sub_target.mk
 
 depend_lib: check_zlib check_libpng check_freetype check_glib
 
-include $(top_dir)/configs/platform/platform_config_tmp.mk
-
 $(target_dir)-config: $(target_dir)-rename-gz-src
-ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
-	cd $(src_path)/$(@:-config=) && \
-        ./autogen.sh && \
+	cd $(src_path)/$(@:-config=) &&     \
+        ./autogen.sh &&                 \
         make distclean
 
 	cd $(build_path)/$(@:-config=) &&               \
@@ -63,7 +61,8 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
             --with-freetype=yes                     \
             --with-icu=no
 
-	$(TOUCH) $(config_ok_path)
+	$(TOUCH) $(config_ok_mark_path)
 endif
 
 .PHONY: all clean distclean list
+

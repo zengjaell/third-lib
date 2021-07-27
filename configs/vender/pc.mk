@@ -18,10 +18,9 @@
 #     last modified: 05/12 2019 17:31
 # ===============================================================
 
-toolchains_version  := x86_64-linux-gnu
-gcc_name            :=
+gcc_version         := x86_64-linux-gnu
 
-toolchains_bin_path :=
+toolchains_path     :=
 gcc_prefix          :=
 host                := x86_64-linux-gnu
 
@@ -31,4 +30,4 @@ cxxflags_com        :=
 ldflags_com         :=
 libs_com            := 
 
-prefix_path         ?= $(base_prefix_path)/$(platform)/$(toolchains_version)
+prefix_path         ?= $(base_prefix_path)/$(vender)/$(gcc_version)

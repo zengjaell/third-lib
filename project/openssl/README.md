@@ -9,7 +9,7 @@
 * 选择版本
 
 ```txt
-TARGET_VERSION 			:= 1.1.1i
+project_version 			:= 1.1.1i
 ```
 
 * 编译平台: 

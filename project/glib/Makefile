@@ -22,9 +22,9 @@ ifndef top_dir
 top_dir     := $(shell pwd)/../..
 endif
 
-project_target          := glib
-target_version          := 2.68.1
-target_download_path    := https://archive.fastgit.org/GNOME/glib/archive/refs/tags/$(target_version).tar.gz
+project                 := glib
+project_version         := 2.68.1
+project_download_url    := https://archive.fastgit.org/GNOME/glib/archive/refs/tags/$(project_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
@@ -34,25 +34,23 @@ include $(sub_target_path)/common_sub_target.mk
 
 depend_lib: check_zlib check_libffi
 
-include $(top_dir)/configs/platform/platform_config_tmp.mk
-
 $(target_dir)-inside-make: $(target_dir)-config
 	$(call echo-make-msg, $(@:-inside-make=))
-	cd $(build_path)/$(@:-inside-make=) && \
-        ninja -j$(PARALLEL_JOBS) && \
+	cd $(build_path)/$(@:-inside-make=) &&  \
+        ninja -j$(PARALLEL_JOBS) &&         \
         meson install
 
 $(target_dir)-config: $(target_dir)-rename-gz-src
-ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
 	cd $(build_path)/$(@:-config=) && \
         echo "[binaries]"                                           > cross_file.txt && \
-        echo "c                 = '${cross_prefix}' + 'gcc'"        >> cross_file.txt && \
-        echo "cpp               = '${cross_prefix}' + 'g++'"        >> cross_file.txt && \
-        echo "ar                = '${cross_prefix}' + 'ar'"         >> cross_file.txt && \
-        echo "ld                = '${cross_prefix}' + 'ld'"         >> cross_file.txt && \
-        echo "strip             = '${cross_prefix}' + 'strip'"      >> cross_file.txt && \
+        echo "c                 = '${cross_gcc}' + 'gcc'"        >> cross_file.txt && \
+        echo "cpp               = '${cross_gcc}' + 'g++'"        >> cross_file.txt && \
+        echo "ar                = '${cross_gcc}' + 'ar'"         >> cross_file.txt && \
+        echo "ld                = '${cross_gcc}' + 'ld'"         >> cross_file.txt && \
+        echo "strip             = '${cross_gcc}' + 'strip'"      >> cross_file.txt && \
         \
         echo ""                                                     >> cross_file.txt && \
         echo "[properties]"                                         >> cross_file.txt && \
@@ -81,7 +79,8 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
             --cross-file $(build_path)/$(target_dir)/cross_file.txt \
             $(build_path)/$(target_dir)
 
-	$(TOUCH) $(config_ok_path)
+	$(TOUCH) $(config_ok_mark_path)
 endif
 
 .PHONY: all clean distclean list
+

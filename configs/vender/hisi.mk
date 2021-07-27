@@ -19,13 +19,12 @@
 # ===============================================================
 
 # arm-himix200-linux, arm-hisiv510-linux
-toolchains_version  := arm-himix200-linux
-gcc_name            := arm-himix200-linux
+gcc_version         := arm-himix200-linux
 
-toolchains_bin_path := $(base_toolchains_path)/$(platform)/$(toolchains_version)/bin
-gcc_prefix          := $(gcc_name)-
-program_prefix      := $(gcc_name)-
-host                := $(gcc_name)
+toolchains_path     := $(base_toolchains_path)/$(vender)/$(gcc_version)/bin
+gcc_prefix          := arm-himix200-linux-
+program_prefix      := arm-himix200-linux-
+host                := arm-himix200-linux
 
 cppflags_com        :=
 cflags_com          :=
@@ -33,4 +32,4 @@ cxxflags_com        :=
 ldflags_com         :=
 libs_com            := 
 
-prefix_path         ?= $(base_prefix_path)/$(platform)/$(toolchains_version)
+prefix_path         ?= $(base_prefix_path)/$(vender)/$(gcc_version)

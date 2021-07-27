@@ -7,7 +7,7 @@
 * 选择版本
 
 ```txt
-TARGET_VERSION 			:= 4.1.6
+project_version 			:= 4.1.6
 ```
 
 * 使用外部zlib

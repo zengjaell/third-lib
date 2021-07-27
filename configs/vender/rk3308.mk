@@ -19,7 +19,7 @@
 # ===============================================================
 
 toolchains_path     := $(base_toolchains_path)/rk3308/host
-toolchains_bin_path := $(toolchains_path)/bin
+toolchains_path     := $(toolchains_path)/bin
 gcc_prefix          := arm-linux-
 host                := arm-linux
 

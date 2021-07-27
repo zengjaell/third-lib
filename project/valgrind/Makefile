@@ -22,9 +22,9 @@ ifndef top_dir
 top_dir     := $(shell pwd)/../..
 endif
 
-project_target          := valgrind
-target_version          := 3.17.0
-target_download_path    := https://sourceware.org/pub/valgrind/$(project_target)-$(target_version).tar.bz2
+project                 := valgrind
+project_version         := 3.17.0
+project_download_url    := https://sourceware.org/pub/valgrind/valgrind-$(project_version).tar.bz2
 
 include $(top_dir)/configs/common_var.mk
 
@@ -34,10 +34,8 @@ include $(sub_target_path)/common_sub_target.mk
 
 depend_lib:
 
-include $(top_dir)/configs/platform/platform_config_tmp.mk
-
 $(target_dir)-config: $(target_dir)-bz2-src
-ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
 	cd $(src_path)/$(@:-config=) && \
@@ -62,11 +60,12 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
 # 注意：只支持 armV7、armV8两种arm CPU架构。
 # 
 # 注意：特别注意安装目录，否则出现如下错误：
-# “valgrind: failed to start tool 'memcheck' for platform 'arm-linux': No such file or directory”
+# “valgrind: failed to start tool 'memcheck' for vender 'arm-linux': No such file or directory”
 # 增加目录路径：
 # 	export VALGRIND_LIB=/lib/valgrind
 
-	$(TOUCH) $(config_ok_path)
+	$(TOUCH) $(config_ok_mark_path)
 endif
 
 .PHONY: all clean distclean debug
+

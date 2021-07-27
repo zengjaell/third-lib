@@ -22,11 +22,11 @@ ifndef top_dir
 top_dir     := $(shell pwd)/../..
 endif
 
-project_target          := squashfs
-target_version          := 4.2
-target_download_path    := https://udomain.dl.sourceforge.net/project/squashfs/squashfs/squashfs$(target_version)/squashfs$(target_version).tar.gz
+project                 := squashfs
+project_version         := 4.2
+project_download_url    := https://udomain.dl.sourceforge.net/project/squashfs/squashfs/squashfs$(project_version)/squashfs$(project_version).tar.gz
 
-target_dir              := $(project_target)$(target_version)
+target_dir              := $(project)$(project_version)
 
 include $(top_dir)/configs/common_var.mk
 
@@ -39,24 +39,23 @@ depend_lib:
 $(target_dir)-make_inside: $(target_dir)-config
 	$(call echo-make-msg, $(@:-make_inside=))
 	
-	cd $(build_path)/$(@:-make_inside=)/squashfs-tools && \
-		make EXTRA_CFLAGS="$(cppflags_com)" EXTRA_LDFLAGS="$(ldflags_com)" && \
+	cd $(build_path)/$(@:-make_inside=)/squashfs-tools &&                       \
+		make EXTRA_CFLAGS="$(cppflags_com)" EXTRA_LDFLAGS="$(ldflags_com)" &&   \
 		make INSTALL_DIR=$(prefix_path) install
 
-include $(top_dir)/configs/platform/platform_config_tmp.mk
-
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
-	cd $(build_path)/$(@:-config=) && \
-        $(CP) $(src_path)/$(@:-config=)/* ./ && \
-        sed -i 's/#XZ_SUPPORT/XZ_SUPPORT/g' squashfs-tools/Makefile && \
+	cd $(build_path)/$(@:-config=) &&                                           \
+        $(CP) $(src_path)/$(@:-config=)/* ./ &&                                 \
+        sed -i 's/#XZ_SUPPORT/XZ_SUPPORT/g' squashfs-tools/Makefile &&          \
         sed -i '/#include <sys\/sysinfo.h>/a #include <sys/sysmacros.h>' squashfs-tools/mksquashfs.c && \
         sed -i '/#include <sys\/types.h>/a #include <sys/sysmacros.h>' squashfs-tools/unsquashfs.c
 
-	$(TOUCH) $(config_ok_path)
+	$(TOUCH) $(config_ok_mark_path)
 endif
 
 
 .PHONY: all clean distclean list
+

@@ -18,14 +18,13 @@
 #     last modified: 14/11 2019 20:18
 # ===============================================================
 
-top_dir := $(shell pwd)
+top_dir         := $(shell pwd)
+makefile_list   := $(wildcard ./project/*/Makefile)
+
 export top_dir
+export makefile_list
 
 include $(top_dir)/configs/common_var.mk
-
-# makefile_list := $(wildcard ./project/zlib/Makefile)
-makefile_list := $(wildcard ./project/*/Makefile)
-export makefile_list
 
 all:
 ifdef project
@@ -42,7 +41,7 @@ endif
 
 include $(sub_target_path)/define_func.mk
 include $(sub_target_path)/common_target.mk
-include $(top_dir)/configs/platform/platform_config.mk
+include $(top_dir)/configs/vender/platform_config.mk
 
 test:
 	$(ECHO) "gcc path: "

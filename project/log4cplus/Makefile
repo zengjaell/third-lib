@@ -22,10 +22,10 @@ ifndef top_dir
 top_dir     := $(shell pwd)/../..
 endif
 
-project_target          := log4cplus
-target_version          := 2.0.6
+project                 := log4cplus
+project_version         := 2.0.6
 target_version_1        := 2_0_6
-target_download_path    := https://download.fastgit.org/log4cplus/log4cplus/releases/download/REL_$(target_version_1)/log4cplus-$(target_version).tar.gz
+project_download_url    := https://download.fastgit.org/log4cplus/log4cplus/releases/download/REL_$(target_version_1)/log4cplus-$(project_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
@@ -35,10 +35,8 @@ include $(sub_target_path)/common_sub_target.mk
 
 depend_lib:
 
-include $(top_dir)/configs/platform/platform_config_tmp.mk
-
 $(target_dir)-config: $(target_dir)-gz-src
-ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
 	cd $(build_path)/$(@:-config=) &&               \
@@ -55,7 +53,7 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
             --host=$(host)                          \
             --target=$(host)
 
-	$(TOUCH) $(config_ok_path)
+	$(TOUCH) $(config_ok_mark_path)
 endif
 
 .PHONY: all clean distclean list

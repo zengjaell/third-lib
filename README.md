@@ -29,7 +29,7 @@
 ├── build                               // 编译输出目录
 ├── configs
 │   ├── common_var.mk
-│   ├── platform                        // gcc相关信息
+│   ├── vender                        // gcc相关信息
 │   │   ├── ats3607d.mk
 │   │   ├── mstar.mk
 │   │   ├── fulhan.mk
@@ -81,7 +81,7 @@
 #       fulhan
 #       mstar
 #       linaro
-platform := x86_64
+vender := x86_64
 ```
 
 > 如果没有对应的平台，可以增加相应的平台配置文件
@@ -99,10 +99,10 @@ prefix_path := 指定最终的安装路径
 
 ```txt
 # arm-himix200-linux, arm-hisiv510-linux
-toolchains_version  := arm-himix200-linux
+gcc_version  := arm-himix200-linux
 gcc_name            := arm-himix200-linux
 
-toolchains_bin_path := $(base_toolchains_path)/$(platform)/$(toolchains_version)/bin    // gcc路径
+toolchains_path := $(base_toolchains_path)/$(vender)/$(gcc_version)/bin    // gcc路径
 gcc_prefix          := $(gcc_name)-
 program_prefix      := $(gcc_name)-
 host                := $(gcc_name)
@@ -113,7 +113,7 @@ cxxflags_com        :=
 ldflags_com         :=
 libs_com            := 
 
-prefix_path         ?= $(base_prefix_path)/$(platform)/$(toolchains_version)            // 安装路径
+prefix_path         ?= $(base_prefix_path)/$(vender)/$(gcc_version)            // 安装路径
 ```
 
 * 在根目录下执行`make`，获取相关信息
@@ -158,9 +158,9 @@ ifndef top_dir
 top_dir     := $(shell pwd)/../..
 endif
 
-project_target          := demo     // 填写项目名称
-target_version          := x.x.x    // 填写项目版本
-target_download_path    := url      // 填写项目url
+project          := demo     // 填写项目名称
+project_version          := x.x.x    // 填写项目版本
+project_download_url    := url      // 填写项目url
 
 include $(top_dir)/configs/common_var.mk
 
@@ -171,7 +171,7 @@ include $(sub_target_path)/common_sub_target.mk
 depend_lib: xxx_check               // 填写项目依赖的第三方库的检查
 
 $(target_dir)-config: $(target_dir)-gz-src      // 后面依赖要看压缩包类型，如gz/xz/bz2
-ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
+ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
     $(MKDIR) $(build_path)/$(@:-config=)
 
     // 项目的配置信息
@@ -189,7 +189,7 @@ ifneq ($(config_ok_path), $(wildcard $(config_ok_path)))
             --host=$(host)                          \
             --target=$(host)
 
-    $(TOUCH) $(config_ok_path)
+    $(TOUCH) $(config_ok_mark_path)
 endif
 
 .PHONY: all clean distclean list

@@ -33,9 +33,9 @@ base_prefix_path     := $(data_disk_path)/install
 #       fulhan
 #       mstar
 #       linaro
-platform := fulhan
+vender := pc
 
-include $(top_dir)/configs/platform/$(platform).mk
+include $(vender_path)/$(vender).mk
 
 # build为编译的平台，host为运行的平台，target为调试的平台
 #
@@ -45,25 +45,25 @@ include $(top_dir)/configs/platform/$(platform).mk
 build   := x86_64-linux-gnu
 target  := $(host)
 
-ifneq ($(platform), pc)
-cross_prefix    := $(toolchains_bin_path)/$(gcc_prefix)
+ifneq ($(vender), pc)
+cross_gcc       := $(toolchains_path)/$(gcc_prefix)
 endif
 
-AR              := $(cross_prefix)ar
-AS              := $(cross_prefix)as
-LD              := $(cross_prefix)ld
-NM              := $(cross_prefix)nm
-CC              := $(cross_prefix)gcc
-GCC             := $(cross_prefix)gcc
-CPP             := $(cross_prefix)cpp
-CXX             := $(cross_prefix)g++
-FC              := $(cross_prefix)gfortran
-F77             := $(cross_prefix)gfortran
-RANLIB          := $(cross_prefix)ranlib
-READELF         := $(cross_prefix)readelf
-STRIP           := $(cross_prefix)strip
-OBJCOPY         := $(cross_prefix)objcopy
-OBJDUMP         := $(cross_prefix)objdump
+AR              := $(cross_gcc)ar
+AS              := $(cross_gcc)as
+LD              := $(cross_gcc)ld
+NM              := $(cross_gcc)nm
+CC              := $(cross_gcc)gcc
+GCC             := $(cross_gcc)gcc
+CPP             := $(cross_gcc)cpp
+CXX             := $(cross_gcc)g++
+FC              := $(cross_gcc)gfortran
+F77             := $(cross_gcc)gfortran
+RANLIB          := $(cross_gcc)ranlib
+READELF         := $(cross_gcc)readelf
+STRIP           := $(cross_gcc)strip
+OBJCOPY         := $(cross_gcc)objcopy
+OBJDUMP         := $(cross_gcc)objdump
 
 cppflags_com    += -I$(prefix_path)/include -pipe
 cflags_com      +=
