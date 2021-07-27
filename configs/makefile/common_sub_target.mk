@@ -35,9 +35,11 @@ $(target_dir)-rm-config_ok_mark_path:
 $(target_dir)-zip-src:
 ifneq ($(target_dir_path), $(wildcard $(target_dir_path)))
 ifneq ($(src_tar_mark_path), $(wildcard $(src_tar_mark_path)))
+ifneq ($(src_mark_path).zip, $(wildcard $(src_mark_path).zip))
 	cd $(src_path) && \
 		$(RM) $(@:-zip-src=).zip && \
-		$(WGET) $(project_download_url) && \
+		$(WGET) $(project_download_url)
+endif
 		touch $(src_tar_mark_path)
 endif
 	cd $(src_path) && \
@@ -47,9 +49,11 @@ endif
 $(target_dir)-bz2-src:
 ifneq ($(target_dir_path), $(wildcard $(target_dir_path)))
 ifneq ($(src_tar_mark_path), $(wildcard $(src_tar_mark_path)))
+ifneq ($(src_mark_path).tar.bz2, $(wildcard $(src_mark_path).tar.bz2))
 	cd $(src_path) && \
 		$(RM) $(@:-bz2-src=).tar.bz2 && \
-		$(WGET) $(project_download_url) && \
+		$(WGET) $(project_download_url)
+endif
 		touch $(src_tar_mark_path)
 endif
 	cd $(src_path) && \
@@ -59,9 +63,11 @@ endif
 $(target_dir)-rename-bz2-src:
 ifneq ($(target_dir_path), $(wildcard $(target_dir_path)))
 ifneq ($(src_tar_mark_path), $(wildcard $(src_tar_mark_path)))
+ifneq ($(src_mark_path).tar.bz2, $(wildcard $(src_mark_path).tar.bz2))
 	cd $(src_path) && \
 		$(RM) $(@:-rename-bz2-src=).tar.bz2 && \
-		$(WGET) $(project_download_url) -O $(@:-rename-bz2-src=).tar.bz2 && \
+		$(WGET) $(project_download_url) -O $(@:-rename-bz2-src=).tar.bz2
+endif
 		touch $(src_tar_mark_path)
 endif
 	cd $(src_path) && \
@@ -71,9 +77,11 @@ endif
 $(target_dir)-gz-src:
 ifneq ($(target_dir_path), $(wildcard $(target_dir_path)))
 ifneq ($(src_tar_mark_path), $(wildcard $(src_tar_mark_path)))
+ifneq ($(src_mark_path).tar.gz, $(wildcard $(src_mark_path).tar.gz))
 	cd $(src_path) && \
 		$(RM) $(@:-gz-src=).tar.gz && \
-		$(WGET) $(project_download_url) && \
+		$(WGET) $(project_download_url)
+endif
 		touch $(src_tar_mark_path)
 endif
 	cd $(src_path) && \
@@ -83,9 +91,11 @@ endif
 $(target_dir)-rename-gz-src:
 ifneq ($(target_dir_path), $(wildcard $(target_dir_path)))
 ifneq ($(src_tar_mark_path), $(wildcard $(src_tar_mark_path)))
+ifneq ($(src_mark_path).tar.gz, $(wildcard $(src_mark_path).tar.gz))
 	cd $(src_path) && \
 		$(RM) $(@:-rename-gz-src=).tar.gz && \
-		$(WGET) $(project_download_url) -O $(@:-rename-gz-src=).tar.gz && \
+		$(WGET) $(project_download_url) -O $(@:-rename-gz-src=).tar.gz
+endif
 		touch $(src_tar_mark_path)
 endif
 	cd $(src_path) && \
@@ -96,9 +106,11 @@ endif
 $(target_dir)-xz-src:
 ifneq ($(target_dir_path), $(wildcard $(target_dir_path)))
 ifneq ($(src_tar_mark_path), $(wildcard $(src_tar_mark_path)))
+ifneq ($(src_mark_path).tar.xz, $(wildcard $(src_mark_path).tar.xz))
 	cd $(src_path) && \
 		$(RM) $(@:-xz-src=).tar.xz && \
-		$(WGET) $(project_download_url) && \
+		$(WGET) $(project_download_url)
+endif
 		touch $(src_tar_mark_path)
 endif
 	cd $(src_path) && \
@@ -108,9 +120,11 @@ endif
 $(target_dir)-rename-xz-src:
 ifneq ($(target_dir_path), $(wildcard $(target_dir_path)))
 ifneq ($(src_tar_mark_path), $(wildcard $(src_tar_mark_path)))
+ifneq ($(src_mark_path).tar.xz, $(wildcard $(src_mark_path).tar.xz))
 	cd $(src_path) && \
 		$(RM) $(@:-rename-xz-src=).tar.xz && \
-		$(WGET) $(project_download_url) -O $(@:-rename-xz-src=).tar.xz && \
+		$(WGET) $(project_download_url) -O $(@:-rename-xz-src=).tar.xz
+endif
 		touch $(src_tar_mark_path)
 endif
 	cd $(src_path) && \
@@ -126,6 +140,7 @@ distclean: clean
 	$(ECHO) "    rm src/$(target_dir)"
 	$(RM) $(src_tar_mark_path)
 	$(RM) $(src_path)/$(target_dir)
+	$(RM) $(src_path)/$(target_dir).tar.xz*
 	$(RM) $(src_path)/$(target_dir).tar.gz*
 	$(RM) $(src_path)/$(target_dir).tar.bz2*
 

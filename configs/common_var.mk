@@ -36,6 +36,7 @@ build_path      ?= $(top_dir)/build/$(vender)
 target_dir      ?= $(project)-$(project_version)
 target_dir_path ?= $(src_path)/$(target_dir)
 
+src_mark_path       ?= $(src_path)/$(target_dir)
 src_tar_mark_path   ?= $(src_path)/.$(target_dir)-download-src-ok
 config_ok_mark_path ?= $(build_path)/.$(target_dir)-config-src-ok
 
