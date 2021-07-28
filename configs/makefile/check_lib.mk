@@ -27,9 +27,9 @@ ifneq ($(_libogg_dir), $(wildcard $(_libogg_dir)))
 	exit 1
 endif
 
-_libopus_dir := $(prefix_path)/include/opus
-check_libopus:
-ifneq ($(_libopus_dir), $(wildcard $(_libopus_dir)))
+_opus_file := $(prefix_path)/include/opus/opus.h
+check_opus:
+ifneq ($(_opus_file), $(wildcard $(_opus_file)))
 	$(ECHO) "\tuse \"make project=opus\" first to compile opus."
 	$(ECHO) ''
 	exit 1
