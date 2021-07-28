@@ -19,10 +19,18 @@
 # ===============================================================
 
 # audio
-_libogg_dir := $(prefix_path)/include/ogg
+_libogg_file := $(prefix_path)/include/ogg/ogg.h
 check_libogg:
-ifneq ($(_libogg_dir), $(wildcard $(_libogg_dir)))
+ifneq ($(_libogg_file), $(wildcard $(_libogg_file)))
 	$(ECHO) "\tuse \"make project=libogg\" first to compile libogg."
+	$(ECHO) ''
+	exit 1
+endif
+
+_flac_file := $(prefix_path)/include/FLAC/all.h
+check_flac:
+ifneq ($(_flac_file), $(wildcard $(_flac_file)))
+	$(ECHO) "\tuse \"make project=flac\" first to compile flac."
 	$(ECHO) ''
 	exit 1
 endif
