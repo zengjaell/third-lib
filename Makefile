@@ -20,6 +20,7 @@
 
 top_dir         := $(shell pwd)
 makefile_list   := $(wildcard ./project/*/Makefile)
+makefile_list   += $(wildcard ./project/*/*/Makefile)
 
 export top_dir
 export makefile_list
