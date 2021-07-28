@@ -35,6 +35,14 @@ ifneq ($(_libopus_dir), $(wildcard $(_libopus_dir)))
 	exit 1
 endif
 
+_libopusenc_file := $(prefix_path)/include/opus/opusenc.h
+check_libopusenc:
+ifneq ($(_libopusenc_file), $(wildcard $(_libopusenc_file)))
+	$(ECHO) "\tuse \"make project=libopusenc\" first to compile libopusenc."
+	$(ECHO) ''
+	exit 1
+endif
+
 
 
 
