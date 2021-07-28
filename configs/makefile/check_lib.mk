@@ -18,6 +18,26 @@
 #     last modified: 25/04 2021 13:38
 # ===============================================================
 
+# audio
+_libogg_dir := $(prefix_path)/include/ogg
+check_libogg:
+ifneq ($(_libogg_dir), $(wildcard $(_libogg_dir)))
+	$(ECHO) "\tuse \"make project=libogg\" first to compile libogg."
+	$(ECHO) ''
+	exit 1
+endif
+
+_libopus_dir := $(prefix_path)/include/opus
+check_libopus:
+ifneq ($(_libopus_dir), $(wildcard $(_libopus_dir)))
+	$(ECHO) "\tuse \"make project=opus\" first to compile opus."
+	$(ECHO) ''
+	exit 1
+endif
+
+
+
+
 _zlib_file := $(prefix_path)/include/zlib.h
 check_zlib:
 ifneq ($(_zlib_file), $(wildcard $(_zlib_file)))
