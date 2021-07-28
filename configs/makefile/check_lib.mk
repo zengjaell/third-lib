@@ -27,6 +27,14 @@ ifneq ($(_libogg_file), $(wildcard $(_libogg_file)))
 	exit 1
 endif
 
+_libvorbis_file := $(prefix_path)/include/vorbis/codec.h
+check_libvorbis:
+ifneq ($(_libvorbis_file), $(wildcard $(_libvorbis_file)))
+	$(ECHO) "\tuse \"make project=libvorbis\" first to compile libvorbis."
+	$(ECHO) ''
+	exit 1
+endif
+
 _flac_file := $(prefix_path)/include/FLAC/all.h
 check_flac:
 ifneq ($(_flac_file), $(wildcard $(_flac_file)))
