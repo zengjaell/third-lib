@@ -29,8 +29,8 @@ export makefile_list
 include $(top_dir)/configs/common_var.mk
 
 all:
-ifdef project
-	$(call run_dir_makefile_make_project, $(makefile_list), $(project))
+ifdef lib
+	$(call run_dir_makefile_make_project, $(makefile_list), $(lib))
 else
 	$(ECHO) "the instructions are as follows:"
 	$(ECHO) ''
@@ -58,12 +58,12 @@ list:
 	$(call run_dir_makefile_make_target, $(makefile_list), list)
 	$(ECHO) ""
 	$(ECHO) ""
-	$(ECHO) "\teg: make project=zlib           - compile zlib"
-	$(ECHO) "\teg: make project=htop           - compile htop"
+	$(ECHO) "\teg: make lib=zlib           - compile zlib"
+	$(ECHO) "\teg: make lib=htop           - compile htop"
 	$(ECHO) ""
-	$(ECHO) "\teg: make project=zlib V=1       - compile zlib with verbose info"
-	$(ECHO) "\teg: make project=zlib_clean     - clean zlib with build(./build/zlib-x.x.x) dir"
-	$(ECHO) "\teg: make project=zlib_distclan  - clean zlib with build(./build/zlib/-x.x.x) and src(./src/zlib-x.x.x) dir"
+	$(ECHO) "\teg: make lib=zlib V=1       - compile zlib with verbose info"
+	$(ECHO) "\teg: make lib=zlib_clean     - clean zlib with build(./build/zlib-x.x.x) dir"
+	$(ECHO) "\teg: make lib=zlib_distcelan - clean zlib with build(./build/zlib/-x.x.x) and src(./src/zlib-x.x.x) dir"
 	$(ECHO) ""
 
 clean:
