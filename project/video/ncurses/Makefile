@@ -52,6 +52,7 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
             --host=$(host)                          \
             --target=$(host)                        \
             \
+            --enable-widec                          \
             --enable-pc-files                       \
             --with-pkg-config=$(lib_path)/pkgconfig \
             --with-shared                           \
