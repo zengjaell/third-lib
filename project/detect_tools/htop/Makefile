@@ -5,7 +5,7 @@
 # @file    Makefile
 # @brief   
 # @author  gnsyxiang <gnsyxiang@163.com>
-# @date    20/04 2021 16:23
+# @date    18/11 2019 11:28
 # @version v0.0.1
 # 
 # @since    note
@@ -13,30 +13,35 @@
 # 
 #     change log:
 #     NO.     Author              Date            Modified
-#     00      zhenquan.qiu        20/04 2021      create the file
+#     00      zhenquan.qiu        18/11 2019      create the file
 # 
-#     last modified: 20/04 2021 16:23
+#     last modified: 18/11 2019 11:28
 # ===============================================================
 
 ifndef top_dir
-top_dir     := $(shell pwd)/../..
+top_dir     := $(shell pwd)/../../..
 endif
 
-project                 := freetype
-project_version         := 2.10.4
-project_download_url    := https://iweb.dl.sourceforge.net/project/freetype/freetype2/$(project_version)/freetype-$(project_version).tar.gz
+project                 := htop
+project_version         := 2.2.0
+project_download_url    := http://hisham.hm/htop/releases/$(project_version)/htop-$(project_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
 all: depend_lib $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
+HTOP_NCURSES_CONFIG_SCRIPT := $(prefix_path)/bin/ncurses6-config
 
-depend_lib: check_zlib check_libpng
+depend_lib: check_ncurses
 
 $(target_dir)-config: $(target_dir)-gz-src
 ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
+
+	cd $(src_path)/$(@:-config=) && \
+        ./autogen.sh && \
+        $(RM) config.h
 
 	cd $(build_path)/$(@:-config=) &&               \
         $(src_path)/$(@:-config=)/configure         \
@@ -52,12 +57,39 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
             --host=$(host)                          \
             --target=$(host)                        \
             \
-            --with-zlib=yes                         \
-            --with-png=yes                          \
-            --with-harfbuzz=no
+            --disable-unicode                       \
+            HTOP_NCURSES_CONFIG_SCRIPT=$(HTOP_NCURSES_CONFIG_SCRIPT)
 
 	$(TOUCH) $(config_ok_mark_path)
 endif
 
 .PHONY: all clean distclean list
+
+### 运行
+#
+#### 缺少terminfo环境变量
+#
+#* 运行htop出现如下问题
+#
+#```
+#  $ htop
+#  Error opening terminal: vt102.
+#  $
+#```
+#
+#* 查看以下两个变量
+#
+#```
+#  $ echo $TERM
+#  $ echo $TERMINFO
+#```
+#
+#* 增加环境变量
+#
+#```
+#  $ vi /etc/profile
+#  export TERM=vt102
+#  export TERMINFO=/usr/share/terminfo
+#```
+#> note: 确保在/usr/share/terminfo/v/下，存在vt102这个文件
 
