@@ -50,6 +50,7 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
             LDFLAGS="$(ldflags_com)"                \
             LIBS="$(libs_com)"                      \
             PKG_CONFIG_PATH="$(pkg_config_path)"    \
+            --program-suffix=                       \
             --prefix=$(prefix_path)                 \
             --build=$(build)                        \
             --host=$(host)                          \
