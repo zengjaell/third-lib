@@ -33,6 +33,7 @@ base_prefix_path     := $(data_disk_path)/install
 #       fulhan
 #       mstar
 #       linaro
+#       gnu_arm_embedded
 vender := pc
 
 include $(vender_path)/$(vender).mk

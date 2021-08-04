@@ -39,7 +39,11 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
 	cd $(build_path)/$(@:-config=) &&           \
-        export CC=$(CC) export CXX=$(CXX) &&    \
+        export CC=$(CC)                         \
+        export AR=$(AR)                         \
+        export CXX=$(CXX)                       \
+        export CFLAGS="$(cflags_com)"           \
+        export LDFLAGS="$(ldflags_com)" &&      \
         $(src_path)/$(@:-config=)/configure     \
         --prefix=$(prefix_path)
 
