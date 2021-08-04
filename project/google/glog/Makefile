@@ -47,11 +47,11 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
         echo "set(CMAKE_CXX_STANDARD_REQUIRED ON)"  >> $(src_path)/$(@:-config=)/toolchains/cross_gcc.cmake && \
         echo "set(CMAKE_CXX_EXTENSIONS OFF)"        >> $(src_path)/$(@:-config=)/toolchains/cross_gcc.cmake
 
-	cd $(src_path)/$(@:-config=) && \
-        cmake \
-        -H. \
-        -DCMAKE_INSTALL_PREFIX="$(prefix_path)" \
-        -B$(build_path)/$(@:-config=) \
+	cd $(src_path)/$(@:-config=) &&                 \
+        cmake                                       \
+        -H.                                         \
+        -B$(build_path)/$(@:-config=)               \
+        -DCMAKE_INSTALL_PREFIX="$(prefix_path)"     \
         -DCMAKE_TOOLCHAIN_FILE="$(src_path)/$(@:-config=)/toolchains/cross_gcc.cmake"
 
 	$(TOUCH) $(config_ok_mark_path)
