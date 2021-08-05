@@ -45,7 +45,9 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
         sed -i 's#/usr/local#$(prefix_path)#g'          Makefile &&         \
         sed -i 's#gcc -std#$(GCC) -std#g'               src/Makefile &&     \
         sed -i 's#AR= ar#AR=$(AR)#g'                    src/Makefile &&     \
-        sed -i 's#RANLIB= ranlib#RANLIB=$(RANLIB)#g'    src/Makefile
+        sed -i 's#RANLIB= ranlib#RANLIB=$(RANLIB)#g'    src/Makefile &&     \
+        \
+        sed -i '/#define LUA_NUMBER	double/i #define LUA_NUMBER_DOUBLE' src/luaconf.h
 
 	$(TOUCH) $(config_ok_mark_path)
 endif
