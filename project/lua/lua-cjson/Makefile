@@ -18,60 +18,35 @@
 #     last modified: 18/11 2019 15:34
 # ===============================================================
 
-TO_top_dir := ../../..
+ifndef top_dir
+top_dir     := $(shell pwd)/../../..
+endif
 
-include $(TO_top_dir)/configs/com_var_def.mk
+project                 := lua-cjson
+project_version         := 2.1.0
+project_download_url    := https://kyne.com.au/~mark/software/download/lua-cjson-$(project_version).tar.gz
 
-target           		:= lua-cjson
-project_version 			:= 2.1.0
-target_dir 				:= $(target)-$(project_version)
-config_ok_mark_path    		:= $(build_DIR)/$(target_dir)-config-ok
-project_download_url 	:= https://www.kyne.com.au/~mark/software/download
-prefix_path 			:= $(ROOT)/../../$(INSTALL_DIR)
-LUA_DIR 	       		:= ../../install/include/lua.h
+include $(top_dir)/configs/common_var.mk
 
 all: depend_lib $(target_dir)-make
 
-depend_lib:
-ifneq ($(LUA_DIR), $(wildcard $(LUA_DIR)))
-	$(ECHO) "\tuse \"make project=lua\" first to  compile lua."
-	$(ECHO) ''
-	exit 1
-endif
+include $(sub_target_path)/common_sub_target.mk
 
-include $(TO_top_dir)/configs/com_target_def.mk
-
-$(target_dir)-make: $(target_dir)-config
-	$(call echo-make-msg, $(@:-make=))
-	cd $(@:-make=) && $(make) && make install
+depend_lib: check_lua
 
 $(target_dir)-config: $(target_dir)-gz-src
 ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
-	$(MKDIR) $(build_DIR)/$(@:-config=)
-	awk '{sub(/\/usr\/local/, "$(prefix_path)"); \
-		print > "$(@:-config=)/Makefile"};' \
-		$(@:-config=)/Makefile
-ifeq ($(host)-x, $(build)-x)
-else
-ifeq ($(host)-x, arm-linux-x)
-	sed -i '/^## Linux/a CC= $$(GCC_PRE)gcc' $(@:-config=)/Makefile
-	sed -i '/^## Linux/a GCC_PRE := $(GCC_PATH)/$(GCC_PRE)' $(@:-config=)/Makefile
-endif
-ifeq ($(host)-x, mips-linux-gnu-x)
-endif
-endif
+	$(MKDIR) $(build_path)/$(@:-config=)
+
+	cd $(build_path)/$(@:-config=) &&               \
+        $(CP) $(src_path)/$(@:-config=)/* $(build_path)/$(@:-config=)
+
+	cd $(build_path)/$(@:-config=) &&                       \
+        sed -i 's#/usr/local#$(prefix_path)#g'  Makefile && \
+        sed -i 's#$$(CC)#$(GCC)#g'              Makefile
 
 	$(TOUCH) $(config_ok_mark_path)
 endif
-
-clean:
-	$(RM) $(build_DIR)
-
-distclean: clean
-	$(RM) $(target_dir)
-
-list:
-	$(ECHO) "\tmake project=lua-cjson \t\t- compile lua-cjson."
 
 .PHONY: all clean distclean list
 
