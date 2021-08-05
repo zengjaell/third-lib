@@ -18,81 +18,39 @@
 #     last modified: 18/11 2019 15:37
 # ===============================================================
 
-TO_top_dir := ../../..
+ifndef top_dir
+top_dir     := $(shell pwd)/../../..
+endif
 
-include $(TO_top_dir)/configs/com_var_def.mk
+project                 := lua
+project_version         := 5.4.3
+project_download_url    := http://www.lua.org/ftp/lua-$(project_version).tar.gz
 
-target           		:= lua
-project_version 			:= 5.1.5
-target_dir 				:= $(target)-$(project_version)
-config_ok_mark_path    		:= $(build_DIR)/$(target_dir)-config-ok
-project_download_url 	:= http://www.lua.org/ftp
-prefix_path 			:= $(ROOT)/../../$(INSTALL_DIR)
+include $(top_dir)/configs/common_var.mk
 
-TAB='\\t'
+all: $(target_dir)-make_inside
 
-all: $(target_dir)-make
+include $(sub_target_path)/common_sub_target.mk
 
-include $(TO_top_dir)/configs/com_target_def.mk
-
-$(target_dir)-make: $(target_dir)-config
-	$(call echo-make-msg, $(@:-make=))
-	cd $(@:-make=) && $(make) linux && make install
+$(target_dir)-make_inside: $(target_dir)-config
+	$(call echo-make-msg, $(@:-inside-make=))
+	cd $(build_path)/$(@:-make_inside=) && $(make) all && make install
 
 $(target_dir)-config: $(target_dir)-gz-src
 ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
-	$(MKDIR) $(build_DIR)/$(@:-config=)
-	sed -i 's/^#define LUA_USE_READLINE/\/\/#define LUA_USE_READLINE/g' \
-		$(@:-config=)/src/luaconf.h
-	sed -i '/\/usr\/local/i #define prefix_path \"$(ROOT)/../../$(INSTALL_DIR)/\"' $(@:-config=)/src/luaconf.h
-	sed -i 's/\"\/usr\/local\/\"/prefix_path/g' $(@:-config=)/src/luaconf.h
-	\
-	awk '{sub(/\/usr\/local/, "$(prefix_path)"); \
-		print > "$(@:-config=)/Makefile"};' \
-		$(@:-config=)/Makefile
-	sed -i 's/V/M/g' $(@:-config=)/Makefile
-	sed -i 's/$$(make) $$@/$$(make) $$@ R=$$(R) VV=$$(VV)/g' $(@:-config=)/Makefile
-	sed -i 's/^TO_LIB=/TO_LIB= liblua.so.$$(R)/g' $(@:-config=)/Makefile
-	sed -i 's/$$(INSTALL_DATA) $$(TO_LIB)/$$(INSTALL_EXEC) $$(TO_LIB)/g' $(@:-config=)/Makefile
-	sed -i '/$$(INSTALL_EXEC) $$(TO_LIB)/a ln -s lib$(target).so.$(project_version) $$(INSTALL_LIB)/liblua.so.5' $(@:-config=)/Makefile
-	sed -i '/$$(INSTALL_EXEC) $$(TO_LIB)/a ln -s liblua.so.5 $$(INSTALL_LIB)/liblua.so' $(@:-config=)/Makefile
-	sed -i 's/^ln/$(TAB)&/g' $(@:-config=)/Makefile
-	\
-	awk '{sub("MYCFLAGS=-DLUA_USE_LINUX MYLIBS=\"-Wl,-E -ldl -lreadline -lhistory -lncurses\"", \
-		"MYCFLAGS=\"-DLUA_USE_LINUX -fPIC\" MYLIBS=\"-Wl,-E -ldl\""); \
-		print > "$(@:-config=)/src/Makefile"};' \
-		$(@:-config=)/src/Makefile
-	sed -i '/^LUA_A=/i LUA_SO= liblua.so' $(@:-config=)/src/Makefile
-	sed -i 's/^ALL_T=/ALL_T= $$(LUA_SO)/g' $(@:-config=)/src/Makefile
-	sed -i '/^$$(LUA_A)/i $$(LUA_SO): $$(CORE_O) $$(LIB_O)' $(@:-config=)/src/Makefile
-	sed -i '/^$$(LUA_SO)/a $$(CC) -shared -Wl,-soname=$$@.$$(VV) -o $$@.$$(R) $$(CORE_O) $$(LIB_O)' $(@:-config=)/src/Makefile
-	sed -i '/^$$(CC)/a ln -s $$@.$$(R) $$@.$$(VV)' $(@:-config=)/src/Makefile
-	sed -i '/^ln/a ln -s $$@.$$(VV) $$@' $(@:-config=)/src/Makefile
-	sed -i 's/^$$(CC)/$(TAB)&/g' $(@:-config=)/src/Makefile
-	sed -i 's/^ln/$(TAB)&/g' $(@:-config=)/src/Makefile
-ifeq ($(host)-x, $(build)-x)
-else
-ifeq ($(host)-x, arm-linux-x)
-	sed -i '/^CC=/i GCC_PRE := $(GCC_PATH)/$(GCC_PRE)' $(@:-config=)/src/Makefile
-	sed -i 's/^CC= /CC= $$(GCC_PRE)/g' $(@:-config=)/src/Makefile
-	sed -i 's/^AR= /AR= $$(GCC_PRE)/g' $(@:-config=)/src/Makefile
-	sed -i 's/^RANLIB= /RANLIB= $$(GCC_PRE)/g' $(@:-config=)/src/Makefile
-endif
-ifeq ($(host)-x, mips-linux-gnu-x)
-endif
-endif
+	$(MKDIR) $(build_path)/$(@:-config=)
+
+	cd $(build_path)/$(@:-config=) &&               \
+        $(CP) $(src_path)/$(@:-config=)/* $(build_path)/$(@:-config=)
+
+	cd $(build_path)/$(@:-config=) &&                                       \
+        sed -i 's#/usr/local#$(prefix_path)#g'          Makefile &&         \
+        sed -i 's#gcc -std#$(GCC) -std#g'               src/Makefile &&     \
+        sed -i 's#AR= ar#AR=$(AR)#g'                    src/Makefile &&     \
+        sed -i 's#RANLIB= ranlib#RANLIB=$(RANLIB)#g'    src/Makefile
 
 	$(TOUCH) $(config_ok_mark_path)
 endif
 
-clean:
-	$(RM) $(build_DIR)
-
-distclean: clean
-	$(RM) $(target_dir)
-
-list:
-	$(ECHO) "\tmake project=lua \t\t- compile lua."
-
-.PHONY: all clean distclean debug
+.PHONY: all clean distclean list
 
