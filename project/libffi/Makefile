@@ -28,9 +28,11 @@ project_download_url    := ftp://sourceware.org/pub/libffi/libffi-$(project_vers
 
 include $(top_dir)/configs/common_var.mk
 
-all: $(target_dir)-make
+all: depend_lib $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
+
+depend_lib:
 
 $(target_dir)-config: $(target_dir)-gz-src
 ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
