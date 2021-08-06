@@ -34,6 +34,7 @@ main
 *_test
 *_demo
 *.gif
+*.out*
 
 build/
 src/
