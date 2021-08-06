@@ -226,6 +226,7 @@ ifneq ($(_libx264_file), $(wildcard $(_libx264_file)))
 	exit 1
 endif
 
+# gui
 _libevdev_dir := $(prefix_path)/include/libevdev-1.0
 check_libevdev:
 ifneq ($(_libevdev_dir), $(wildcard $(_libevdev_dir)))

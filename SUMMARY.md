@@ -47,6 +47,8 @@
 
 * [图形系统](project/gui/README.md)
     + [qt](project/gui/qt-everywhere-src/README.md)
+    + [tslib](project/gui/tslib/README.md)
+    + [libevdev](project/gui/libevdev/README.md)
 
 * [FFmpeg](project/FFmpeg/README.md)
 * [SDL2](project/SDL2/README.md)
@@ -107,7 +109,6 @@
     + [fftw](project/fft/fftw/README.md)
 
 * [dbus](project/dbus/README.md)
-* [libevdev](project/libevdev/README.md)
 * [libffi](project/libffi/README.md)
 * [mosquitto](project/mosquitto/README.md)
 * [paho.mqtt.embedded-c](project/paho.mqtt.embedded-c/README.md)
@@ -115,6 +116,5 @@
 * [pkg-config](project/pkg-config/README.md)
 * [sqlite](project/sqlite/README.md)
 * [squashfs](project/squashfs/README.md)
-* [tslib](project/tslib/README.md)
 
 
