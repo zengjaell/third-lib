@@ -38,13 +38,17 @@ $(target_dir)-config: $(target_dir)-gz-src
 ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
-	cd $(src_path)/$(@:-config=) &&             \
-        cmake                                   \
-        -H.                                     \
-        -B$(build_path)/$(@:-config=)           \
-        -DCMAKE_C_COMPILER=$(GCC)               \
-        -DCMAKE_CXX_COMPILER=$(CXX)             \
-        -DCMAKE_INSTALL_PREFIX="$(prefix_path)" \
+	cd $(src_path)/$(@:-config=) &&                 \
+        cmake                                       \
+        -H.                                         \
+        -B$(build_path)/$(@:-config=)               \
+        -DCMAKE_SYSTEM_NAME="Linux"                 \
+        -DCMAKE_C_COMPILER=$(GCC)                   \
+        -DCMAKE_CXX_COMPILER=$(CXX)                 \
+        -DCMAKE_INSTALL_PREFIX="$(prefix_path)"     \
+        -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER   \
+        -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY    \
+        -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY    \
         \
 
 
