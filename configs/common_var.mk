@@ -31,6 +31,7 @@ sub_target_path ?= $(top_dir)/configs/makefile
 vender_path     ?= $(top_dir)/configs/vender
 project_path    ?= $(top_dir)/project
 src_path        ?= $(top_dir)/src
+tools_path      ?= $(top_dir)/tools
 build_path      ?= $(top_dir)/build/$(vender)
 
 target_dir      ?= $(project)-$(project_version)
