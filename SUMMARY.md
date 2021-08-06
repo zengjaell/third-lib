@@ -105,6 +105,7 @@
 * [fft](project/fft/README.md)
     + [fftw](project/fft/fftw/README.md)
 
+* [dbus](project/dbus/README.md)
 * [libevdev](project/libevdev/README.md)
 * [libffi](project/libffi/README.md)
 * [mosquitto](project/mosquitto/README.md)
