@@ -30,5 +30,9 @@ node_modules/
 compile_commands.json
 package-lock.json
 
+main
+
 build/
 src/
+
+
