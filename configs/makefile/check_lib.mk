@@ -133,9 +133,10 @@ ifneq ($(_freetype2_dir), $(wildcard $(_freetype2_dir)))
 	exit 1
 endif
 
-_glib_dir := $(prefix_path)/include/glib-2.0
+# gnome
+_glib_file := $(prefix_path)/include/glib-2.0/glib.h
 check_glib:
-ifneq ($(_glib_dir), $(wildcard $(_glib_dir)))
+ifneq ($(_glib_file), $(wildcard $(_glib_file)))
 	$(ECHO) "\tuse \"make lib=glib \" first to compile glib."
 	$(ECHO) ''
 	exit 1
