@@ -87,6 +87,7 @@
     + [gdb](project/detect_tools/gdb/README.md)
     + [htop](project/detect_tools/htop/README.md)
     + [valgrind](project/detect_tools/valgrind/README.md)
+    + [cflow](project/detect_tools/cflow/README.md)
 
 * [日志](project/log/README.md)
     + [glog](project/log/glog/README.md)
