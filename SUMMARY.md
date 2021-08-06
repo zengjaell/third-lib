@@ -69,6 +69,7 @@
     + [jsoncpp](project/serialization_protocol/jsoncpp/README.md)
     + [protobuf](project/serialization_protocol/protobuf/README.md)
     + [protobuf-c](project/serialization_protocol/protobuf-c/README.md)
+    + [libexpat](project/serialization_protocol/libexpat/README.md)
 
 * [字体/编码](project/font_encode/README.md)
     + [freetype](project/font_encode/freetype/README.md)

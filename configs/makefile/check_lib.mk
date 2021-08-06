@@ -149,6 +149,8 @@ ifneq ($(_ncurses_dir), $(wildcard $(_ncurses_dir)))
 	exit 1
 endif
 
+
+# serialization protocol
 _cjson_dir := $(prefix_path)/include/cjson
 check_cjson:
 ifneq ($(_cjson_dir), $(wildcard $(_cjson_dir)))
@@ -156,6 +158,16 @@ ifneq ($(_cjson_dir), $(wildcard $(_cjson_dir)))
 	$(ECHO) ''
 	exit 1
 endif
+
+_expat_file := $(prefix_path)/include/expat.h
+check_expat:
+ifneq ($(_expat_file), $(wildcard $(_expat_file)))
+	$(ECHO) "\tuse \"make lib=libexpat \" first to compile libexpat."
+	$(ECHO) ''
+	exit 1
+endif
+
+
 
 _cares_file := $(prefix_path)/include/ares.h
 check_cares:
