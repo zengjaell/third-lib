@@ -32,7 +32,7 @@ all: depend_lib $(target_dir)-make_inside
 
 include $(sub_target_path)/common_sub_target.mk
 
-depend_lib:
+depend_lib: check_openssl check_libnl
 
 $(target_dir)-make_inside: $(target_dir)-config
 	$(call echo-make-msg, $(@:-inside-make=))

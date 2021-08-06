@@ -101,6 +101,14 @@ ifneq ($(_openssl_dir), $(wildcard $(_openssl_dir)))
 	exit 1
 endif
 
+_libnl3_file := $(prefix_path)/include/libnl3/netlink/netlink.h
+check_libnl:
+ifneq ($(_libnl3_file), $(wildcard $(_libnl3_file)))
+	$(ECHO) "\tuse \"make lib=libnl\" first to compile libnl."
+	$(ECHO) ''
+	exit 1
+endif
+
 _png_file := $(prefix_path)/include/png.h
 check_libpng:
 ifneq ($(_png_file), $(wildcard $(_png_file)))
