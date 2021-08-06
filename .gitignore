@@ -31,6 +31,8 @@ compile_commands.json
 package-lock.json
 
 main
+*_test
+*_demo
 
 build/
 src/
