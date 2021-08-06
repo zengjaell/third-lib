@@ -98,9 +98,10 @@
     + [LuaBitOp](project/lua/LuaBitOp/README.md)
 
 * [google](project/google/README.md)
-    + [gflags](project/gnome/gflags/README.md)
-    + [glog](project/gnome/glog/README.md)
-    + [protobuf](project/gnome/protobuf/README.md)
+    + [gflags](project/google/gflags/README.md)
+    + [glog](project/google/glog/README.md)
+    + [protobuf](project/google/protobuf/README.md)
+    + [googletest](project/google/googletest/README.md)
 
 * [gnome](project/gnome/README.md)
     + [glib](project/gnome/glib/README.md)
