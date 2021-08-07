@@ -55,7 +55,7 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
             --host=$(host)                          \
             --target=$(host)                        \
             \
-            --with-zlib
+            --enable-libunwind
 
 
 	$(TOUCH) $(config_ok_mark_path)
