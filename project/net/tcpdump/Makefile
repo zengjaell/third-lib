@@ -19,7 +19,7 @@
 # ===============================================================
 
 ifndef top_dir
-top_dir := $(shell pwd)/../..
+top_dir := $(shell pwd)/../../..
 endif
 
 project                 := tcpdump
@@ -45,12 +45,15 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
             CFLAGS="$(cflags_com)"                  \
             CXXFLAGS="$(cxxflags_com)"              \
             LDFLAGS="$(ldflags_com)"                \
-            LIBS="$(libs_com)"                      \
+            LIBS="$(libs_com) -lnl-3 -lnl-genl-3"   \
             PKG_CONFIG_PATH="$(pkg_config_path)"    \
             --prefix=$(prefix_path)                 \
             --build=$(build)                        \
             --host=$(host)                          \
-            --target=$(host)
+            --target=$(host)                        \
+            \
+            --disable-local-libpcap
+
 
 	$(TOUCH) $(config_ok_mark_path)
 endif

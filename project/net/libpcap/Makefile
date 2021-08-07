@@ -19,7 +19,7 @@
 # ===============================================================
 
 ifndef top_dir
-top_dir     := $(shell pwd)/../..
+top_dir := $(shell pwd)/../../..
 endif
 
 project                 := libpcap
@@ -42,7 +42,7 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
         $(src_path)/$(@:-config=)/configure         \
             CC=$(GCC) CXX=$(CXX)                    \
             CPPFLAGS="$(cppflags_com)"              \
-            CFLAGS="$(cflags_com)"                  \
+            CFLAGS="$(cflags_com) -I$(prefix_path)/include/libnl3" \
             CXXFLAGS="$(cxxflags_com)"              \
             LDFLAGS="$(ldflags_com)"                \
             LIBS="$(libs_com)"                      \

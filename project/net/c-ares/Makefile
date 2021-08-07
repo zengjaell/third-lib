@@ -19,7 +19,7 @@
 # ===============================================================
 
 ifndef top_dir
-top_dir     := $(shell pwd)/../..
+top_dir := $(shell pwd)/../../..
 endif
 
 project                 := c-ares
@@ -38,8 +38,6 @@ $(target_dir)-config: $(target_dir)-gz-src
 ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
-	cd $(src_path)/$(@:-config=) && autoreconf -fi
-
 	cd $(build_path)/$(@:-config=) &&               \
         $(src_path)/$(@:-config=)/configure         \
             CC=$(GCC) CXX=$(CXX)                    \
@@ -52,7 +50,9 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
             --prefix=$(prefix_path)                 \
             --build=$(build)                        \
             --host=$(host)                          \
-            --target=$(host)
+            --target=$(host)                        \
+            \
+            --disable-tests
 
 	$(TOUCH) $(config_ok_mark_path)
 endif

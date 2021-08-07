@@ -19,7 +19,7 @@
 # ===============================================================
 
 ifndef top_dir
-top_dir     := $(shell pwd)/../..
+top_dir := $(shell pwd)/../../..
 endif
 
 project                 := libwebsockets
@@ -32,7 +32,7 @@ all: depend_lib $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
 
-depend_lib: check_zlib check_libuv check_mbedtls
+depend_lib: check_zlib check_libuv check_openssl
 
 $(target_dir)-config: $(target_dir)-rename-gz-src
 ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
@@ -53,9 +53,8 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
         -DLWS_ZLIB_INCLUDE_DIRS="$(include_path)"           \
         -DLWS_ZLIB_LIBRARIES="$(lib_path)/libz.so"          \
         \
-        -DLWS_WITH_LWSWS:BOOL=ON                            \
-        -DLWS_WITH_MBEDTLS:BOOL=ON                          \
-        -DLWS_MBEDTLS_LIBRARIES="$(lib_path)/libmbedcrypto.so;$(lib_path)/libmbedtls.so;$(lib_path)/libmbedx509.so" \
+        -DLWS_WITH_SSL:BOOL=ON                              \
+        -DLWS_MBEDTLS_LIBRARIES="$(lib_path)/libcrypto.so;$(lib_path)/libssl.so" \
         -DLWS_MBEDTLS_INCLUDE_DIRS="$(include_path)"
 
 	$(TOUCH) $(config_ok_mark_path)
