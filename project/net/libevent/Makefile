@@ -45,7 +45,7 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
             CFLAGS="$(cflags_com)"                  \
             CXXFLAGS="$(cxxflags_com)"              \
             LDFLAGS="$(ldflags_com)"                \
-            LIBS="$(libs_com) -lz"                  \
+            LIBS="$(libs_com)"                      \
             PKG_CONFIG_PATH="$(pkg_config_path)"    \
             --prefix=$(prefix_path)                 \
             --build=$(build)                        \
