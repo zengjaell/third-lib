@@ -232,7 +232,9 @@ make: *** [makefile:42: main-main] Interrupt
 ==696984== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
 ```
 
-* demo-callgrind: 动态执行流程分析和性能瓶颈分析
+### 动态执行流程分析和性能瓶颈分析
+
+* demo-callgrind: 性能分析
 
 产生检测信息
 
@@ -249,12 +251,289 @@ make: *** [makefile:42: main-main] Interrupt
 
 定位性能瓶颈
 
-kcachegrind打开进程信息
+`kcachegrind`打开进程信息
+
+> note: sudo apt install -y kcachegrind
+
+### 内存检测
+
+* demo-mem: 读写越界，变量未初始化
+
+```txt
+==829457== Memcheck, a memory error detector
+==829457== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==829457== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==829457== Command: ./main
+==829457== 
+==829457== Invalid write of size 4
 
 
+==829457==    at 0x1091C5: write_illegal (main.c:12)
+写越界了, 在main:12
 
 
+==829457==    by 0x1092C3: main (main.c:39)
+==829457==  Address 0x4a5b050 is 0 bytes after a block of size 16 alloc'd
+==829457==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==829457==    by 0x1091AC: write_illegal (main.c:11)
+==829457==    by 0x1092C3: main (main.c:39)
+==829457== 
+==829457== Invalid read of size 4
 
 
+==829457==    at 0x10921A: read_illegal (main.c:21)
+读越界了, 在main:21
 
+
+==829457==    by 0x1092CD: main (main.c:40)
+==829457==  Address 0x4a5b0a0 is 0 bytes after a block of size 16 alloc'd
+==829457==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==829457==    by 0x109201: read_illegal (main.c:20)
+==829457==    by 0x1092CD: main (main.c:40)
+==829457== 
+==829457== Conditional jump or move depends on uninitialised value(s)
+==829457==    at 0x48E0AD8: __vfprintf_internal (vfprintf-internal.c:1687)
+==829457==    by 0x48CAEBE: printf (printf.c:33)
+
+
+==829457==    by 0x109282: uninitialised_value (main.c:29)
+堆上变量没有初始化, 在main.c:29
+
+
+==829457==    by 0x1092D7: main (main.c:41)
+==829457== 
+==829457== Use of uninitialised value of size 8
+==829457==    at 0x48C481B: _itoa_word (_itoa.c:179)
+==829457==    by 0x48E06F4: __vfprintf_internal (vfprintf-internal.c:1687)
+==829457==    by 0x48CAEBE: printf (printf.c:33)
+==829457==    by 0x109282: uninitialised_value (main.c:29)
+==829457==    by 0x1092D7: main (main.c:41)
+==829457== 
+==829457== Conditional jump or move depends on uninitialised value(s)
+==829457==    at 0x48C482D: _itoa_word (_itoa.c:179)
+==829457==    by 0x48E06F4: __vfprintf_internal (vfprintf-internal.c:1687)
+==829457==    by 0x48CAEBE: printf (printf.c:33)
+==829457==    by 0x109282: uninitialised_value (main.c:29)
+==829457==    by 0x1092D7: main (main.c:41)
+==829457== 
+==829457== Conditional jump or move depends on uninitialised value(s)
+==829457==    at 0x48E13A8: __vfprintf_internal (vfprintf-internal.c:1687)
+==829457==    by 0x48CAEBE: printf (printf.c:33)
+==829457==    by 0x109282: uninitialised_value (main.c:29)
+==829457==    by 0x1092D7: main (main.c:41)
+==829457== 
+==829457== Conditional jump or move depends on uninitialised value(s)
+==829457==    at 0x48E086E: __vfprintf_internal (vfprintf-internal.c:1687)
+==829457==    by 0x48CAEBE: printf (printf.c:33)
+==829457==    by 0x109282: uninitialised_value (main.c:29)
+==829457==    by 0x1092D7: main (main.c:41)
+==829457== 
+==829457== Conditional jump or move depends on uninitialised value(s)
+==829457==    at 0x48E0AD8: __vfprintf_internal (vfprintf-internal.c:1687)
+==829457==    by 0x48CAEBE: printf (printf.c:33)
+
+
+==829457==    by 0x1092A4: uninitialised_value (main.c:33)
+堆上变量没有初始化, 在main.c:29
+
+
+==829457==    by 0x1092D7: main (main.c:41)
+==829457== 
+==829457== Use of uninitialised value of size 8
+==829457==    at 0x48C481B: _itoa_word (_itoa.c:179)
+==829457==    by 0x48E06F4: __vfprintf_internal (vfprintf-internal.c:1687)
+==829457==    by 0x48CAEBE: printf (printf.c:33)
+==829457==    by 0x1092A4: uninitialised_value (main.c:33)
+==829457==    by 0x1092D7: main (main.c:41)
+==829457== 
+==829457== Conditional jump or move depends on uninitialised value(s)
+==829457==    at 0x48C482D: _itoa_word (_itoa.c:179)
+==829457==    by 0x48E06F4: __vfprintf_internal (vfprintf-internal.c:1687)
+==829457==    by 0x48CAEBE: printf (printf.c:33)
+==829457==    by 0x1092A4: uninitialised_value (main.c:33)
+==829457==    by 0x1092D7: main (main.c:41)
+==829457== 
+==829457== Conditional jump or move depends on uninitialised value(s)
+==829457==    at 0x48E13A8: __vfprintf_internal (vfprintf-internal.c:1687)
+==829457==    by 0x48CAEBE: printf (printf.c:33)
+==829457==    by 0x1092A4: uninitialised_value (main.c:33)
+==829457==    by 0x1092D7: main (main.c:41)
+==829457== 
+==829457== Conditional jump or move depends on uninitialised value(s)
+==829457==    at 0x48E086E: __vfprintf_internal (vfprintf-internal.c:1687)
+==829457==    by 0x48CAEBE: printf (printf.c:33)
+==829457==    by 0x1092A4: uninitialised_value (main.c:33)
+==829457==    by 0x1092D7: main (main.c:41)
+==829457== 
+00==829457== 
+==829457== HEAP SUMMARY:
+==829457==     in use at exit: 0 bytes in 0 blocks
+==829457==   total heap usage: 4 allocs, 4 frees, 1,072 bytes allocated
+==829457== 
+==829457== All heap blocks were freed -- no leaks are possible
+==829457== 
+==829457== Use --track-origins=yes to see where uninitialised values come from
+==829457== For lists of detected and suppressed errors, rerun with: -s
+==829457== ERROR SUMMARY: 12 errors from 12 contexts (suppressed: 0 from 0)
+```
+
+* demo-mem-free: 释放内存空间
+
+```txt
+==831837== Memcheck, a memory error detector
+==831837== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==831837== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==831837== Command: ./main
+==831837== 
+==831837== Invalid free() / delete / delete[] / realloc()
+==831837==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+
+
+==831837==    by 0x1091E8: doubule_free (main.c:13)
+内存重复释放
+
+
+==831837==    by 0x1092EE: main (main.c:39)
+==831837==  Address 0x4a5b040 is 0 bytes inside a block of size 16 free'd
+==831837==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==831837==    by 0x1091DC: doubule_free (main.c:12)
+==831837==    by 0x1092EE: main (main.c:39)
+==831837==  Block was alloc'd at
+==831837==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==831837==    by 0x1091CC: doubule_free (main.c:11)
+==831837==    by 0x1092EE: main (main.c:39)
+==831837== 
+==831837== Invalid free() / delete / delete[] / realloc()
+==831837==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+
+
+==831837==    by 0x109225: no_heap (main.c:20)
+释放非堆内存
+
+
+==831837==    by 0x1092F8: main (main.c:40)
+==831837==  Address 0x1ffefff7ec is on thread 1's stack
+==831837==  in frame #1, created by no_heap (main.c:17)
+==831837== 
+==831837== Argument 'size' of function malloc has a fishy (possibly negative) value: -1
+==831837==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+
+
+==831837==    by 0x1092BA: test (main.c:32)
+可疑参数
+
+
+==831837==    by 0x10930C: main (main.c:42)
+==831837== 
+==831837== 
+==831837== HEAP SUMMARY:
+==831837==     in use at exit: 0 bytes in 0 blocks
+==831837==   total heap usage: 1 allocs, 3 frees, 16 bytes allocated
+==831837== 
+==831837== All heap blocks were freed -- no leaks are possible
+==831837== 
+==831837== For lists of detected and suppressed errors, rerun with: -s
+==831837== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
+```
+
+* demo-mem-leak: 内存泄露
+
+```txt
+==832906== Memcheck, a memory error detector
+==832906== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==832906== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==832906== Command: ./main
+==832906== 
+==832906== 
+==832906== HEAP SUMMARY:
+==832906==     in use at exit: 32 bytes in 1 blocks
+==832906==   total heap usage: 1 allocs, 0 frees, 32 bytes allocated
+==832906== 
+==832906== 32 bytes in 1 blocks are definitely lost in loss record 1 of 1
+==832906==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+
+
+==832906==    by 0x109168: mem_leak (main.c:11)
+发生内存泄露的地方
+
+
+==832906==    by 0x109190: main (main.c:17)
+==832906== 
+==832906== LEAK SUMMARY:
+==832906==    definitely lost: 32 bytes in 1 blocks
+==832906==    indirectly lost: 0 bytes in 0 blocks
+==832906==      possibly lost: 0 bytes in 0 blocks
+==832906==    still reachable: 0 bytes in 0 blocks
+==832906==         suppressed: 0 bytes in 0 blocks
+==832906== 
+==832906== For lists of detected and suppressed errors, rerun with: -s
+==832906== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+```
+
+* demo-mem-leak-1: 内存泄露
+
+`sudo apt install massif-visualizer -y`
+
+`valgrind --tool=massif --time-unit=B --detailed-freq=1`
+
+* demo-data_race: 数据竞争
+
+```txt
+==835971== Helgrind, a thread error detector
+==835971== Copyright (C) 2007-2017, and GNU GPL'd, by OpenWorks LLP et al.
+==835971== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==835971== Command: ./main
+==835971== 
+==835971== ---Thread-Announcement------------------------------------------
+==835971== 
+==835971== Thread #3 was created
+==835971==    at 0x49B1282: clone (clone.S:71)
+==835971==    by 0x48742EB: create_thread (createthread.c:101)
+==835971==    by 0x4875E0F: pthread_create@@GLIBC_2.2.5 (pthread_create.c:817)
+==835971==    by 0x4842917: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==835971==    by 0x109395: main (main.c:29)
+==835971== 
+==835971== ---Thread-Announcement------------------------------------------
+==835971== 
+==835971== Thread #2 was created
+==835971==    at 0x49B1282: clone (clone.S:71)
+==835971==    by 0x48742EB: create_thread (createthread.c:101)
+==835971==    by 0x4875E0F: pthread_create@@GLIBC_2.2.5 (pthread_create.c:817)
+==835971==    by 0x4842917: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==835971==    by 0x109378: main (main.c:28)
+==835971== 
+==835971== ----------------------------------------------------------------
+==835971== 
+
+
+==835971== Possible data race during write of size 4 at 0x10C078 by thread #3
+==835971== Locks held: none
+存在数据竞争
+
+
+==835971==    at 0x109306: thread_func (main.c:17)
+==835971==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==835971==    by 0x4875608: start_thread (pthread_create.c:477)
+==835971==    by 0x49B1292: clone (clone.S:95)
+==835971== 
+
+
+==835971== This conflicts with a previous write of size 4 by thread #2
+==835971== Locks held: none
+存在数据竞争
+
+
+==835971==    at 0x109306: thread_func (main.c:17)
+==835971==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==835971==    by 0x4875608: start_thread (pthread_create.c:477)
+==835971==    by 0x49B1292: clone (clone.S:95)
+==835971==  Address 0x10c078 is 0 bytes inside data symbol "s_racy"
+==835971== 
+Result: 2
+==835971== 
+==835971== Use --history-level=approx or =none to gain increased speed, at
+==835971== the cost of reduced accuracy of conflicting-access information
+==835971== For lists of detected and suppressed errors, rerun with: -s
+==835971== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+```
 

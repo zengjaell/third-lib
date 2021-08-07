@@ -17,17 +17,17 @@ static void delay_ms(const int ms) {
 }
 
 void read_lock(const int ms) {
-  pthread_rwlock_t    rwlock;
- 
-  fprintf(stderr, "Locking rwlock shared ...\n");
- 
-  pthread_rwlock_init(&rwlock, 0);
-  pthread_rwlock_rdlock(&rwlock);
-  delay_ms(ms);
-  pthread_rwlock_rdlock(&rwlock);
-  pthread_rwlock_unlock(&rwlock);
-  pthread_rwlock_unlock(&rwlock);
-  pthread_rwlock_destroy(&rwlock);
+    pthread_rwlock_t    rwlock;
+
+    fprintf(stderr, "Locking rwlock shared ...\n");
+
+    pthread_rwlock_init(&rwlock, 0);
+    pthread_rwlock_rdlock(&rwlock);
+    delay_ms(ms);
+    pthread_rwlock_rdlock(&rwlock);
+    pthread_rwlock_unlock(&rwlock);
+    pthread_rwlock_unlock(&rwlock);
+    pthread_rwlock_destroy(&rwlock);
 }
 
 int main(int argc, char** argv) {

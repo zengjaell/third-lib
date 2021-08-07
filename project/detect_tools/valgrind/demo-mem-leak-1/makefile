@@ -31,14 +31,16 @@ all: $(_target)-clean $(_target)-main
 
 include $(sub_target_path)/common_sub_target.mk
 
-cppflags_com += -I.
-libs_com += -Wl,--as-needed
+cppflags_com += -I. -g -O0
+libs_com += -lpthread
 
 $(_target)-clean:
 	$(RM) $(@:-clean=)
+	$(RM) massif.out*
 
 $(_target)-main:
 	$(CC) $(_src_com) -o $(@:-main=) $(cflags_com) $(cppflags_com) $(ldflags_com) $(libs_com)
+	valgrind --tool=massif --time-unit=B --detailed-freq=1 ./$(@:-main=)
 
 .PHONY: all clean clean_inside distclean list
 

@@ -1,22 +1,3 @@
-/**
- * 
- * Release under GPLv-3.0.
- * 
- * @file    main.c
- * @brief   
- * @author  gnsyxiang <gnsyxiang@163.com>
- * @date    06/08 2021 20:47
- * @version v0.0.1
- * 
- * @since    note
- * @note     note
- * 
- *     change log:
- *     NO.     Author              Date            Modified
- *     00      zhenquan.qiu        06/08 2021      create the file
- * 
- *     last modified: 06/08 2021 20:47
- */
 #include <stdio.h>
 #include <pthread.h>
 #include <unistd.h>
