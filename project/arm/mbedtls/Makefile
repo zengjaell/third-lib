@@ -23,7 +23,7 @@ top_dir := $(shell pwd)/../../..
 endif
 
 project                 := mbedtls
-project_version         := 2.26.0
+project_version         := 3.0.0
 project_download_url    := https://archive.fastgit.org/ARMmbed/mbedtls/archive/refs/tags/v$(project_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk

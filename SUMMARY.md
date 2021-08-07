@@ -61,7 +61,6 @@
     + [tcpdump](project/net/tcpdump/README.md)
     + [libuv](project/net/libuv/README.md)
     + [libwebsockets](project/net/libwebsockets/README.md)
-    + [mbedtls](project/net/mbedtls/README.md)
     + [openssl](project/net/openssl/README.md)
     + [libnl](project/net/libnl/README.md)
     + [hostapd](project/net/hostapd/README.md)
@@ -104,6 +103,9 @@
     + [protobuf](project/google/protobuf/README.md)
     + [googletest](project/google/googletest/README.md)
     + [gperftools](project/google/gperftools/README.md)
+
+* [arm](project/arm/README.md)
+    + [mbedtls](project/arm/mbedtls/README.md)
 
 * [gnome](project/gnome/README.md)
     + [glib](project/gnome/glib/README.md)
