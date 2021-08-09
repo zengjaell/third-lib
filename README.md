@@ -11,18 +11,21 @@
   - [编译指定版本](#编译指定版本)
   - [手动下载大软件包](#手动下载大软件包)
 * [相关说明文档](#相关说明文档)
+* [thanks](#thanks)
 
 <!-- vim-markdown-toc -->
 
 ## 项目说明
 
-该项目旨在更加方便的编译(交叉编译)第三方库。
+* 该项目旨在更加方便的编译(交叉编译)第三方库
+* 学习`autotools`，`cmake`，`Makefile`的使用方法
+* 把第三方库的编译集中到一起，避免重复劳动提供效率
 
 ### 项目特点
 
 * 使用`Makefile`组织，用`make`进行编译
 * 抽离出跟平台相关的配置信息，如`gcc`
-* `一键编译`(只需要指定软件版本，框架会去官方下载版本并编译)
+* `一键编译`(只需要指定软件版本，框架会去官方下载版本并编译，然后安装到指定的目录)
 
 ### 项目组成
 
@@ -30,7 +33,11 @@
 .
 ├── build                               // 编译输出目录
 │   ├── hisi
+│   │   ├── htop-2.2.0
+│   │   └── zlib-1.2.11
 │   └── pc
+│       ├── htop-2.2.0
+│       └── zlib-1.2.11
 ├── configs
 │   ├── cmd.mk
 │   ├── common_var.mk
@@ -42,10 +49,10 @@
 │   └── vender                          // gcc相关信息
 │       ├── ats3607d.mk
 │       ├── fulhan.mk
-│       ├── hisi.mk
+│       ├── hisi.mk                     // 海思平台gcc配置信息
 │       ├── linaro.mk
 │       ├── mstar.mk
-│       ├── pc.mk
+│       ├── pc.mk                       // pc平台gcc配置信息
 │       ├── platform_config.mk          // 平台配置文件
 │       ├── platform_config_tmp.mk      // 平台配置文件，覆盖上面文件的相关变量
 │       ├── r328.mk
@@ -53,7 +60,7 @@
 │       ├── unione.mk
 │       └── x1830.mk
 ├── LICENSE
-├── Makefile
+├── Makefile                            // 顶层Makefile
 ├── project
 │   ├── htop
 │   │   ├── Makefile                    // 第三方库编译Makefile
@@ -63,6 +70,8 @@
 │       └── README.md
 ├── README.md
 ├── src                                 // 源码目录
+│   ├── htop-2.2.0
+│   └── zlib-1.2.11
 └── SUMMARY.md
 ```
 
@@ -70,9 +79,11 @@
 
 ### 编译
 
-* 在`platform_config.mk`中配置对应的厂商
+* 配置对应的厂商
 
 ```shell
+vim configs/vender/platform_config.mk
+
 # 可选的厂商有: 
 #       pc
 #       hisi
@@ -87,6 +98,8 @@ vender := pc
 * 默认为编译pc版本
 
 ```makefile
+vim configs/vender/pc.mk
+
 gcc_version         := x86_64-linux-gnu
 
 toolchains_path     :=
@@ -111,6 +124,8 @@ prefix_path         ?= $(base_prefix_path)/$(vender)/$(gcc_version)         // �
 * 修改gcc配置
 
 ```makefile
+vim configs/vender/hisi.mk
+
 # arm-himix200-linux, arm-hisiv510-linux
 gcc_version         := arm-himix200-linux
 
@@ -128,13 +143,19 @@ libs_com            :=
 prefix_path         ?= $(base_prefix_path)/$(vender)/$(gcc_version)         // 安装路径
 ```
 
+> note: 
+>
+> 1, gcc的安装目录最好按照上述格式，避免修改过程中或增加新的gcc编译不通过
+>
+> 2, 变量`base_toolchains_path`和`vender`在`platform_config.mk`中定义
+
 * 在`platform_config_tmp.mk`中配置的信息会覆盖`platform_config.mk`相关变量
 
 ```txt
 prefix_path := 指定最终的安装路径
 ```
 
-> prefix_path只会修改最终的安装路径，方便交叉编译的部署，体系中的相关依赖不会改变
+> note: prefix_path只会修改最终的安装路径，方便交叉编译的部署，体系中的相关依赖不会改变
 
 
 * 在根目录下执行`make`，获取相关信息
@@ -166,7 +187,11 @@ $ make clean       // 清除build下zlib相关文件
 $ make distclan    // 清除src和build下zlib相关文件
 ```
 
-> note: 在项目目录下编译，可以少写关于项目的指定
+> note: 
+>
+> 1, 在项目目录下编译，可以少写关于项目的指定
+>
+> 2, 编译各个环节中出现奇怪的问题，都可以使用`make distclean`清除所有信息，然后重新开始
 
 ### 增加新的项目
 
@@ -176,7 +201,7 @@ $ make distclan    // 清除src和build下zlib相关文件
 
 ```makefile
 ifndef top_dir
-top_dir     := $(shell pwd)/../..
+top_dir := $(shell pwd)/../..       // 项目相对于根目录的路径
 endif
 
 project                 := demo     // 填写项目名称
@@ -196,25 +221,18 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
     $(MKDIR) $(build_path)/$(@:-config=)
 
     // 项目的配置信息
-    cd $(build_path)/$(@:-config=) &&               \
-        $(src_path)/$(@:-config=)/configure         \
-            CC=$(GCC) CXX=$(CXX)                    \
-            CPPFLAGS="$(cppflags_com)"              \
-            CFLAGS="$(cflags_com)"                  \
-            CXXFLAGS="$(cxxflags_com)"              \
-            LDFLAGS="$(ldflags_com)"                \
-            LIBS="$(libs_com) -lz"                  \
-            PKG_CONFIG_PATH="$(pkg_config_path)"    \
-            --prefix=$(prefix_path)                 \
-            --build=$(build)                        \
-            --host=$(host)                          \
-            --target=$(host)
 
     $(TOUCH) $(config_ok_mark_path)
 endif
 
 .PHONY: all clean distclean list
 ```
+> note:
+>
+> 1, 参考实例见`project/template`，根据项目的编译系统，选择对应的目录作为参考
+>
+> 2, 需要注意`top_dir`目录的定义，根据创建目录深度的不同而不同
+
 
 ### 编译指定版本
 
@@ -229,6 +247,8 @@ project_download_url    := https://nchc.dl.sourceforge.net/project/libpng/zlib/$
 ![compile_specified_version](img/compile_specified_version.png)
 
 * 按照上面的编译步骤编译
+
+> note: 不同的版本编译可能会失败，因为源码的修改或者依赖库的修改，都需要修改配置选项
 
 
 ### 手动下载大软件包
@@ -251,5 +271,12 @@ project_download_url    := https://nchc.dl.sourceforge.net/project/libpng/zlib/$
 
 ## 相关说明文档
 
-[详见`SUMMARY.md`](SUMMARY.md)
+[现有支持编译的项目](SUMMARY.md)
+
+## thanks
+
+欢迎大家提交`PR`或`Issues`
+
+能给一个`Start`就是对我最大的鼓励^_^...
+
 

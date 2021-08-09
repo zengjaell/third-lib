@@ -19,7 +19,7 @@
 # ===============================================================
 
 ifndef top_dir
-top_dir     := $(shell pwd)/../..
+top_dir := $(shell pwd)/../..
 endif
 
 project                 := pkg-config
@@ -32,7 +32,7 @@ all: depend_lib $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
 
-depend_lib:
+depend_lib: check_glib
 
 $(target_dir)-config: $(target_dir)-gz-src
 ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
@@ -41,10 +41,6 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
     # https://blog.csdn.net/hexf9632/article/details/102625696
     # 编译glib出现的问题，加了下面的echo语句和-C选项
 	cd $(build_path)/$(@:-config=) && \
-        echo "glib_cv_stack_grows=yes"           > config.cache && \
-        echo "ac_cv_func_posix_getpwuid_r=yes"  >> config.cache && \
-        echo "glib_cv_uscore=yes"               >> config.cache && \
-        echo "ac_cv_func_posix_getgrgid_r=yes"  >> config.cache && \
         $(src_path)/$(@:-config=)/configure         \
             CC=$(GCC) CXX=$(CXX)                    \
             CPPFLAGS="$(cppflags_com)"              \
@@ -58,8 +54,7 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
             --host=$(host)                          \
             --target=$(host)                        \
             \
-            -C \
-            --with-internal-glib \
+
 
 	$(TOUCH) $(config_ok_mark_path)
 endif

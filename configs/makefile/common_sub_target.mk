@@ -39,12 +39,28 @@ ifneq ($(src_mark_path).zip, $(wildcard $(src_mark_path).zip))
 	cd $(src_path) && \
 		$(RM) $(@:-zip-src=).zip && \
 		$(WGET) $(project_download_url) \
-			|| ! $(RM) $(@:-zip-src=).tar.gz || exit 1
+			|| ! $(RM) $(@:-zip-src=).zip || exit 1
 endif
 		touch $(src_tar_mark_path)
 endif
 	cd $(src_path) && \
 		$(UNZIP) $(@:-zip-src=).zip
+endif
+
+$(target_dir)-rename-zip-src:
+ifneq ($(target_dir_path), $(wildcard $(target_dir_path)))
+ifneq ($(src_tar_mark_path), $(wildcard $(src_tar_mark_path)))
+ifneq ($(src_mark_path).zip, $(wildcard $(src_mark_path).zip))
+	cd $(src_path) && \
+		$(RM) $(@:-rename-zip-src=).zip && \
+		$(WGET) $(project_download_url) -O  $(@:-rename-bz2-src=).tar.bz2 \
+			|| ! $(RM) $(@:-rename-zip-src=).zip || exit 1
+endif
+		touch $(src_tar_mark_path)
+endif
+	cd $(src_path) && \
+		$(MKDIR) $(@:-rename-zip-src=) && \
+		$(UNZIP) $(@:-rename-zip-src=).zip -d $(@:-rename-zip-src=)
 endif
 
 $(target_dir)-bz2-src:

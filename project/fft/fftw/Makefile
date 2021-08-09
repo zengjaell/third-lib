@@ -19,7 +19,7 @@
 # ===============================================================
 
 ifndef top_dir
-top_dir     := $(shell pwd)/../../..
+top_dir := $(shell pwd)/../../..
 endif
 
 project                 := fftw
@@ -37,9 +37,6 @@ depend_lib:
 $(target_dir)-config: $(target_dir)-gz-src
 ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
-
-	cd $(src_path)/$(@:-config=) && \
-        ./bootstrap.sh
 
 	cd $(build_path)/$(@:-config=) &&               \
         $(src_path)/$(@:-config=)/configure         \

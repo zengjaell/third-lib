@@ -19,7 +19,7 @@
 # ===============================================================
 
 ifndef top_dir
-top_dir     := $(shell pwd)/../../..
+top_dir := $(shell pwd)/../../..
 endif
 
 project                 := htop
@@ -31,9 +31,9 @@ include $(top_dir)/configs/common_var.mk
 all: depend_lib $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
-HTOP_NCURSES_CONFIG_SCRIPT := $(prefix_path)/bin/ncurses6-config
+HTOP_NCURSES_CONFIG_SCRIPT := $(prefix_path)/bin/ncursesw6-config
 
-depend_lib: check_ncurses
+depend_lib: check_ncursesw
 
 $(target_dir)-config: $(target_dir)-gz-src
 ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))

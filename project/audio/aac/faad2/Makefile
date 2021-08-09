@@ -19,7 +19,7 @@
 # ===============================================================
 
 ifndef top_dir
-top_dir     := $(shell pwd)/../../../..
+top_dir := $(shell pwd)/../../../..
 endif
 
 project                 := faad2

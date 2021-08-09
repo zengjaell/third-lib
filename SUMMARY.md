@@ -7,6 +7,8 @@
 * [模板](project/template/README.md)
     + [autotools](project/template/autotools/README.md)
     + [cmake](project/template/cmake/README.md)
+    + [cp-src-makefile](project/template/cp-src-makefile/README.md)
+    + [demo-makefile](project/template/demo-makefile/README.md)
 
 -------
 * [音频](project/audio/README.md)

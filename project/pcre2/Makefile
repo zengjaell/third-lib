@@ -19,12 +19,12 @@
 # ===============================================================
 
 ifndef top_dir
-top_dir     := $(shell pwd)/../..
+top_dir := $(shell pwd)/../..
 endif
 
 project                 := pcre2
-project_version         := 10.36
-project_download_url    := https://udomain.dl.sourceforge.net/project/pcre/pcre2/$(project_version)/pcre2-$(project_version).tar.gz
+project_version         := 10.37
+project_download_url    := https://ftp.pcre.org/pub/pcre/pcre2-$(project_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 

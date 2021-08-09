@@ -19,7 +19,7 @@
 # ===============================================================
 
 ifndef top_dir
-top_dir     := $(shell pwd)/../../..
+top_dir := $(shell pwd)/../../..
 endif
 
 project                 := glib
@@ -32,7 +32,7 @@ all: depend_lib $(target_dir)-inside-make
 
 include $(sub_target_path)/common_sub_target.mk
 
-depend_lib: check_zlib check_libffi
+depend_lib: check_zlib check_libffi check_libiconv
 
 $(target_dir)-inside-make: $(target_dir)-config
 	$(call echo-make-msg, $(@:-inside-make=))
@@ -52,24 +52,24 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
         echo "ld                = '${cross_gcc}' + 'ld'"         >> cross_file.txt && \
         echo "strip             = '${cross_gcc}' + 'strip'"      >> cross_file.txt && \
         \
-        echo ""                                                     >> cross_file.txt && \
-        echo "[properties]"                                         >> cross_file.txt && \
-        echo "c_args            = ['-I${include_path}']"            >> cross_file.txt && \
-        echo "c_link_args       = ['-L${lib_path}', '-lz', '-lffi']">> cross_file.txt && \
+        echo ""                                                                 >> cross_file.txt && \
+        echo "[properties]"                                                     >> cross_file.txt && \
+        echo "c_args            = ['-I${include_path}']"                        >> cross_file.txt && \
+        echo "c_link_args       = ['-L${lib_path}', '-lz', '-lffi', '-liconv']" >> cross_file.txt && \
         \
-        echo ""                                                     >> cross_file.txt && \
-        echo "[host_machine]"                                       >> cross_file.txt && \
-        echo "system            = 'linux'"                          >> cross_file.txt && \
-        echo "cpu_family        = 'arm'"                            >> cross_file.txt && \
-        echo "cpu               = 'armv7'"                          >> cross_file.txt && \
-        echo "endian            = 'little'"                         >> cross_file.txt && \
+        echo ""                                                                 >> cross_file.txt && \
+        echo "[host_machine]"                                                   >> cross_file.txt && \
+        echo "system            = 'linux'"                                      >> cross_file.txt && \
+        echo "cpu_family        = 'arm'"                                        >> cross_file.txt && \
+        echo "cpu               = 'armv7'"                                      >> cross_file.txt && \
+        echo "endian            = 'little'"                                     >> cross_file.txt && \
         \
-        echo ""                                                     >> cross_file.txt && \
-        echo "[project options]"                                    >> cross_file.txt && \
-        echo "prefix            = '${prefix_path}'"                 >> cross_file.txt && \
-        echo "internal_pcre     = 'true'"                           >> cross_file.txt && \
-        echo "selinux           = 'disabled'"                       >> cross_file.txt && \
-        echo "libelf            = 'disabled'"                       >> cross_file.txt
+        echo ""                                                                 >> cross_file.txt && \
+        echo "[project options]"                                                >> cross_file.txt && \
+        echo "prefix            = '${prefix_path}'"                             >> cross_file.txt && \
+        echo "internal_pcre     = 'true'"                                       >> cross_file.txt && \
+        echo "selinux           = 'disabled'"                                   >> cross_file.txt && \
+        echo "libelf            = 'disabled'"                                   >> cross_file.txt
 
 		cd $(src_path)/$(@:-config=) && \
             sed -i "/^libffi_dep/a libffi_dep = dependency(\'libffi\', required : false)" meson.build && \
