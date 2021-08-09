@@ -106,6 +106,10 @@
     + [googletest](project/google/googletest/README.md)
     + [gperftools](project/google/gperftools/README.md)
 
+* [mqtt](project/mqtt/README.md)
+    + [mosquitto](project/mqtt/mosquitto/README.md)
+    + [paho.mqtt.embedded-c](project/mqtt/paho.mqtt.embedded-c/README.md)
+
 * [arm](project/arm/README.md)
     + [mbedtls](project/arm/mbedtls/README.md)
 
@@ -118,8 +122,6 @@
 * [libunwind](project/libunwind/README.md)
 * [dbus](project/dbus/README.md)
 * [libffi](project/libffi/README.md)
-* [mosquitto](project/mosquitto/README.md)
-* [paho.mqtt.embedded-c](project/paho.mqtt.embedded-c/README.md)
 * [pcre2](project/pcre2/README.md)
 * [pkg-config](project/pkg-config/README.md)
 * [sqlite](project/sqlite/README.md)
