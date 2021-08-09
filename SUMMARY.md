@@ -119,6 +119,7 @@
 * [fft](project/fft/README.md)
     + [fftw](project/fft/fftw/README.md)
 
+* [libmodbus](project/libmodbus/README.md)
 * [libunwind](project/libunwind/README.md)
 * [dbus](project/dbus/README.md)
 * [libffi](project/libffi/README.md)
