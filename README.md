@@ -10,6 +10,7 @@
   - [增加新的项目](#增加新的项目)
   - [编译指定版本](#编译指定版本)
   - [手动下载大软件包](#手动下载大软件包)
+  - [编译`mcu`版本](#编译mcu版本)
 * [相关说明文档](#相关说明文档)
 * [thanks](#thanks)
 
@@ -268,6 +269,12 @@ project_download_url    := https://nchc.dl.sourceforge.net/project/libpng/zlib/$
 > 3，编译机器所在的网络不好，可以从其他地方下载
 >
 > 4, 所在机器没有网络
+
+### 编译`mcu`版本
+
+* 需要指定参数`-specs=nano.specs -specs=nosys.specs`，否则`autotools`检测不过
+
+* 需要指定芯片的相关参数，与应用程序相同，否则链接不成功。如`-mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffunction-sections -fdata-sections`
 
 ## 相关说明文档
 
