@@ -27,8 +27,8 @@ program_prefix      := arm-none-eabi-
 host                := arm-none-eabi
 
 cppflags_com        :=
-cflags_com          := -specs=nano.specs -specs=nosys.specs -mcpu=cortex-m0 -mthumb -ffunction-sections -fdata-sections
-# cflags_com          := -specs=nano.specs -specs=nosys.specs -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffunction-sections -fdata-sections
+# cflags_com          := -specs=nano.specs -specs=nosys.specs -mcpu=cortex-m0 -mthumb -ffunction-sections -fdata-sections
+cflags_com          := -specs=nano.specs -specs=nosys.specs -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffunction-sections -fdata-sections
 cxxflags_com        :=
 ldflags_com         :=
 libs_com            :=
