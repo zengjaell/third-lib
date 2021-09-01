@@ -30,6 +30,7 @@ base_prefix_path     := $(data_disk_path)/install
 #       x1830
 #       ats3607d
 #       hisi
+#       yizhi
 #       fulhan
 #       mstar
 #       linaro
