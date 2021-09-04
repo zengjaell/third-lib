@@ -49,7 +49,9 @@
         + [x264](project/multi-media/video/x264/README.md)
 
     * [FFmpeg](project/multi-media/FFmpeg/README.md)
+
     * [SDL2](project/multi-media/SDL2/README.md)
+    * [SDL2_ttf](project/multi-media/SDL2_ttf/README.md)
 
 * [图形系统](project/gui/README.md)
     + [qt](project/gui/qt-everywhere-src/README.md)
