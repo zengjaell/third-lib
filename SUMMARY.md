@@ -47,6 +47,7 @@
         + [libpng](project/multi-media/video/libpng/README.md)
         + [ncurses](project/multi-media/video/ncurses/README.md)
         + [x264](project/multi-media/video/x264/README.md)
+        + [live555](project/multi-media/video/live555/README.md)
 
     * [FFmpeg](project/multi-media/FFmpeg/README.md)
 
