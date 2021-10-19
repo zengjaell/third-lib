@@ -62,7 +62,7 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 # 注意：特别注意安装目录，否则出现如下错误：
 # “valgrind: failed to start tool 'memcheck' for vender 'arm-linux': No such file or directory”
 # 增加目录路径：
-# 	export VALGRIND_LIB=/lib/valgrind
+# 	export VALGRIND_LIB=../libexec/valgrind
 
 	$(TOUCH) $(config_ok_mark_path)
 endif
