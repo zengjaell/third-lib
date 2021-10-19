@@ -57,8 +57,9 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
             --host=$(host)                          \
             --target=$(host)                        \
             \
-            --disable-unicode                       \
             HTOP_NCURSES_CONFIG_SCRIPT=$(HTOP_NCURSES_CONFIG_SCRIPT)
+
+            # --disable-unicode
 
 	$(TOUCH) $(config_ok_mark_path)
 endif
