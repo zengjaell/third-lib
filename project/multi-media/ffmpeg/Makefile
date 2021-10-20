@@ -22,9 +22,9 @@ ifndef top_dir
 top_dir := $(shell pwd)/../../..
 endif
 
-project                 := FFmpeg
-project_version         := n4.4
-project_download_url    := https://archive.fastgit.org/FFmpeg/FFmpeg/archive/refs/tags/$(project_version).tar.gz
+project                 := ffmpeg
+project_version         := 4.4
+project_download_url    := http://ffmpeg.org/releases/ffmpeg-$(project_version).tar.bz2
 
 include $(top_dir)/configs/common_var.mk
 
@@ -32,7 +32,7 @@ all: depend_lib $(target_dir)-make
 
 include $(sub_target_path)/common_sub_target.mk
 
-depend_lib: check_zlib check_libiconv check_libx264
+depend_lib: check_zlib check_libx264
 
 _common_base_var :=                                     \
     --prefix=$(prefix_path)                             \
@@ -40,20 +40,62 @@ _common_base_var :=                                     \
     --extra-cflags="$(cflags_com) $(cppflags_com)"      \
     --extra-cxxflags="$(cxxflags_com) $(cppflags_com)"  \
     --extra-ldflags="$(ldflags_com)"                    \
-    --extra-libs="$(libs_com) -lz -liconv"              \
+    --extra-libs="$(libs_com) -lz"                      \
     --extra-objcflags=                                  \
     --extra-ldexeflags=                                 \
     --extra-ldsoflags=                                  \
     --enable-shared                                     \
     \
     --enable-gpl                                        \
-    --enable-iconv                                      \
     --enable-zlib                                       \
+    \
+    --enable-small                                      \
+    \
+    --disable-encoders                                  \
     --enable-libx264                                    \
+    --enable-encoder=libx264                            \
+    \
+    --disable-muxers                                    \
+    --enable-muxer=mov                                  \
+    --enable-muxer=mp4                                  \
+    --enable-muxer=avi                                  \
+    \
+    --disable-filters                                   \
+    --enable-filter=anull                               \
+    --enable-filter=null                                \
+    --enable-filter=aresample                           \
+    --enable-filter=pad                                 \
+    --enable-filter=scale                               \
+    --enable-filter=overlay                             \
+    --enable-filter=amix                                \
+    --enable-filter=aresample                           \
+    \
+    --disable-demuxers                                  \
+    --enable-demuxer=h264                               \
+    --enable-demuxer=avi                                \
+    --enable-demuxer=mpc                                \
+    --enable-demuxer=mov                                \
+    \
+    --disable-parsers                                   \
+    --enable-parser=h264                                \
+    \
+    --disable-protocols                                 \
+    --enable-protocol=file                              \
+    \
+    --disable-bsfs                                      \
+    --enable-bsf=h264_mp4toannexb                       \
+    \
+    --disable-indevs                                    \
+    --disable-outdevs                                   \
+    --disable-ffprobe                                   \
     --disable-debug                                     \
     --disable-doc
 
-$(target_dir)-config: $(target_dir)-rename-gz-src
+    # --enable-bsf=aac_adtstoasc                          \
+    # --enable-parser=aac                                 \
+    # --enable-libx265
+
+$(target_dir)-config: $(target_dir)-bz2-src
 ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
