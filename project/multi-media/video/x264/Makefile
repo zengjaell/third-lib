@@ -41,10 +41,9 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	cd $(build_path)/$(@:-config=) &&                       \
         $(src_path)/$(@:-config=)/configure                 \
             --prefix=$(prefix_path)                         \
-            --cross-prefix=$(cross_gcc)                  \
+            --cross-prefix=$(cross_gcc)                     \
             --host=$(host)                                  \
             \
-            --disable-asm                                   \
             --enable-static                                 \
             --enable-shared                                 \
             --extra-cflags="$(cflags_com) $(cppflags_com)"  \
