@@ -23,9 +23,8 @@ top_dir := $(shell pwd)/../../..
 endif
 
 project                 := log4cplus
-project_version         := 2.0.6
-target_version_1        := 2_0_6
-project_download_url    := https://download.fastgit.org/log4cplus/log4cplus/releases/download/REL_$(target_version_1)/log4cplus-$(project_version).tar.gz
+project_version         := 2.0.7
+project_download_url    := https://udomain.dl.sourceforge.net/project/log4cplus/log4cplus-stable/$(project_version)/log4cplus-$(project_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
