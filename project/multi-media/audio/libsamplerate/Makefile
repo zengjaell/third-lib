@@ -23,7 +23,7 @@ top_dir := $(shell pwd)/../../../..
 endif
 
 project                 := libsamplerate
-project_version         := 0.2.1
+project_version         := 0.2.2
 project_download_url    := https://archive.fastgit.org/libsndfile/libsamplerate/archive/refs/tags/$(project_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
