@@ -71,6 +71,11 @@ clean:
 	$(RM) $(prefix_path)
 	$(call run_dir_makefile_make_target, $(makefile_list), clean)
 
+clean-src:
+	$(ECHO) "clean all src projects"
+	$(RM) $(prefix_path)
+	$(call run_dir_makefile_make_target, $(makefile_list), clean-src)
+
 distclean:
 	$(ECHO) "clean all projects"
 	$(RM) $(prefix_path)

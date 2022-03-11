@@ -161,10 +161,13 @@ clean:
 	$(RM) $(build_path)/$(target_dir)
 	$(RM) $(config_ok_mark_path)
 
-distclean: clean
+clean-src: clean
 	$(ECHO) "    rm src/$(target_dir)"
 	$(RM) $(src_tar_mark_path)
 	$(RM) $(src_path)/$(target_dir)
+
+distclean: clean-src clean
+	$(ECHO) "    rm src/$(target_dir).tar.*"
 	$(RM) $(src_path)/$(target_dir).tar.xz*
 	$(RM) $(src_path)/$(target_dir).tar.gz*
 	$(RM) $(src_path)/$(target_dir).tar.bz2*
