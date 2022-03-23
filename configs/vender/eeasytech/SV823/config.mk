@@ -28,5 +28,5 @@ cxxflags_com        :=
 ldflags_com         :=
 libs_com            := 
 
-prefix_path         ?= /opt/data/nfs/install/eeasytech/SV823
+prefix_path         ?= /opt/data/nfs/install/$(vender)/$(chip)
 

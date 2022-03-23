@@ -29,5 +29,5 @@ cxxflags_com        :=
 ldflags_com         :=
 libs_com            :=
 
-prefix_path         ?= /opt/data/nfs/install/MCU/at/at32f4xx
+prefix_path         ?= /opt/data/nfs/install/$(vender)/$(chip)
 
