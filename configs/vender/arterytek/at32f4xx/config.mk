@@ -2,7 +2,7 @@
 # 
 # Release under GPLv-3.0.
 # 
-# @file    hisi.mk
+# @file    config.mk
 # @brief   
 # @author  gnsyxiang <gnsyxiang@163.com>
 # @date    16/04 2021 15:17
@@ -18,11 +18,7 @@
 #     last modified: 16/04 2021 15:17
 # ===============================================================
 
-# gcc-arm-none-eabi-10-2020-q4-major, gcc-arm-none-eabi-5_4-2016q3
-gcc_version         := gcc-arm-none-eabi-5_4-2016q3
-
-toolchains_path     := $(base_toolchains_path)/$(vender)/$(gcc_version)/bin
-gcc_prefix          := arm-none-eabi-
+toolchains_path     := /opt/toolchains/MCU/gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-
 program_prefix      := arm-none-eabi-
 host                := arm-none-eabi
 
@@ -33,4 +29,5 @@ cxxflags_com        :=
 ldflags_com         :=
 libs_com            :=
 
-prefix_path         ?= $(base_prefix_path)/$(vender)/$(gcc_version)
+prefix_path         ?= /opt/data/nfs/install/MCU/at/at32f4xx
+

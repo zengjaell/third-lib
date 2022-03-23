@@ -2,10 +2,10 @@
 # 
 # Release under GPLv-3.0.
 # 
-# @file    x86_64.mk
+# @file    config.mk
 # @brief   
 # @author  gnsyxiang <gnsyxiang@163.com>
-# @date    05/12 2019 17:31
+# @date    05/12 2019 17:40
 # @version v0.0.1
 # 
 # @since    note
@@ -15,14 +15,12 @@
 #     NO.     Author              Date            Modified
 #     00      zhenquan.qiu        05/12 2019      create the file
 # 
-#     last modified: 05/12 2019 17:31
+#     last modified: 05/12 2019 17:40
 # ===============================================================
 
-gcc_version         := x86_64-linux-gnu
-
 toolchains_path     :=
-gcc_prefix          :=
-host                := x86_64-linux-gnu
+program_prefix      :=
+host                :=
 
 cppflags_com        :=
 cflags_com          :=
@@ -30,4 +28,5 @@ cxxflags_com        :=
 ldflags_com         :=
 libs_com            := 
 
-prefix_path         ?= $(base_prefix_path)/$(vender)/$(gcc_version)
+prefix_path         ?=
+
