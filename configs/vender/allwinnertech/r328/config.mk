@@ -2,10 +2,10 @@
 # 
 # Release under GPLv-3.0.
 # 
-# @file    rk3308.mk
+# @file    config.mk
 # @brief   
 # @author  gnsyxiang <gnsyxiang@163.com>
-# @date    05/12 2019 17:42
+# @date    05/12 2019 16:27
 # @version v0.0.1
 # 
 # @since    note
@@ -15,15 +15,19 @@
 #     NO.     Author              Date            Modified
 #     00      zhenquan.qiu        05/12 2019      create the file
 # 
-#     last modified: 05/12 2019 17:42
+#     last modified: 05/12 2019 16:27
 # ===============================================================
 
-toolchains_path     := $(base_toolchains_path)/rk3308/host
-toolchains_path     := $(toolchains_path)/bin
-gcc_prefix          := arm-linux-
+cross_gcc           :=
+TOOLCHAINS_INC_DIR  := $(toolchains_path)/include
+program_prefix      := arm-openwrt-linux-
 host                := arm-linux
 
 CFLAGS              :=
 LDFLAGS             :=
 
-prefix_path         ?= $(base_prefix_path)/rk3308
+STAGING_DIR         := $(toolchains_path)
+export STAGING_DIR
+
+prefix_path         ?= /opt/data/nfs/install/$(vender)/$(chip)
+

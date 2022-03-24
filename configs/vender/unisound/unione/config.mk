@@ -2,10 +2,10 @@
 # 
 # Release under GPLv-3.0.
 # 
-# @file    config.mk
+# @file    unione.mk
 # @brief   
 # @author  gnsyxiang <gnsyxiang@163.com>
-# @date    01/09 2021 09:22
+# @date    05/12 2019 17:33
 # @version v0.0.1
 # 
 # @since    note
@@ -13,14 +13,14 @@
 # 
 #     change log:
 #     NO.     Author              Date            Modified
-#     00      zhenquan.qiu        01/09 2021      create the file
+#     00      zhenquan.qiu        05/12 2019      create the file
 # 
-#     last modified: 01/09 2021 09:22
+#     last modified: 05/12 2019 17:33
 # ===============================================================
 
-cross_gcc           := /opt/toolchains/eeasytech/SV823/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
-program_prefix      := arm-linux-gnueabihf-
-host                := arm-linux-gnueabihf
+cross_gcc           :=
+program_prefix      :=
+host                :=
 
 cppflags_com        :=
 cflags_com          :=

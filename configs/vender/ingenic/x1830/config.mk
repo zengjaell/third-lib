@@ -18,7 +18,7 @@
 #     last modified: 05/12 2019 17:40
 # ===============================================================
 
-toolchains_path     :=
+cross_gcc           :=
 program_prefix      :=
 host                :=
 

@@ -41,6 +41,8 @@ base_prefix_path     := $(data_disk_path)/install
 #   at32f4xx
 # ingenic
 #   x1830
+# actions
+#   ats3607d
 vender := pc
 chip := pc-chip
 
@@ -54,21 +56,21 @@ include $(vender_path)/$(vender)/$(chip)/config.mk
 build   := x86_64-linux-gnu
 target  := $(host)
 
-AR              := $(toolchains_path)ar
-AS              := $(toolchains_path)as
-LD              := $(toolchains_path)ld
-NM              := $(toolchains_path)nm
-CC              := $(toolchains_path)gcc
-GCC             := $(toolchains_path)gcc
-CPP             := $(toolchains_path)cpp
-CXX             := $(toolchains_path)g++
-FC              := $(toolchains_path)gfortran
-F77             := $(toolchains_path)gfortran
-RANLIB          := $(toolchains_path)ranlib
-READELF         := $(toolchains_path)readelf
-STRIP           := $(toolchains_path)strip
-OBJCOPY         := $(toolchains_path)objcopy
-OBJDUMP         := $(toolchains_path)objdump
+AR              := $(cross_gcc)ar
+AS              := $(cross_gcc)as
+LD              := $(cross_gcc)ld
+NM              := $(cross_gcc)nm
+CC              := $(cross_gcc)gcc
+GCC             := $(cross_gcc)gcc
+CPP             := $(cross_gcc)cpp
+CXX             := $(cross_gcc)g++
+FC              := $(cross_gcc)gfortran
+F77             := $(cross_gcc)gfortran
+RANLIB          := $(cross_gcc)ranlib
+READELF         := $(cross_gcc)readelf
+STRIP           := $(cross_gcc)strip
+OBJCOPY         := $(cross_gcc)objcopy
+OBJDUMP         := $(cross_gcc)objdump
 
 cppflags_com    += -I$(prefix_path)/include -pipe
 cflags_com      +=

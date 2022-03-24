@@ -18,7 +18,7 @@
 #     last modified: 05/12 2019 17:31
 # ===============================================================
 
-toolchains_path     :=
+cross_gcc           :=
 host                := x86_64-linux-gnu
 
 cppflags_com        :=

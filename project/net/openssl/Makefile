@@ -49,14 +49,14 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
             cd $(build_path)/$(@:-config=) &&                   \
                 $(src_path)/$(@:-config=)/Configure             \
                 linux-x86_64 $(CONFIG_COM)                      \
-                --cross-compile-prefix=$(cross_gcc)          \
+                --cross-compile-prefix=$(cross_gcc)             \
                 --prefix=$(prefix_path)                         \
             ;;                                                  \
         arm*)                                                   \
             cd $(build_path)/$(@:-config=) &&                   \
                 $(src_path)/$(@:-config=)/Configure             \
                 linux-generic32 shared no-async $(CONFIG_COM)   \
-                --cross-compile-prefix=$(cross_gcc)          \
+                --cross-compile-prefix=$(cross_gcc)             \
                 --prefix=$(prefix_path)                         \
             ;;                                                  \
     esac
