@@ -22,16 +22,6 @@ data_disk_path       := /opt/data
 base_toolchains_path := $(data_disk_path)/opt/toolchains
 base_prefix_path     := $(data_disk_path)/install
 
-# 可选的平台有: 
-#       r328
-#       rk3308
-#       unione
-#       ats3607d
-#       hisi
-#       fulhan
-#       mstar
-#       linaro
-
 # 可选的平台和芯片有:
 # pc
 #   pc-chip
