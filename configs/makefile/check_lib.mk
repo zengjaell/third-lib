@@ -76,6 +76,13 @@ ifneq ($(_lua_file), $(wildcard $(_lua_file)))
 	exit 1
 endif
 
+_xz_file := $(prefix_path)/include/lzma.h
+check_xz:
+ifneq ($(_xz_file), $(wildcard $(_xz_file)))
+	$(ECHO) "\tuse \"make lib=xz \" first to compile xz."
+	$(ECHO) ''
+	exit 1
+endif
 
 _zlib_file := $(prefix_path)/include/zlib.h
 check_zlib:

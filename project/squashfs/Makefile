@@ -34,14 +34,14 @@ all: depend_lib $(target_dir)-make_inside
 
 include $(sub_target_path)/common_sub_target.mk
 
-depend_lib:
+depend_lib: check_xz
 
 $(target_dir)-make_inside: $(target_dir)-config
 	$(call echo-make-msg, $(@:-make_inside=))
 	
 	cd $(build_path)/$(@:-make_inside=)/squashfs-tools &&                       \
 		make EXTRA_CFLAGS="$(cppflags_com)" EXTRA_LDFLAGS="$(ldflags_com)" &&   \
-		make INSTALL_DIR=$(prefix_path) install
+		make INSTALL_DIR=$(prefix_path)/bin install
 
 $(target_dir)-config: $(target_dir)-gz-src
 ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
