@@ -23,10 +23,9 @@ top_dir := $(shell pwd)/../../../..
 endif
 
 project                 := tinyalsa
-project_version         := 2.0.0
-project_download_url    := https://archive.fastgit.org/tinyalsa/tinyalsa/archive/refs/tags/v$(project_version).tar.gz
-# project_version         := 1.1.1
-# project_download_url    := https://archive.fastgit.org/tinyalsa/tinyalsa/archive/refs/tags/$(project_version).tar.gz
+project_version         := 1.1.1
+project_download_url    := https://archive.fastgit.org/tinyalsa/tinyalsa/archive/refs/tags/$(project_version).tar.gz
+# 2.0.0版本有问题
 
 include $(top_dir)/configs/common_var.mk
 
