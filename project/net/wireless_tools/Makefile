@@ -49,10 +49,12 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	cd $(build_path)/$(@:-config=) &&               \
         $(CP) $(src_path)/$(@:-config=)/* $(build_path)/$(@:-config=)
 
-	cd $(build_path)/$(@:-config=) &&                                       \
-        sed -i 's#CC = gcc#CC = $(GCC)#g'                   Makefile &&     \
-        sed -i 's#AR = ar#AR = $(AR)#g'                     Makefile &&     \
-        sed -i 's#RANLIB = ranlib#RANLIB = $(RANLIB)#g'     Makefile
+	cd $(build_path)/$(@:-config=) &&                                           \
+        sed -i 's#CC = gcc#CC = $(GCC)#g'                       Makefile &&     \
+        sed -i 's#AR = ar#AR = $(AR)#g'                         Makefile &&     \
+        sed -i 's#RANLIB = ranlib#RANLIB = $(RANLIB)#g'         Makefile &&     \
+        sed -i '/LDCONFIG = /a LDFLAGS += -Wl,-rpath=../lib'    Makefile &&     \
+        sed -i 's#\/sbin\/#\/bin\/#g'                           Makefile
 
 	$(TOUCH) $(config_ok_mark_path)
 endif
