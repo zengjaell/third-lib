@@ -32,7 +32,7 @@ all: depend_lib $(target_dir)-make_inside
 
 include $(sub_target_path)/common_sub_target.mk
 
-depend_lib:
+depend_lib: check_openssl check_libnl
 
 $(target_dir)-make_inside: $(target_dir)-config
 	$(call echo-make-msg, $(@:-inside-make=))
@@ -53,8 +53,10 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	cd $(build_path)/$(@:-config=) &&               \
         $(CP) $(src_path)/$(@:-config=)/* $(build_path)/$(@:-config=)
 
-	cd $(build_path)/$(@:-config=) &&                       \
-        $(CP) wpa_supplicant/defconfig wpa_supplicant/.config &&          \
+	cd $(build_path)/$(@:-config=) &&                                                   \
+        $(CP) wpa_supplicant/defconfig wpa_supplicant/.config &&                        \
+        sed -i 's/CONFIG_CTRL_IFACE_DBUS_NEW=y/#CONFIG_CTRL_IFACE_DBUS_NEW=y/g'     wpa_supplicant/.config &&   \
+        sed -i 's/CONFIG_CTRL_IFACE_DBUS_INTRO=y/#CONFIG_CTRL_IFACE_DBUS_INTRO=y/g' wpa_supplicant/.config &&   \
         sed -i 's/#CONFIG_TLS=openssl/CONFIG_TLS=openssl/g' wpa_supplicant/.config
 
 	$(TOUCH) $(config_ok_mark_path)
