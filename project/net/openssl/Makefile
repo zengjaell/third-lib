@@ -23,7 +23,7 @@ top_dir := $(shell pwd)/../../..
 endif
 
 project                 := openssl
-project_version         := 1.1.1i
+project_version         := 3.0.2
 project_download_url    := https://www.openssl.org/source/openssl-$(project_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
