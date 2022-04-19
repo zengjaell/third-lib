@@ -109,7 +109,7 @@ ifneq ($(_openssl_dir), $(wildcard $(_openssl_dir)))
 endif
 
 _libnl3_file := $(prefix_path)/include/libnl3/netlink/netlink.h
-check_libnl:
+check_libnl3:
 ifneq ($(_libnl3_file), $(wildcard $(_libnl3_file)))
 	$(ECHO) "\tuse \"make lib=libnl\" first to compile libnl."
 	$(ECHO) ''
