@@ -23,8 +23,8 @@ top_dir := $(shell pwd)/../../..
 endif
 
 project                 := zlib
-project_version         := 1.2.11
-project_download_url    := https://nchc.dl.sourceforge.net/project/libpng/zlib/$(project_version)/zlib-$(project_version).tar.gz
+project_version         := 1.2.12
+project_download_url    := https://www.zlib.net/zlib-$(project_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
@@ -38,14 +38,11 @@ $(target_dir)-config: $(target_dir)-gz-src
 ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
-	cd $(build_path)/$(@:-config=) &&           \
-        export CC=$(CC)                         \
-        export AR=$(AR)                         \
-        export CXX=$(CXX)                       \
-        export CFLAGS="$(cflags_com)"           \
-        export LDFLAGS="$(ldflags_com)" &&      \
-        $(src_path)/$(@:-config=)/configure     \
-        --prefix=$(prefix_path)
+	cd $(build_path)/$(@:-config=)              && \
+        $(src_path)/$(@:-config=)/configure        \
+        --prefix=$(prefix_path)                 && \
+        sed -i 's#gcc#$(GCC)#g' Makefile        && \
+        sed -i 's#AR=ar#AR=$(AR)#g' Makefile
 
 	$(TOUCH) $(config_ok_mark_path)
 endif
