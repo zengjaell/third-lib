@@ -18,7 +18,7 @@
 #     last modified: 16/04 2021 15:17
 # ===============================================================
 
-cross_gcc           := /opt/toolchains/MCU/gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-
+cross_gcc           := /mnt/data/toolchain/MCU/gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-
 program_prefix      := arm-none-eabi-
 host                := arm-none-eabi
 

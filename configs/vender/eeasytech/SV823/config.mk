@@ -18,7 +18,7 @@
 #     last modified: 01/09 2021 09:22
 # ===============================================================
 
-cross_gcc           := /opt/toolchains/eeasytech/SV823/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
+cross_gcc           := /mnt/data/toolchain/eeasytech/SV823/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
 program_prefix      := arm-linux-gnueabihf-
 host                := arm-linux-gnueabihf
 
