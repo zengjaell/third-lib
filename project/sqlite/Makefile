@@ -22,9 +22,9 @@ ifndef top_dir
 top_dir := $(shell pwd)/../..
 endif
 
-project                 := sqlite-version
-project_version         := 3.35.5
-project_download_url    := https://archive.fastgit.org/sqlite/sqlite/archive/refs/tags/version-$(project_version).tar.gz
+project                 := sqlite-autoconf
+project_version         := 3380500
+project_download_url    := https://sqlite.org/2022/sqlite-autoconf-$(project_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
 
@@ -34,7 +34,7 @@ include $(sub_target_path)/common_sub_target.mk
 
 depend_lib: check_zlib
 
-$(target_dir)-config: $(target_dir)-rename-gz-src
+$(target_dir)-config: $(target_dir)-gz-src
 ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
 
