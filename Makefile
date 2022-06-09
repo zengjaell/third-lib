@@ -19,9 +19,8 @@
 # ===============================================================
 
 top_dir         := $(shell pwd)
-makefile_list   := $(wildcard ./project/*/Makefile)
-makefile_list   += $(wildcard ./project/*/*/Makefile)
-makefile_list   += $(wildcard ./project/*/*/*/Makefile)
+
+makefile_list   = $(shell find ./project -name Makefile)
 
 export top_dir
 export makefile_list
