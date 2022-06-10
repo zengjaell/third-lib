@@ -174,7 +174,7 @@ distclean: clean-src clean
 
 list:
 ifneq ($(makefile_list), ) # 在顶层显示
-	echo -n "$(project) / "
+	printf "%-30s" "$(project)"
 else # 在项目层显示
 	$(ECHO) "\tmake \t\t\t- compile $(project)."
 endif

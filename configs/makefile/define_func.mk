@@ -19,8 +19,13 @@
 # ===============================================================
 
 define run_dir_makefile_make_target
+	cnt=0;                                          \
 	for dir in $(1); do                             \
-        $(make_j1) -C $${dir%/*} $(2) || exit 1;    \
+		$(make_j1) -C $${dir%/*} $(2) || exit 1;    \
+		cnt=`expr $${cnt} + 1`;                     \
+ 		if [ `expr $${cnt} % 3` -eq 0 ]; then       \
+ 			printf "\n";                            \
+ 		fi                                          \
     done
 endef
 
