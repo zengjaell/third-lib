@@ -165,6 +165,14 @@ ifneq ($(_ncursesw_dir), $(wildcard $(_ncursesw_dir)))
 	exit 1
 endif
 
+_ncurses_dir := $(prefix_path)/include/ncurses
+check_ncurses:
+ifneq ($(_ncurses_dir), $(wildcard $(_ncurses_dir)))
+	$(ECHO) "\tuse \"make lib=ncurses\" first to  compile ncurses."
+	$(ECHO) ''
+	exit 1
+endif
+
 
 # serialization protocol
 _cjson_dir := $(prefix_path)/include/cjson

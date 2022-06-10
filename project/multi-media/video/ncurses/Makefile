@@ -23,7 +23,7 @@ top_dir := $(shell pwd)/../../../..
 endif
 
 project                 := ncurses
-project_version         := 6.2
+project_version         := 6.1
 project_download_url    := http://ftp.gnu.org/gnu/ncurses/ncurses-$(project_version).tar.gz
 
 include $(top_dir)/configs/common_var.mk
@@ -37,6 +37,8 @@ depend_lib:
 $(target_dir)-config: $(target_dir)-gz-src
 ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
 	$(MKDIR) $(build_path)/$(@:-config=)
+
+#            --enable-widec                          \
 
 	cd $(build_path)/$(@:-config=) &&               \
         $(src_path)/$(@:-config=)/configure         \
@@ -52,9 +54,9 @@ ifneq ($(config_ok_mark_path), $(wildcard $(config_ok_mark_path)))
             --host=$(host)                          \
             --target=$(host)                        \
             \
-            --enable-widec                          \
             --enable-pc-files                       \
             --with-pkg-config=$(lib_path)/pkgconfig \
+            --with-termlib                          \
             --with-shared                           \
             \
             --without-progs                         \
