@@ -2,17 +2,17 @@
 
 <!-- vim-markdown-toc GFM -->
 
-* [项目说明](#项目说明)
+- [项目说明](#项目说明)
   - [项目特点](#项目特点)
   - [项目组成](#项目组成)
-* [使用说明](#使用说明)
+- [使用说明](#使用说明)
   - [编译](#编译)
   - [增加新的项目](#增加新的项目)
   - [编译指定版本](#编译指定版本)
   - [手动下载大软件包](#手动下载大软件包)
   - [编译`mcu`版本](#编译mcu版本)
-* [相关说明文档](#相关说明文档)
-* [thanks](#thanks)
+- [相关说明文档](#相关说明文档)
+- [thanks](#thanks)
 
 <!-- vim-markdown-toc -->
 
@@ -28,18 +28,26 @@
 * 抽离出跟平台相关的配置信息，如`gcc`
 * `一键编译`(只需要指定软件版本，框架会去官方下载版本并编译，然后安装到指定的目录)
 
+> 交叉编译时，部分`gcc`可能会有问题，可以尝试修改并提交pr，也可以直接提`Issues`
+
 ### 项目组成
 
-```txt
+```shell
 .
 ├── build                               // 编译输出目录
-│   ├── hisi
+│   ├── fullhan
 │   │   ├── htop-2.2.0
-│   │   └── zlib-1.2.11
+│   │   ├── ncurses-6.1
+│   │   └── zlib-1.2.12
+│   ├── fullhan
+│   │   ├── htop-2.2.0
+│   │   ├── ncurses-6.1
+│   │   └── zlib-1.2.12
 │   └── pc
-│       ├── htop-2.2.0
-│       └── zlib-1.2.11
-├── configs
+│       ├── htop-2.2.0
+│       ├── ncurses-6.1
+│       └── zlib-1.2.12
+├── configs                             // 配置文件
 │   ├── cmd.mk
 │   ├── common_var.mk
 │   ├── makefile
@@ -47,33 +55,63 @@
 │   │   ├── common_sub_target.mk
 │   │   ├── common_target.mk
 │   │   └── define_func.mk
-│   └── vender                          // gcc相关信息
-│       ├── ats3607d.mk
-│       ├── fulhan.mk
-│       ├── hisi.mk                     // 海思平台gcc配置信息
-│       ├── linaro.mk
-│       ├── mstar.mk
-│       ├── pc.mk                       // pc平台gcc配置信息
+│   └── vender                          // 厂商信息
+│       ├── actions                     // 炬芯
+│       │   └── ats3607d
+│       │       └── config.mk
+│       ├── allwinnertech               // 全志
+│       │   └── r328
+│       │       └── config.mk
+│       ├── arterytek                   // 雅特力
+│       │   └── at32f4xx
+│       │       └── config.mk
+│       ├── eeasytech                   // 亿智
+│       │   └── SV823
+│       │       └── config.mk
+│       ├── fullhan                     // 富翰微
+│       │   ├── MC3312
+│       │   │   └── config.mk
+│       │   └── MC6810E
+│       │       └── config.mk
+│       ├── hisilicon                   // 海思
+│       │   └── 3536DV100
+│       │       └── config.mk           // 交叉编译gcc配置信息
+│       ├── ingenic                     // 君正
+│       │   └── x1830
+│       │       └── config.mk
+│       ├── pc                          // pc
+│       │   └── pc-chip
+│       │       └── config.mk
 │       ├── platform_config.mk          // 平台配置文件
 │       ├── platform_config_tmp.mk      // 平台配置文件，覆盖上面文件的相关变量
-│       ├── r328.mk
-│       ├── rk3308.mk
-│       ├── unione.mk
-│       └── x1830.mk
+│       ├── rock-chips                  // 瑞芯微
+│       │   └── rk3308
+│       │       └── config.mk
+│       └── unisound                    // 云之声
+│           └── unione
+│               └── config.mk
+├── img
 ├── LICENSE
 ├── Makefile                            // 顶层Makefile
-├── project
-│   ├── htop
-│   │   ├── Makefile                    // 第三方库编译Makefile
-│   │   └── README.md
-│   └── zlib
-│       ├── Makefile
-│       └── README.md
+├── project                             // 第三方库
+│   ├── compress
+│   │   ├── README.md
+│   │   ├── xz
+│   │   │   ├── Makefile
+│   │   │   └── README.md
+│   │   └── zlib
+│   │       ├── Makefile                // 第三方编译Makefile
+│   │       └── README.md
+│   ├── detect_tools
+│   │   └── htop
+│   │       ├── Makefile
+│   │       └── README.md
 ├── README.md
 ├── src                                 // 源码目录
-│   ├── htop-2.2.0
-│   └── zlib-1.2.11
-└── SUMMARY.md
+├── SUMMARY.md
+└── tools
+    ├── tree2dotx
+    └── tree2svg
 ```
 
 ## 使用说明
@@ -86,12 +124,29 @@
 vim configs/vender/platform_config.mk
 
 # 可选的厂商有: 
-#       pc
-#       hisi
-#       fulhan
-#       mstar
-#       linaro
+# actions
+#   ats3607d
+# allwinnertech
+#   r328
+# arterytek
+#   at32f4xx
+# eeasytech
+#   SV823
+# fullhan
+#   MC6810E
+#   MC3312
+# hisilicon
+#   3536DV100
+# ingenic
+#   x1830
+# pc
+#   pc-chip
+# rock-chips
+#   rk3308
+# unisound
+#   unione
 vender := pc
+chip := pc-chip
 ```
 
 > 如果没有对应的厂商，可以增加相应的厂商配置文件
@@ -113,7 +168,7 @@ cxxflags_com        :=
 ldflags_com         :=
 libs_com            := 
 
-prefix_path         ?= $(base_prefix_path)/$(vender)/$(gcc_version)         // 安装目录
+prefix_path         ?= /mnt/data/nfs/$(vender)/$(chip)         // 安装目录
 ```
 
 > note:
@@ -125,15 +180,11 @@ prefix_path         ?= $(base_prefix_path)/$(vender)/$(gcc_version)         // �
 * 修改gcc配置
 
 ```makefile
-vim configs/vender/hisi.mk
+vim configs/vender/fullhan/MC6810E/config.mk
 
-# arm-himix200-linux, arm-hisiv510-linux
-gcc_version         := arm-himix200-linux
-
-toolchains_path     := $(base_toolchains_path)/$(vender)/$(gcc_version)/bin // gcc路径
-gcc_prefix          := arm-himix200-linux-
-program_prefix      := arm-himix200-linux-
-host                := arm-himix200-linux
+cross_gcc           := /mnt/data/toolchain/molchip/MC6810E/molchipv500-armgcc-uclibc/bin/arm-mol-linux-uclibcgnueabihf-
+program_prefix      := arm-mol-linux-uclibcgnueabihf-
+host                := arm-mol-linux-uclibcgnueabihf
 
 cppflags_com        :=
 cflags_com          :=
@@ -141,14 +192,14 @@ cxxflags_com        :=
 ldflags_com         :=
 libs_com            := 
 
-prefix_path         ?= $(base_prefix_path)/$(vender)/$(gcc_version)         // 安装路径
+prefix_path         ?= /mnt/data/nfs/$(vender)/$(chip)                      // 安装路径
 ```
 
 > note: 
 >
 > 1, gcc的安装目录最好按照上述格式，避免修改过程中或增加新的gcc编译不通过
 >
-> 2, 变量`base_toolchains_path`和`vender`在`platform_config.mk`中定义
+> 2, 变量`vender`和`chip在`platform_config.mk`中定义
 
 * 在`platform_config_tmp.mk`中配置的信息会覆盖`platform_config.mk`相关变量
 
@@ -181,7 +232,7 @@ $ make project=zlib_distclan    // 清除src和build下zlib相关文件
 * 在项目目录下编译
 
 ```shell
-$ cd project/zlib
+$ cd project/compress/zlib
 $ make             // 编译zlib
 $ make V=1         // 编译zlib，并输出详细的编译信息
 $ make clean       // 清除build下zlib相关文件
@@ -237,12 +288,12 @@ endif
 
 ### 编译指定版本
 
-* 打开`project/zlib/Makefile`，修改`project_version`字段
+* 打开`project/compress/zlib/Makefile，修改`project_version`字段
 
 ```makefile
 project                 := zlib
 project_version         := 1.2.9    // 修改成需要的版本(指定的版本必须是存在的，不能自己定义一个版本，否则下载将失败)
-project_download_url    := https://nchc.dl.sourceforge.net/project/libpng/zlib/$(project_version)/zlib-$(project_version).tar.gz
+project_download_url    := https://www.zlib.net/zlib-$(project_version).tar.gz
 ```
 
 ![compile_specified_version](img/compile_specified_version.png)

@@ -19,19 +19,27 @@
 # ===============================================================
 
 # 可选的平台和芯片有:
-# pc
-#   pc-chip
-# eeasytech
-#   SV823
-# arterytek
-#   at32f4xx
-# ingenic
-#   x1830
 # actions
 #   ats3607d
+# allwinnertech
+#   r328
+# arterytek
+#   at32f4xx
+# eeasytech
+#   SV823
 # fullhan
 #   MC6810E
 #   MC3312
+# hisilicon
+#   3536DV100
+# ingenic
+#   x1830
+# pc
+#   pc-chip
+# rock-chips
+#   rk3308
+# unisound
+#   unione
 vender := pc
 chip := pc-chip
 
