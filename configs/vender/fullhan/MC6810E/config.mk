@@ -18,7 +18,7 @@
 #     last modified: 01/09 2021 09:22
 # ===============================================================
 
-cross_gcc           := /mnt/data/toolchain/molchip/MC6810E/molchipv500-armgcc-uclibc/bin/arm-mol-linux-uclibcgnueabihf-
+cross_gcc           := /mnt/data/toolchain/fullhan/MC6810E/molchipv500-armgcc-uclibc/bin/arm-mol-linux-uclibcgnueabihf-
 program_prefix      := arm-mol-linux-uclibcgnueabihf-
 host                := arm-mol-linux-uclibcgnueabihf
 
