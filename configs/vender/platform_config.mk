@@ -29,8 +29,9 @@
 #   x1830
 # actions
 #   ats3607d
-# molchip
+# fullhan
 #   MC6810E
+#   MC3312
 vender := pc
 chip := pc-chip
 
