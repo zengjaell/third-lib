@@ -40,8 +40,8 @@
 #   rk3308
 # unisound
 #   unione
-vender := fullhan
-chip := MC6810E
+vender := pc
+chip := pc-chip
 
 include $(vender_path)/$(vender)/$(chip)/config.mk
 
